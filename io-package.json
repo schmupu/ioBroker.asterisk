@@ -1,0 +1,44 @@
+{
+  "common": {
+    "name": "asterisk",
+    "version": "0.1.0",
+    "news": {
+      "0.1.0": {
+        "en": "First version",
+        "de": "Erste Version"
+      }
+    },
+    "title": "Asterisk Manager (AMI) Adapter",
+    "titleLang": {
+      "en": "Asterisk Manager (AMI) Adapter",
+      "de": "Asterisk Manager (AMI) Adapter"
+    },
+    "desc": {
+      "en": "ioBroker Asterisk Manager (AMI) Adapter",
+      "de": "ioBroker Asterisk Manager (AMI) Adapter"
+    },
+    "license": "MIT",
+    "authors": [
+      "Thorsten Stueben <thorsten@stueben.de>"
+    ],
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "asterisk.png",
+    "materialize": true,
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
+    "keywords": ["voip", "sip", "voice", "speach", "call"],
+    "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
+    "loglevel": "info",
+    "type": "voip",
+    "restartAdapters": []
+  },
+  "native": {
+    "asterisk_port": 50000,
+    "asterisk_ip": "192.168.1.1",
+    "asterisk_mng_user": "Manager",
+    "asterisk_mng_passwd": ""
+  },
+  "objects": [],
+  "instanceObjects": []
+}

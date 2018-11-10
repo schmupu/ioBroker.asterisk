@@ -1,34 +1,6 @@
-![Logo](admin/asterisk.png)
-
-# ioBroker.asterisk
-==================
-
-[![Travis CI Build Status](https://travis-ci.org/schmupu/ioBroker.asterisk.svg?branch=master)](https://travis-ci.org/schmupu/ioBroker.asterisk)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/schmupu/ioBroker.asterisk?branch=master&svg=true)](https://ci.appveyor.com/project/schmupu/ioBroker-asterisk/)
-[![NPM version](http://img.shields.io/npm/v/iobroker.asterisk.svg)](https://www.npmjs.com/package/iobroker.asterisk)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.asterisk.svg)](https://www.npmjs.com/package/iobroker.asterisk)
-
-[![NPM](https://nodei.co/npm/iobroker.asterisk.png?downloads=true)](https://nodei.co/npm/iobroker.asterisk/)
-
-
-...
-
-
-## Install & Configuration
-
-...
-
-
-## Changelog
-
-### 0.1.0 (10.11.2018)
-* (Stübi) First Version
-
-
-## License
 The MIT License (MIT)
 
-Copyright (c) 2018 Thorsten <thorsten@stueben.de>
+Copyright (c) 2018 Thorsten Stueben <thorsten@stueben.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

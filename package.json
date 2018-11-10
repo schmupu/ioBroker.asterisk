@@ -1,0 +1,43 @@
+{
+  "name": "iobroker.asterisk",
+  "version": "0.1.5",
+  "description": "ioBroker asterisk Adapter",
+  "author": {
+    "name": "Thorsten Stueben",
+    "email": "thorsten@stueben.de"
+  },
+  "contributors": [
+    {
+      "name": "Thorsten Stueben",
+      "email": "thorsten@stueben.de"
+    }
+  ],
+  "homepage": "https://github.com/schmupu/ioBroker.asterisk",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "asterisk",
+    "Smart Home",
+    "burglar",
+    "alarm",
+    "home automation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schmupu/ioBroker.asterisk"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "mocha": "^4.1.0",
+    "chai": "^4.1.2"
+  },
+  "main": "asterisk.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha --exit"
+  },
+  "bugs": {
+    "url": "https://github.com/schmupu/ioBroker.asterisk/issues"
+  },
+  "readmeFilename": "README.md"
+}
