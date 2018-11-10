@@ -23,21 +23,23 @@
     ],
     "platform": "Javascript/Node.js",
     "mode": "daemon",
+    "messagebox": true,
+    "subscribe": "messagebox",
     "icon": "asterisk.png",
     "materialize": true,
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
-    "keywords": ["voip", "sip", "voice", "speach", "call"],
+    "keywords": ["voip", "asterisk", "sip", "voice", "speach", "call"],
     "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
     "loglevel": "info",
-    "type": "voip",
+    "type": "Infrastruktur",
     "restartAdapters": []
   },
   "native": {
-    "asterisk_port": 50000,
-    "asterisk_ip": "192.168.1.1",
-    "asterisk_mng_user": "Manager",
-    "asterisk_mng_passwd": ""
+    "port": 5038,
+    "ip": "192.168.1.1",
+    "user": "manager",
+    "password": "manager"
   },
   "objects": [],
   "instanceObjects": []
