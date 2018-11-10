@@ -10,20 +10,30 @@
 
 [![NPM](https://nodei.co/npm/iobroker.asterisk.png?downloads=true)](https://nodei.co/npm/iobroker.asterisk/)
 
-
-...
-
+The Asterisk adapter converts text messages to audio files and calls then over Asterisk by voip any telephonenumber you want and plays the audo message.
 
 ## Install & Configuration
 
----
+You have to install asterisk for voip calls and ffmpeg to trancode mp3 audofiles to gsm audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
+
+Intalling asterisk and ffmpeg on a raspberry. It is possible to  install asterisk and ffmpeg on Windows and Apple Macs too. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
+
+```sh
+apt-get install ffmpeg
+apt-get install asterisk
+```
+
+Now you can  connect asterisk directly to you voip provider or with your Fritzbox. If you use the Frizbox you have to add a new LAN/WLAN telephone device.
+In my example the Fritbox has the IP address 192.168.1.1 and the username is *12345689* und th password is *mypassword* . The telphonenumber for outgoing and incoming calls is *03047114711*.
 
 ![Fritzbox1](admin/fritzbox1.png)
 
 ![Fritzbox2](admin/fritzbox2.png)
-...
+
+Now you have to configure following asterisk configuraion files. 
 
 /etc/asterisk/manager.conf
+```sh
 [general]
 enabled = yes
 port = 5038
@@ -95,7 +105,25 @@ context ael-antwort {
 }
 ```
 
-...
+For starting the asterisk server type */etc/init.d/asterisk start*
+Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf*.
+
+![Iobroker1](admin/iobroker1.png)
+
+Now you can use the adapter in your javascript or blocky programs.
+
+```sh
+var number  = "040 666-7766";
+var msg     = "Hello, this textmessage will be converted to audio"; 
+
+sendTo('asterisk.0', "dial", {
+    telnr: number, 
+    text:  msg}, 
+    (res) => {
+        console.log('Sent to ' + res + ' users');
+});       
+```
+
 
 ## Changelog
 
