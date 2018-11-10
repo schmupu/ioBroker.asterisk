@@ -19,8 +19,8 @@ You have to install asterisk for voip calls and ffmpeg to trancode mp3 audofiles
 Intalling asterisk and ffmpeg on a raspberry. It is possible to  install asterisk and ffmpeg on Windows and Apple Macs too. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
 
 ```sh
-apt-get install ffmpeg
-apt-get install asterisk
+sudo apt-get install ffmpeg
+sudo apt-get install asterisk
 ```
 
 Now you can  connect asterisk directly to you voip provider or with your Fritzbox. If you use the Frizbox you have to add a new LAN/WLAN telephone device.
