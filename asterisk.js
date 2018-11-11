@@ -41,13 +41,6 @@ adapter.on('message', (msg) => {
 
   adapter.log.debug('Message: ' + JSON.stringify(msg));
 
-  adapter.sendTo(msg.from, msg.command, {
-    result: {
-      success: true
-    },
-    error: null
-  }, msg.callback);
-
 
   if (parameter) {
 
@@ -64,14 +57,17 @@ adapter.on('message', (msg) => {
               } else {
                 adapter.log.debug("dial result " + JSON.stringify(res));
               }
+              adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
             });
           })
           .catch((err) => {
             // An error occured
             aadapter.log.error("dial error " + JSON.stringify(err));
+            adapter.sendTo(msg.from, msg.command, { result: null, error: err }, msg.callback);
           });
       } else {
         adapter.log.error('Paramter telnr and/or text are missing');
+        adapter.sendTo(msg.from, msg.command, { result: null, error: 'Paramter telnr and/or text are missing' }, msg.callback);
       }
     }
 
@@ -88,6 +84,7 @@ adapter.on('message', (msg) => {
               } else {
                 adapter.log.debug("action result " + JSON.stringify(res));
               }
+              adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
             });
           })
           .catch((err) => {
@@ -101,12 +98,14 @@ adapter.on('message', (msg) => {
           } else {
             adapter.log.debug("action result " + JSON.stringify(res));
           }
+          adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
         });
       }
     }
 
   } else {
     adapter.log.error('Paramter missing');
+    adapter.sendTo(msg.from, msg.command, { result: null, error: 'Paramter missing' }, msg.callback);
   }
 
 });
