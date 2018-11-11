@@ -31,15 +31,17 @@ adapter.on('unload', (callback) => {
 
 
 adapter.on('message', (msg) => {
+
   let command = msg.command;
   let parameter = msg.message;
+  let callback = msg.callback;
   let id = msg._id;
 
   adapter.log.debug('Message: ' + JSON.stringify(msg));
 
   if (command == 'dial') {
     if (parameter && parameter.text && parameter.telnr) {
-      if(!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id;
+      if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id;
       converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile + ".gsm")
         .then((file) => {
           adapter.log.info("finish" + JSON.stringify(file));
@@ -57,6 +59,10 @@ adapter.on('message', (msg) => {
     }
   }
 
+  if (command == 'action') {
+  }
+
+  
 });
 
 
@@ -81,8 +87,6 @@ function main() {
 
   asterisk = new ami(adapter.config.port, adapter.config.ip, adapter.config.user, adapter.config.password, false);
   converter = new transcode();
- 
+
 
 }
-
-
