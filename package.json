@@ -1,7 +1,7 @@
 {
   "name": "iobroker.asterisk",
   "version": "0.1.2",
-  "description": "ioBroker Asterisk VoIP Adapter",
+  "description": "Asterisk VoIP",
   "author": {
     "name": "Thorsten Stueben",
     "email": "thorsten@stueben.de"

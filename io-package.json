@@ -12,10 +12,10 @@
         "de": "Erste Version vom ioBroker Asterisk VoIP Adapter"
       }
     },
-    "title": "Asterisk VoIP Adapter",
+    "title": "Asterisk VoIP",
     "titleLang": {
-      "en": "Asterisk VoIP Adapter",
-      "de": "Asterisk VoIP Adapter"
+      "en": "Asterisk VoIP",
+      "de": "Asterisk VoIP"
     },
     "desc": {
       "en": "Asterisk VoIP Adapter",
