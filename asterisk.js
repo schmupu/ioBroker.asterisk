@@ -46,10 +46,13 @@ adapter.on('message', (msg) => {
 
     if (command == 'dial') {
       if (parameter.text && parameter.telnr) {
-        if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id;
-        converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile + ".gsm")
+        if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id + '.gsm';
+        if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() != 'gsm') {
+          parameter.audiofile = converter.getBasename(parameter.audiofile) + '.gsm';
+        }
+        converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile)
           .then((file) => {
-            adapter.log.debug("dial finish " + JSON.stringify(file));
+            adapter.log.debug("dial start dialing " + JSON.stringify(file));
             // The file is converted at path "file"
             asterisk.dial(parameter, (err, res) => {
               if (err) {
@@ -62,12 +65,46 @@ adapter.on('message', (msg) => {
           })
           .catch((err) => {
             // An error occured
-            aadapter.log.error("dial error " + JSON.stringify(err));
+            adapter.log.error("dial error " + JSON.stringify(err));
             adapter.sendTo(msg.from, msg.command, { result: null, error: err }, msg.callback);
           });
+      } else if (parameter.audiofile && parameter.telnr) {
+        if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'mp3') {
+          let fileNameMP3 = parameter.audiofile;
+          let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
+          parameter.audiofile = fileNameGSM;
+          converter.mp3ToGsm(fileNameMP3, fileNameGSM)
+            .then((file) => {
+              adapter.log.debug("dial start dialing " + JSON.stringify(file));
+              // The file is converted at path "file"
+              asterisk.dial(parameter, (err, res) => {
+                if (err) {
+                  adapter.log.error("dial error " + JSON.stringify(err));
+                } else {
+                  adapter.log.debug("dial result " + JSON.stringify(res));
+                }
+                adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
+              });
+            })
+            .catch((err) => {
+              // An error occured
+              adapter.log.error("dial error " + JSON.stringify(err));
+              adapter.sendTo(msg.from, msg.command, { result: null, error: err }, msg.callback);
+            });
+        } else {
+          // play audio file if exist
+          asterisk.dial(parameter, (err, res) => {
+            if (err) {
+              adapter.log.error("dial error " + JSON.stringify(err));
+            } else {
+              adapter.log.debug("dial result " + JSON.stringify(res));
+            }
+            adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
+          });
+        }
       } else {
-        adapter.log.error('Paramter telnr and/or text are missing');
-        adapter.sendTo(msg.from, msg.command, { result: null, error: 'Paramter telnr and/or text are missing' }, msg.callback);
+        adapter.log.error('Paramter telnr and/or text/audiofile is missing');
+        adapter.sendTo(msg.from, msg.command, { result: null, error: 'Paramter telnr and/or text/audiofile is missing' }, msg.callback);
       }
     }
 
@@ -76,7 +113,7 @@ adapter.on('message', (msg) => {
         if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id;
         converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile + ".gsm")
           .then((file) => {
-            adapter.log.debug("action finish " + JSON.stringify(file));
+            adapter.log.debug("action start acion " + JSON.stringify(file));
             // The file is converted at path "file"
             asterisk.action(parameter, (err, res) => {
               if (err) {
