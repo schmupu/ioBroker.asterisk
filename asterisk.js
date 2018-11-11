@@ -93,6 +93,7 @@ adapter.on('message', (msg) => {
             });
         } else {
           // play audio file if exist
+          parameter.audiofile = converter.getBasename(parameter.audiofile);
           asterisk.dial(parameter, (err, res) => {
             if (err) {
               adapter.log.error("dial error " + JSON.stringify(err));

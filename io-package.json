@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "Bugfixing",
+        "de": "Fehlerbehebung"
+      },
       "0.1.2": {
         "en": "First version of ioBroker Asterisk VoIP Adapter",
         "de": "Erste Version vom ioBroker Asterisk VoIP Adapter"
