@@ -130,11 +130,12 @@ sendTo('asterisk.0', "dial", {
 
 ## Changelog
 
+### 0.1.2 (12.11.2018)
+* (Stübi) First Version
+
 ### 0.1.1 (11.11.2018)
 * (Stübi) First Version
 
-### 0.1.2 (12.11.2018)
-* (Stübi) First Version
 
 ## License
 The MIT License (MIT)
