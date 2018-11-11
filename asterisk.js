@@ -73,7 +73,7 @@ adapter.on('message', (msg) => {
           let fileNameMP3 = parameter.audiofile;
           let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
           parameter.audiofile = fileNameGSM;
-          converter.mp3ToGsm(fileNameMP3, fileNameGSM)
+          converter.mp3ToGsm(fileNameMP3, fileNameGSM, false)
             .then((file) => {
               adapter.log.debug("dial start dialing " + JSON.stringify(file));
               // The file is converted at path "file"
