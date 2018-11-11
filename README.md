@@ -1,7 +1,7 @@
 ![Logo](admin/asterisk.png)
 
-# ioBroker.asterisk
-==================
+# ioBroker Asterisk VoIP Adapter
+===============================
 
 [![Travis CI Build Status](https://travis-ci.org/schmupu/ioBroker.asterisk.svg?branch=master)](https://travis-ci.org/schmupu/ioBroker.asterisk)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/schmupu/ioBroker.asterisk?branch=master&svg=true)](https://ci.appveyor.com/project/schmupu/ioBroker-asterisk/)
@@ -14,23 +14,26 @@ The Asterisk adapter converts text messages to audio files and calls then over A
 
 ## Install & Configuration
 
-You have to install asterisk for voip calls and ffmpeg to trancode mp3 audofiles to gsm audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
+You have to install asterisk for voip calls and ffmpeg to trancode mp3 audofiles to gsm audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. The text message can not be longer than 200 characters.
 
-Intalling asterisk and ffmpeg on a raspberry. It is possible to  install asterisk and ffmpeg on Windows and Apple Macs too. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
+You cann install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
+
+Important: asterisk and ffmpeg hst to be on the same hardware as ioBroker! The reason is that the audio files are stored locally. Maybe I will add an SFTP tranfer of audio files in one of the following versions.
+
+if you use Linux (Raspbery for example) you have to install ffmpeg and asterisk like this: 
 
 ```sh
 sudo apt-get install ffmpeg
 sudo apt-get install asterisk
 ```
 
-Now you can  connect asterisk directly to you voip provider or with your Fritzbox. If you use the Frizbox you have to add a new LAN/WLAN telephone device.
-In my example the Fritbox has the IP address 192.168.1.1 and the username is *12345689* und th password is *mypassword* . The telphonenumber for outgoing and incoming calls is *03047114711*.
+Asterisk has to connect for outgoing calls wiht your voip provider or with your Fritzbox. If you use the Frizbox you have to add a new LAN/WLAN telephone device. In my example the Fritbox has the IP address 192.168.1.1 and the username is *12345689* und the password is *mypassword* . The telphonenumber for outgoing and incoming calls is *03047114711*.
 
 ![Fritzbox1](admin/fritzbox1.png)
 
 ![Fritzbox2](admin/fritzbox2.png)
 
-Now you have to configure following asterisk configuraion files. 
+Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 3 files!   
 
 /etc/asterisk/manager.conf
 ```sh
@@ -127,9 +130,8 @@ sendTo('asterisk.0', "dial", {
 
 ## Changelog
 
-### 0.1.0 (10.11.2018)
+### 0.1.1 (11.11.2018)
 * (Stübi) First Version
-
 
 ## License
 The MIT License (MIT)

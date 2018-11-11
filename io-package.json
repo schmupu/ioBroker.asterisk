@@ -1,21 +1,21 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
       "0.1.0": {
-        "en": "First version",
-        "de": "Erste Version"
+        "en": "First version of ioBroker Asterisk VoIP Adapter",
+        "de": "Erste Version vom ioBroker Asterisk VoIP Adapter"
       }
     },
-    "title": "Asterisk Manager (AMI) Adapter",
+    "title": "Asterisk VoIP Adapter",
     "titleLang": {
-      "en": "Asterisk Manager (AMI) Adapter",
-      "de": "Asterisk Manager (AMI) Adapter"
+      "en": "Asterisk VoIP Adapter",
+      "de": "Asterisk VoIP Adapter"
     },
     "desc": {
-      "en": "ioBroker Asterisk Manager (AMI) Adapter",
-      "de": "ioBroker Asterisk Manager (AMI) Adapter"
+      "en": "Asterisk VoIP Adapter",
+      "de": "Asterisk VoIP Adapter"
     },
     "license": "MIT",
     "authors": [

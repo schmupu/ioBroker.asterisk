@@ -24,28 +24,6 @@ systemDictionary = {
     "es": "Ajustes principales",
     "pl": "Ustawienia główne"
   },
-  "Subscribers": {
-    "en": "Subscribers",
-    "de": "Abonnenten",
-    "ru": "Подписчики",
-    "pt": "Inscritos",
-    "nl": "abonnees",
-    "fr": "Les abonnés",
-    "it": "Iscritti",
-    "es": "Suscriptores",
-    "pl": "Subskrybenci"
-  },
-  "bind": {
-    "en": "Bind IP-Address",
-    "de": "Bind IP-Adresse",
-    "ru": "Связывание IP-адреса",
-    "pt": "Vincular endereço IP",
-    "nl": "Bind het IP-adres",
-    "fr": "Lier l'adresse IP",
-    "it": "Bind IP-Address",
-    "es": "Dirección IP de enlace",
-    "pl": "Przypisz adres IP"
-  },
   "Port": {
     "en": "Port",
     "de": "Port",
@@ -68,26 +46,26 @@ systemDictionary = {
     "es": "Dirección IP",
     "pl": "Adres IP"
   },
-  "subscriber": {
-    "en": "Subscriber",
-    "de": "Abonnement",
-    "ru": "подписчик",
-    "pt": "assinante",
-    "nl": "abonnee",
-    "fr": "abonné",
-    "it": "abbonato",
-    "es": "abonado",
-    "pl": "abonent"
+  "Username (Manager)": {
+    "en": "Username (Manager)",
+    "de": "Benutzername (Manager)",
+    "ru": "Имя пользователя (менеджер)",
+    "pt": "Nome de usuário (gerente)",
+    "nl": "Gebruikersnaam (manager)",
+    "fr": "Nom d'utilisateur (gestionnaire)",
+    "it": "Username (Manager)",
+    "es": "Nombre de usuario (administrador)",
+    "pl": "Nazwa użytkownika (menedżer)"
   },
-  "alarmsystem": {
-    "en": "alarmsystem",
-    "de": "Alarmanlage",
-    "ru": "аварийная система",
-    "pt": "sistema de alarme",
-    "nl": "alarmsysteem",
-    "fr": "système d'alarme",
-    "it": "sistema d'allarme",
-    "es": "Sistema de alarmas",
-    "pl": "system alarmowy"
+  "Password (Manager)": {
+    "en": "Password (Manager)",
+    "de": "Passwortmanager)",
+    "ru": "Пароль (Менеджер)",
+    "pt": "Senha (Manager)",
+    "nl": "Wachtwoord (Manager)",
+    "fr": "Mot de passe (gestionnaire)",
+    "it": "Password (Manager)",
+    "es": "Contraseña (Administrador)",
+    "pl": "Hasło (menedżer)"
   }
 };
