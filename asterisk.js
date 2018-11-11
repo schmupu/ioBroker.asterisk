@@ -46,11 +46,11 @@ adapter.on('message', (msg) => {
 
     if (command == 'dial') {
       if (parameter.text && parameter.telnr) {
-        if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id + '.gsm';
-        if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() != 'gsm') {
-          parameter.audiofile = converter.getBasename(parameter.audiofile) + '.gsm';
+        if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id ;
+        if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
+          parameter.audiofile = converter.getBasename(parameter.audiofile);
         }
-        converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile)
+        converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile + '.gsm')
           .then((file) => {
             adapter.log.debug("dial start dialing " + JSON.stringify(file));
             // The file is converted at path "file"
@@ -72,7 +72,7 @@ adapter.on('message', (msg) => {
         if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'mp3') {
           let fileNameMP3 = parameter.audiofile;
           let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
-          parameter.audiofile = fileNameGSM;
+          parameter.audiofile = converter.getBasename(parameter.audiofile);
           converter.mp3ToGsm(fileNameMP3, fileNameGSM, false)
             .then((file) => {
               adapter.log.debug("dial start dialing " + JSON.stringify(file));
