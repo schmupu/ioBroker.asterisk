@@ -119,12 +119,22 @@ Now you can use the adapter in your javascript or blocky programs.
 var number  = "040 666-7766";
 var msg     = "Hello, this textmessage will be converted to audio"; 
 
-sendTo('asterisk.0', "dial", {
-    telnr: number, 
-    text:  msg}, 
-    (res) => {
-        console.log('Sent to ' + res + ' users');
-});       
+// call telephone nummber 040 666-7766 and play text message as audio
+sendTo('asterisk.0', "dial", { telnr: number, text:  msg},  (res) => {
+      console.log('Result: ' + JSON.stringify(res));
+});  
+
+// call telephone nummber 040 666-7766 and play mp3 audio file
+// mp3 file has to exist on asterix server
+sendTo('asterisk.0', "dial", { telnr: number, aufiofile:  '/tmp/audio.mp3'},  (res) => {
+      console.log('Result: ' + JSON.stringify(res));
+});  
+
+// call telephone nummber 040 666-7766 and play gsm audio file 
+// gsm file has to exist on asterix server
+sendTo('asterisk.0', "dial", { telnr: number, aufiofile:  '/tmp/audio.gsm'},  (res) => {
+      console.log('Result: ' + JSON.stringify(res));
+});  
 ```
 
 
