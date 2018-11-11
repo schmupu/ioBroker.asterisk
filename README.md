@@ -1,7 +1,7 @@
 ![Logo](admin/asterisk.png)
 
 # ioBroker Asterisk VoIP Adapter
-===============================
+
 
 [![Travis CI Build Status](https://travis-ci.org/schmupu/ioBroker.asterisk.svg?branch=master)](https://travis-ci.org/schmupu/ioBroker.asterisk)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/schmupu/ioBroker.asterisk?branch=master&svg=true)](https://ci.appveyor.com/project/schmupu/ioBroker-asterisk/)
