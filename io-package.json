@@ -24,6 +24,7 @@
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "messagebox": true,
+    "stopBeforeUpdate": true,
     "subscribe": "messagebox",
     "icon": "asterisk.png",
     "materialize": true,
@@ -32,7 +33,7 @@
     "keywords": ["voip", "asterisk", "sip", "voice", "speach", "call"],
     "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
     "loglevel": "info",
-    "type": "Infrastruktur",
+    "type": "communication",
     "restartAdapters": []
   },
   "native": {
