@@ -42,15 +42,15 @@ Now you have to edit the follwoing asterisk configuration files. Delete the old 
  
 **/etc/asterisk/manager.conf**
 ```sh
-[general]							; Do not change
+[general]						; Do not change
 enabled = yes						; Do not change
 port = 5038						; Do not change
 bindaddr = 0.0.0.0					; Do not change
 
-[manager]							; Do not change
+[manager]						; Do not change
 secret = managerpassword				; Change Manager password for ioBroker asterisk adapter
-permit = 192.168.1.0/255.255.255.0  		; Change to your subnet and netmask
-read = all							; Do not change
+permit = 192.168.1.0/255.255.255.0  			; Change to your subnet and netmask
+read = all						; Do not change
 write = all						; Do not change
 ```
 You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask)
@@ -58,7 +58,7 @@ You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit*
 
 **/etc/asterisk/sip.conf**
 ```sh
-[general]					; Do not change
+[general]				; Do not change
 port = 5060				; Do not change
 bindaddr = 0.0.0.0			; Do not change
 context = default			; Do not change
@@ -73,8 +73,8 @@ username = 123456789      		; Change to username of Fritzbox WLAN/LAN telephone
 host = 192.168.1.1        		; Change hostname / IP address of Fritzbox
 secret = mypassword       		; Change password of Fritzbox WLAN/LAN telephone
 fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
-fromuser = 123456789   	  	; Change username of Fritzbox WLAN/LAN telephone
-callerid= 03047114711	  	; Change your telephone number defined in the Fritzbox
+fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
+callerid= 03047114711	  		; Change your telephone number defined in the Fritzbox
 ```
 You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
 
