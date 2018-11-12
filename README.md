@@ -143,7 +143,7 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 ```
 
 > You can use following parameter in the sendTo dial statement:
-> - **language:** language take for text to speach (tts) function. (allowed values: 'DE', 'EN', ... Default is ioBroker system language)
+> - **language:** language take for text to speach (tts) function. (allowed values: 'DE', 'EN', ... Default is the ioBroker system language)
 > - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
 > - **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
 > - **text:** text message that will be send as audio (max 200 characters) 
