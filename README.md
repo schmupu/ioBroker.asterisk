@@ -31,7 +31,7 @@ Asterisk has to connect for outgoing calls wiht your voip provider or with your 
 
 ![Fritzbox1](admin/fritzbox1.png)
 
-If you do not want, that ioBroker answer the phone, please levae "nur auf folgende Rufnummern reagieren" empty.
+If you do not want, that ioBroker answer the phone, please leave "nur auf folgende Rufnummern reagieren" empty.
 
 ![Fritzbox2](admin/fritzbox2.png)
 
@@ -146,8 +146,7 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 ```
 
 > You can use following parameter in the sendTo dial statement:
->
-- **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
+> - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
 - **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
 - **text:** text message that will be send as audio (max 200 characters) 
 - **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
