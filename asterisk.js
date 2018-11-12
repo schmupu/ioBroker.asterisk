@@ -8,6 +8,7 @@ var ami = require(__dirname + '/lib/ami');
 var transcode = require(__dirname + '/lib/transcode');
 var asterisk = undefined
 var converter = undefined;
+var systemLanguage  = 'EN';
 
 // *****************************************************************************************************
 // is called when adapter shuts down - callback has to be called under any circumstances!
@@ -38,19 +39,24 @@ adapter.on('message', (msg) => {
   let parameter = msg.message;
   let callback = msg.callback;
   let id = msg._id;
+  let tmppath = adapter.config.path || '/tmp/';
 
   adapter.log.debug('Message: ' + JSON.stringify(msg));
 
+  if(tmppath.slice(-1) != '/' && tmppath.slice(-1) != '\\' ) {
+    tmppath = tmppath +  '/';
+  } 
 
   if (parameter) {
-
     if (command == 'dial') {
       if (parameter.text && parameter.telnr) {
-        if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id ;
+        if (!parameter.audiofile) parameter.audiofile =  tmppath + 'audio_' + id ;
         if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
           parameter.audiofile = converter.getBasename(parameter.audiofile);
         }
-        converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile + '.gsm')
+        let language = parameter.language || systemLanguage;
+        adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+        converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
           .then((file) => {
             adapter.log.debug("dial start dialing " + JSON.stringify(file));
             // The file is converted at path "file"
@@ -73,6 +79,7 @@ adapter.on('message', (msg) => {
           let fileNameMP3 = parameter.audiofile;
           let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
           parameter.audiofile = converter.getBasename(parameter.audiofile);
+          adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
           converter.mp3ToGsm(fileNameMP3, fileNameGSM, false)
             .then((file) => {
               adapter.log.debug("dial start dialing " + JSON.stringify(file));
@@ -94,6 +101,7 @@ adapter.on('message', (msg) => {
         } else {
           // play audio file if exist
           parameter.audiofile = converter.getBasename(parameter.audiofile);
+          adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
           asterisk.dial(parameter, (err, res) => {
             if (err) {
               adapter.log.error("dial error " + JSON.stringify(err));
@@ -111,8 +119,10 @@ adapter.on('message', (msg) => {
 
     if (command == 'action') {
       if (parameter.text) {
-        if (!parameter.audiofile) parameter.audiofile = '/tmp/audio_' + id;
-        converter.textToGsm(parameter.text, 'DE', 100, parameter.audiofile + ".gsm")
+        if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
+        let language = parameter.language || systemLanguage;
+        adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+        converter.textToGsm(parameter.text, language, 100, parameter.audiofile + ".gsm")
           .then((file) => {
             adapter.log.debug("action start acion " + JSON.stringify(file));
             // The file is converted at path "file"
@@ -130,6 +140,7 @@ adapter.on('message', (msg) => {
             adapter.log.error("action error " + JSON.stringify(err));
           });
       } else {
+        adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
         asterisk.action(parameter, (err, res) => {
           if (err) {
             adapter.log.error("action error " + JSON.stringify(err));
@@ -153,11 +164,18 @@ adapter.on('message', (msg) => {
 // is called when databases are connected and adapter received configuration.
 // start here!
 // *****************************************************************************************************
+// adapter.on('ready', () => {
+
+//   adapter.log.info("Adapter " + adapter.namespace + " starting!");
+//   main();
+
+// });
+
 adapter.on('ready', () => {
-
-  adapter.log.info("Adapter " + adapter.namespace + " starting!");
-  main();
-
+  adapter.getForeignObject('system.config', (err, obj) => {
+      systemLanguage = (obj.common.language).toUpperCase();
+      main();
+  });
 });
 
 

@@ -59,7 +59,7 @@ systemDictionary = {
   },
   "Password (Manager)": {
     "en": "Password (Manager)",
-    "de": "Passwortmanager)",
+    "de": "Passwort (Manager)",
     "ru": "Пароль (Менеджер)",
     "pt": "Senha (Manager)",
     "nl": "Wachtwoord (Manager)",
@@ -67,5 +67,16 @@ systemDictionary = {
     "it": "Password (Manager)",
     "es": "Contraseña (Administrador)",
     "pl": "Hasło (menedżer)"
+  },
+  "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker": {
+    "en": "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker",
+    "de": "Pfad für temporäre Audiodateien. Muss für Asterisk und ioBroker zugänglich und autorisiert sein",
+    "ru": "Путь для временных аудиофайлов. Должен быть доступен и разрешен для Asterisk и ioBroker",
+    "pt": "Caminho para arquivos de áudio temporários. Deve ser acessível e autorizado para o Asterisk e o ioBroker",
+    "nl": "Pad voor tijdelijke audiobestanden. Moet toegankelijk en geautoriseerd zijn voor Asterisk en ioBroker",
+    "fr": "Chemin pour les fichiers audio temporaires. Doit être accessible et autorisé pour Asterisk et ioBroker",
+    "it": "Percorso per file audio temporanei. Deve essere accessibile e autorizzato per Asterisk e ioBroker",
+    "es": "Ruta para archivos de audio temporales. Debe ser accesible y autorizado para Asterisk y ioBroker.",
+    "pl": "Ścieżka do tymczasowych plików audio. Musi być dostępny i autoryzowany dla Asterisk i ioBroker"
   }
 };

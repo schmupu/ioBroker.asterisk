@@ -48,7 +48,9 @@
     "port": 5038,
     "ip": "192.168.1.1",
     "user": "manager",
-    "password": "manager"
+    "password": "manager",
+    "path": "/tmp/" 
+
   },
   "objects": [],
   "instanceObjects": []

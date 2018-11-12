@@ -18,7 +18,9 @@ You have to install asterisk for voip calls and ffmpeg to trancode mp3 audofiles
 
 You cann install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
 
-Important: asterisk and ffmpeg hst to be on the same hardware as ioBroker! The reason is that the audio files are stored locally. Maybe I will add an SFTP tranfer of audio files in one of the following versions.
+Important: asterisk and ffmpeg has to be on the same hardware as ioBroker! The reason is that the audio files are stored locally and accesable from both aplication. Maybe I will add an SFTP tranfer of audio files in one of the following versions.
+
+If you still want to use separated server for ioBroker and Asterisk there is a work around. You still install ffmpeg on the ioBroker server. You have to share a path on a server (for example with cifs), where both ioBroker and Asterisk have read and write access. The path name must on the asterisk and ioBroker server completle identical. The command *ln -s* will help! You have to enter the path in the ioBroker asterisk adapter configuraton (see screenshot below).
 
 if you use Linux (Raspbery for example) you have to install ffmpeg and asterisk like this: 
 
@@ -61,8 +63,8 @@ bindaddr = 0.0.0.0
 context = default
 subscribecontext = default
 
-;           Username:Password@SIP-Server-IP/Extension of default (subscribecontext)
-register => 12345689:mypassword@192.168.1.1/1000    ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
 
 [12345689]                ; username of Fritzbox WLAN/LAN telephone
 type = friend
@@ -78,30 +80,23 @@ You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox
 
 **/etc/asterisk/extensions.ael**
 ```sh
-globals {
-	CONSOLE-AEL="Console/dsp"; 		// Console interface for demo
-	IAXINFO-AEL=guest;				// IAXtel username/password
-	OUTBOUND-TRUNK="Zap/g2";		// Trunk interface
-	OUTBOUND-TRUNKMSD=1;			// MSD digits to strip (usually 1 or 0)
-};
-
 context default {
-  1000 => {
+  	1000 => {
         Goto(ael-antwort,10,1);
-  }
+  	}
 }
 
 context ael-ansage {
-        10 => {
-                Answer();
-                Wait(1);
-                for (x=0; ${x} < ${repeat}; x=${x} + 1) {
-                        Playback(${file});
+	10 => {
+		Answer();
+		Wait(1);
+		for (x=0; ${x} < ${repeat}; x=${x} + 1) {
+			Playback(${file});
 			Playback(beep);
-                	Wait(1);
-                }
+			Wait(1);
+		}
 		Hangup();
-        }
+	}
 }
 
 context ael-antwort {
@@ -109,8 +104,8 @@ context ael-antwort {
 		Answer();
 		Wait(1);
 		Playback(beep);
-    		Wait(10);
-    		Hangup();
+    	Wait(10);
+    	Hangup();
 	}
 }
 ```
@@ -118,7 +113,7 @@ Copy the content above into the */etc/asterisk/extensions.ael* and do not change
 
 
 For starting the asterisk server type */etc/init.d/asterisk start*
-Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf*.
+Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf*. You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
 
 ![Iobroker1](admin/iobroker1.png)
 
@@ -147,6 +142,7 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 ```
 
 > You can use following parameter in the sendTo dial statement:
+> - **language:** language take for text to speach (tts) function. (allowed values: 'DE', 'EN', ... Default is ioBroker system language)
 > - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
 > - **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
 > - **text:** text message that will be send as audio (max 200 characters) 
