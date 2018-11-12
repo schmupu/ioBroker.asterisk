@@ -41,16 +41,16 @@ Now you have to edit the follwoing asterisk configuration files. Delete the old 
  
 **/etc/asterisk/manager.conf**
 ```sh
-[general]
-enabled = yes
-port = 5038
-bindaddr = 0.0.0.0
+[general]					; Do not change
+enabled = yes				; Do not change
+port = 5038					; Do not change
+bindaddr = 0.0.0.0			; Do not change
 
-[manager]
-secret=managerpwd                   ; Change to password 
-permit=192.168.1.0/255.255.255.0    ; Your subnet and netmask
-read=all
-write=all
+[manager]							; Do not change
+secret=managerpwd                   ; Change Manager password for ioBroker asterisk adapter   
+permit=192.168.1.0/255.255.255.0    ; Change to your subnet and netmask
+read=all							; Do not change
+write=all							; Do not change
 ```
 You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask)
 
@@ -66,14 +66,14 @@ subscribecontext = default
 
 register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
 
-[12345689]                ; username of Fritzbox WLAN/LAN telephone
-type = friend
-username = 123456789      ; username of Fritzbox WLAN/LAN telephone
-host = 192.168.1.1        ; hostname / IP address of Fritzbox
-secret = mypassword       ; password of Fritzbox WLAN/LAN telephone
-fromdomain = 192.168.1.1  ; hostname / IP address of Fritzbox
-fromuser = 123456789   	  ; username of Fritzbox WLAN/LAN telephone
-callerid= 03047114711	  ; your telephone number defined in the Fritzbox
+[iobroker]               	; Do not change
+type = friend			  	; Do not change
+username = 123456789      	; Change to username of Fritzbox WLAN/LAN telephone
+host = 192.168.1.1        	; Change hostname / IP address of Fritzbox
+secret = mypassword       	; Change password of Fritzbox WLAN/LAN telephone
+fromdomain = 192.168.1.1  	; Change hostname / IP address of Fritzbox
+fromuser = 123456789   	  	; Change username of Fritzbox WLAN/LAN telephone
+callerid= 03047114711	  	; Change your telephone number defined in the Fritzbox
 ```
 You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* and the entry *[123456789]* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
 
