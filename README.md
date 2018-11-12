@@ -47,8 +47,8 @@ port = 5038					; Do not change
 bindaddr = 0.0.0.0			; Do not change
 
 [manager]							; Do not change
-secret = managerpassword              ; Change Manager password for ioBroker asterisk adapter   
-permit = 192.168.1.0/255.255.255.0    ; Change to your subnet and netmask
+secret = managerpassword            ; Change Manager password for ioBroker asterisk adapter   
+permit = 192.168.1.0/255.255.255.0  ; Change to your subnet and netmask
 read = all							; Do not change
 write = all							; Do not change
 ```
