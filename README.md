@@ -10,7 +10,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.asterisk.png?downloads=true)](https://nodei.co/npm/iobroker.asterisk/)
 
-The Asterisk adapter converts text messages to audio files and calls then over Asterisk by voip any telephonenumber you want and plays the audo message.
+The Asterisk adapter converts text messages to audio files and calls afterwards a given telephone number and plays the text as audio message to the callee.
 
 ## Install & Configuration
 
