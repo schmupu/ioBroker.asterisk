@@ -47,10 +47,10 @@ port = 5038					; Do not change
 bindaddr = 0.0.0.0			; Do not change
 
 [manager]							; Do not change
-secret=managerpwd                   ; Change Manager password for ioBroker asterisk adapter   
-permit=192.168.1.0/255.255.255.0    ; Change to your subnet and netmask
-read=all							; Do not change
-write=all							; Do not change
+secret = managerpassword              ; Change Manager password for ioBroker asterisk adapter   
+permit = 192.168.1.0/255.255.255.0    ; Change to your subnet and netmask
+read = all							; Do not change
+write = all							; Do not change
 ```
 You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask)
 
@@ -75,7 +75,7 @@ fromdomain = 192.168.1.1  	; Change hostname / IP address of Fritzbox
 fromuser = 123456789   	  	; Change username of Fritzbox WLAN/LAN telephone
 callerid= 03047114711	  	; Change your telephone number defined in the Fritzbox
 ```
-You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* and the entry *[123456789]* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
+You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
 
 
 **/etc/asterisk/extensions.ael**
