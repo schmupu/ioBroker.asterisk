@@ -10,13 +10,13 @@
 
 [![NPM](https://nodei.co/npm/iobroker.asterisk.png?downloads=true)](https://nodei.co/npm/iobroker.asterisk/)
 
-The Asterisk adapter converts text messages to audio files and calls afterwards a given telephone number and plays the text as audio message to the callee.
+The Asterisk adapter converts text messages to audio files and calls then over Asterisk by voip any telephone number you want and plays the audo message.
 
 ## Install & Configuration
 
-You have to install asterisk for voip calls and ffmpeg to trancode mp3 audofiles to gsm audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. The text message can not be longer than 200 characters.
+You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. The text message can not be longer than 200 characters.
 
-You cann install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
+You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
 
 Important: asterisk and ffmpeg has to be on the same hardware as ioBroker! The reason is that the audio files are stored locally and accesable from both aplication. Maybe I will add an SFTP tranfer of audio files in one of the following versions.
 
@@ -29,7 +29,8 @@ sudo apt-get install ffmpeg
 sudo apt-get install asterisk
 ```
 
-Asterisk has to connect for outgoing calls wiht your voip provider or with your Fritzbox. If you use the Frizbox you have to add a new LAN/WLAN telephone device. In my example the Fritbox has the IP address 192.168.1.1 and the username is *12345689* und the password is *mypassword* . The telphonenumber for outgoing and incoming calls is *03047114711*.
+Asterisk has to connect for outgoing calls with your voip provider or with your fritz.box! If you use the fritz
+box! you have to add a new LAN/WLAN telephone device. In my example the frit.box! has the IP address 192.168.1.1 and the user name is *12345689* und the password is *mypassword* . The telphone number for outgoing and incoming calls is *03047114711*.
 
 ![Fritzbox1](admin/fritzbox1.png)
 
@@ -117,7 +118,7 @@ Now you have to connect ioBroker with the asterisk server. If the ioBroker and t
 
 ![Iobroker1](admin/iobroker1.png)
 
-Now you can use the adapter in your javascript or blocky programs.
+Now you can use the adapter in your javascript or blocky programms.
 
 ```sh
 var number  = "040 666-7766";
