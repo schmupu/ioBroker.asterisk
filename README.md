@@ -45,8 +45,8 @@ port = 5038
 bindaddr = 0.0.0.0
 
 [manager]
-secret=managerpwd
-permit=192.168.1.0/255.255.255.0
+secret=managerpwd                   ; Change to password 
+permit=192.168.1.0/255.255.255.0    ; Your subnet and netmask
 read=all
 write=all
 ```
@@ -60,17 +60,18 @@ port = 5060
 bindaddr = 0.0.0.0
 context = default
 subscribecontext = default
-;                Username:Password:SIP-Server-IP/Extension of default (subscribecontext)
-register => 12345689:mypassword@192.168.1.1/1000
 
-[12345689]
+;           Username:Password@SIP-Server-IP/Extension of default (subscribecontext)
+register => 12345689:mypassword@192.168.1.1/1000    ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+[12345689]                ; username of Fritzbox WLAN/LAN telephone
 type = friend
-username = 123456789
-host = 192.168.1.1
-secret = mypassword
-fromdomain = 192.168.1.1
-fromuser = 123456789
-callerid= 03047114711
+username = 123456789      ; username of Fritzbox WLAN/LAN telephone
+host = 192.168.1.1        ; hostname / IP address of Fritzbox
+secret = mypassword       ; password of Fritzbox WLAN/LAN telephone
+fromdomain = 192.168.1.1  ; hostname / IP address of Fritzbox
+fromuser = 123456789   	  ; username of Fritzbox WLAN/LAN telephone
+callerid= 03047114711	  ; your telephone number defined in the Fritzbox
 ```
 You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* and the entry *[123456789]* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
 
@@ -81,7 +82,7 @@ globals {
 	CONSOLE-AEL="Console/dsp"; 		// Console interface for demo
 	IAXINFO-AEL=guest;				// IAXtel username/password
 	OUTBOUND-TRUNK="Zap/g2";		// Trunk interface
-	OUTBOUND-TRUNKMSD=1;			 / MSD digits to strip (usually 1 or 0)
+	OUTBOUND-TRUNKMSD=1;			// MSD digits to strip (usually 1 or 0)
 };
 
 context default {
