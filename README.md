@@ -147,11 +147,11 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 
 > You can use following parameter in the sendTo dial statement:
 > - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
-- **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
-- **text:** text message that will be send as audio (max 200 characters) 
-- **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
-- **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
-- **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
+> - **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
+> - **text:** text message that will be send as audio (max 200 characters) 
+> - **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
+> - **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
+> - **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
 
 
 ## Changelog
