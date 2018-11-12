@@ -154,6 +154,9 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 
 ## Changelog
 
+### 0.1.4 (13.11.2018)
+* (Stübi) Bugfixing
+
 ### 0.1.3 (12.11.2018)
 * (Stübi) Bugfixing
 
