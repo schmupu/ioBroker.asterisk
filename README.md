@@ -31,11 +31,13 @@ Asterisk has to connect for outgoing calls wiht your voip provider or with your 
 
 ![Fritzbox1](admin/fritzbox1.png)
 
+If you do not want, that ioBroker answer the phone, please levae "nur auf folgende Rufnummern reagieren" empty.
+
 ![Fritzbox2](admin/fritzbox2.png)
 
-Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 3 files!   
-
-/etc/asterisk/manager.conf
+Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 3 files! Do not change the user authority of the files.
+ 
+**/etc/asterisk/manager.conf**
 ```sh
 [general]
 enabled = yes
@@ -48,8 +50,10 @@ permit=192.168.1.0/255.255.255.0
 read=all
 write=all
 ```
+You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask)
 
-/etc/asterisk/sip.conf
+
+**/etc/asterisk/sip.conf**
 ```sh
 [general]
 port = 5060
@@ -68,8 +72,10 @@ fromdomain = 192.168.1.1
 fromuser = 123456789
 callerid= 03047114711
 ```
+You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* and the entry *[123456789]* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
 
-/etc/asterisk/extensions.ael
+
+**/etc/asterisk/extensions.ael**
 ```sh
 globals {
 	CONSOLE-AEL="Console/dsp"; 		// Console interface for demo
@@ -107,6 +113,8 @@ context ael-antwort {
 	}
 }
 ```
+Copy the content above into the */etc/asterisk/extensions.ael* and do not change anything! If you change something here, your ioBroker dial command will not work.
+
 
 For starting the asterisk server type */etc/init.d/asterisk start*
 Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf*.
@@ -136,6 +144,15 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
       console.log('Result: ' + JSON.stringify(res));
 });  
 ```
+
+> You can use following parameter in the sendTo dial statement:
+>
+- **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
+- **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
+- **text:** text message that will be send as audio (max 200 characters) 
+- **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
+- **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
+- **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
 
 
 ## Changelog
