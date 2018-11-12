@@ -58,11 +58,11 @@ You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit*
 
 **/etc/asterisk/sip.conf**
 ```sh
-[general]
-port = 5060
-bindaddr = 0.0.0.0
-context = default
-subscribecontext = default
+[general]					; Do not change
+port = 5060					; Do not change
+bindaddr = 0.0.0.0			; Do not change
+context = default			; Do not change
+subscribecontext = default	; Do not change
 
 
 register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
