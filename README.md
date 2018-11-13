@@ -34,7 +34,8 @@ box! you have to add a new LAN/WLAN telephone device. In my example the frit.box
 
 ![Fritzbox1](admin/fritzbox1.png)
 
-If you do not want, that ioBroker answer the phone, please leave "nur auf folgende Rufnummern reagieren" empty.
+If you do not want, that ioBroker answer the phone, please leave "nur auf folgende Rufnummern reagieren" empty.  Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
+
 
 ![Fritzbox2](admin/fritzbox2.png)
 
@@ -76,7 +77,8 @@ fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
 fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
 callerid= 03047114711	  		; Change your telephone number defined in the Fritzbox
 ```
-You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. Change the *callerid* with your phone number configured in the Fritzbox.
+You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. Important, the Fribox ustername 
+Change the *callerid* with your phone number configured in the Fritzbox. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
 
 
 **/etc/asterisk/extensions.ael**
