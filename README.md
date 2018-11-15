@@ -123,23 +123,24 @@ Now you have to connect ioBroker with the asterisk server. If the ioBroker and t
 Now you can use the adapter in your javascript or blocky programms.
 
 ```sh
-var number  = "040 666-7766";
-var msg     = "Hello, this textmessage will be converted to audio"; 
+var number   = "040 666-7766";
+var callerid = '040 123 999'; // optional
+var msg      = "Hello, this textmessage will be converted to audio"; 
 
 // call telephone nummber 040 666-7766 and play text message as audio
-sendTo('asterisk.0', "dial", { telnr: number, text:  msg},  (res) => {
+sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, text:  msg},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
 });  
 
 // call telephone nummber 040 666-7766 and play mp3 audio file
 // mp3 file has to exist on asterix server
-sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.mp3'},  (res) => {
+sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.mp3'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
 });  
 
 // call telephone nummber 040 666-7766 and play gsm audio file 
 // gsm file has to exist on asterix server
-sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (res) => {
+sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.gsm'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
 });  
 ```
@@ -152,7 +153,7 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 > - **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
 > - **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
 > - **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
-> - **callerid:** Defines the identifier. Your telephonenumber. If callerid is missing the call will be anonymous
+> - **callerid:** Defines the identifier (your sender telephone number)	. If callerid is missing the transferred telephone number will be anonymous
 
 ## Changelog
 
