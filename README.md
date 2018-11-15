@@ -152,7 +152,7 @@ sendTo('asterisk.0', "dial", { telnr: number, aufiofile: '/tmp/audio.gsm'},  (re
 > - **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
 > - **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
 > - **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
-
+> - **callerid:** Defines the identifier. Your telephonenumber. If callerid is missing the call will be anonymous
 
 ## Changelog
 
