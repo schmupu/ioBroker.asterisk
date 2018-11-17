@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "news": {
+      "0.1.5": {
+        "en": "Bugfixing",
+        "de": "Fehlerbehebung"
+      },
       "0.1.4": {
         "en": "Bugfixing",
         "de": "Fehlerbehebung"

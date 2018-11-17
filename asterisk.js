@@ -241,14 +241,7 @@ function asteriskDisconnect(callback) {
   if (callback) callback();
 }
 
-function delTmpFileOnHangup() {
-  if (asterisk) {
-    adapter.log.info("Starting event hanlding hangup");
-    asterisk.eventHangup((msg) => {
-      adapter.log.info(JSON.stringify(msg));
-    });
-  }
-}
+
 
 // *****************************************************************************************************
 // Main function
@@ -264,7 +257,6 @@ function main() {
     }
   });
   asterisk.keepConnected();
-  delTmpFileOnHangup();
   adapter.log.debug("Started function keepConnected()");
 
 }

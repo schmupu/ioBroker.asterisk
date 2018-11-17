@@ -1,6 +1,6 @@
 {
   "name": "iobroker.asterisk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Asterisk VoIP",
   "author": {
     "name": "Thorsten Stueben",
