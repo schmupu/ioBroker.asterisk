@@ -16,13 +16,9 @@ adapter.on('unload', (callback) => {
 
   try {
     adapter.log.info('Closing Asterisk Adapter');
-
-    if (server) {
-      server.close();
-    }
-
     callback();
   } catch (e) {
+    adapter.log.error(e);
     callback();
   }
 
