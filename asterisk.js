@@ -9,6 +9,19 @@ var transcode = require(__dirname + '/lib/transcode');
 var asterisk = undefined
 var systemLanguage = 'EN';
 
+
+// *****************************************************************************************************
+// Decrypt Password
+// *****************************************************************************************************
+function decrypt(key, value) {
+  let result = '';
+  for (let i = 0; i < value.length; ++i) {
+    result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+  }
+  return result;
+}
+
+
 // *****************************************************************************************************
 // is called when adapter shuts down - callback has to be called under any circumstances!
 // *****************************************************************************************************
@@ -189,6 +202,15 @@ adapter.on('message', (msg) => {
 adapter.on('ready', () => {
   adapter.getForeignObject('system.config', (err, obj) => {
     systemLanguage = (obj.common.language).toUpperCase();
+    if (adapter.config.password) {
+      if (obj && obj.native && obj.native.secret) {
+        //noinspection JSUnresolvedVariable
+        adapter.config.password = decrypt(obj.native.secret, adapter.config.password);
+      } else {
+        //noinspection JSUnresolvedVariable
+        adapter.config.password = decrypt('Zgfr56gFe87jJOM', adapter.config.password);
+      }
+    }
     main();
   });
 });

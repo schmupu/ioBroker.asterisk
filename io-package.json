@@ -4,8 +4,8 @@
     "version": "0.1.6",
     "news": {
       "0.1.6": {
-        "en": "Bugfixing",
-        "de": "Fehlerbehebung"
+        "en": "Bugfixing and password will be saved encrypted",
+        "de": "Fehlerbehebung und Passwort wird verschlüsselt gespeichert"
       },
       "0.1.5": {
         "en": "Bugfixing",

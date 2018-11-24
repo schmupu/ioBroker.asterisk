@@ -21,10 +21,31 @@
 
     if (typeof _ !== 'function') _ = translateWord;
 
+    function encrypt(key, value) {
+      var result = '';
+      for (var i = 0; i < value.length; ++i) {
+        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+      }
+      return result;
+    }
 
-    function load(settings, onChange) {
+    function decrypt(key, value) {
+
+      var result = '';
+      for (var i = 0; i < value.length; ++i) {
+        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+      }
+      return result;
+
+    }
+
+    function loadHelper(settings, onChange) {
+
+      if (!settings) return;
+      if (settings.password === undefined) settings.password = '';
+      if (settings.user === undefined) settings.user = '';
+
       g_onChange = onChange;
-
 
       getIPs(function (ips) {
         for (var i = 0; i < ips.length; i++) {
@@ -90,10 +111,17 @@
         }
       }
 
+
       //for (var key in settings) {
       forAllKeys(settings, function (key) {
         // example: select elements with id=key and class=value and insert value
         var val = getVal(key);
+
+        if (val && $('#' + key + '.value').attr('data-crypt') == "1") {
+          val = decrypt(secret, val);
+        }
+        //var val = $key.data('crypt') && settings[key] ? decrypt(secret, settings[key]) : settings[key];
+        // var val = $key.data('crypt') && getVal(key) ? decrypt(secret, getVal(key)) : getVal(key);
         if ($('#' + key + '.value').attr('type') == 'checkbox') {
           $('#' + key + '.value').prop('checked', val).change(function () {
             if ($('#auth').prop('checked')) {
@@ -118,6 +146,17 @@
       devices = settings.keys; // || [ {name: '', ip: "", mac: ""} ];
       values2table('values', devices, onChange);
       //changed = true;
+      // $('#password_confirm').val($('#password').val());
+      onChange(false);
+    }
+
+    function load(settings, onChange) {
+
+      socket.emit('getObject', 'system.config', function (err, obj) {
+        secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+        loadHelper(settings, onChange);
+      });
+
       onChange(false);
     }
 
@@ -145,13 +184,23 @@
             val = ~~$this.val();
             break;
           default:
-            val = $this.val();
+            val = $this.data('crypt') && $this.val() ? encrypt(secret, $this.val()) : $this.val();
         }
         setVal(obj, $this.attr('id'), val);
       });
       obj.keys = table2values('values');
+
+      /*
+       if ($('#password').val() !== $('#password_confirm').val()) {
+         showMessage(_('Password confirmation is not equal with password'));
+         return;
+       }
+       */
+
       callback(obj);
     }
+
+
   </script>
   <style>
     .loader {
@@ -213,7 +262,7 @@
             <label class="translate" for="user">Username (Manager)</label>
           </div>
           <div class="col s12 m8 l3">
-            <input class="value" id="password" type="password" />
+            <input class="value" id="password" data-crypt="1" type="password" />
             <label class="translate" for="password">Password (Manager)</label>
           </div>
         </div>
@@ -224,7 +273,8 @@
         <div class="row">
           <div class="col s12 m8 l5">
             <input class="value" id="path" type="text" />
-            <label class="translate" for="path">Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker</label>
+            <label class="translate" for="path">Path for temporary audio files. Must be accessible and authorized for
+              Asterisk and ioBroker</label>
           </div>
         </div>
 

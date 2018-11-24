@@ -157,8 +157,8 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 
 ## Changelog
 
-### 0.1.6 (18.11.2018)
-* (Stübi) Bugfixing
+### 0.1.6 (23.11.2018)
+* (Stübi) Bugfixing and password will be saved encrypted
 
 ### 0.1.5 (17.11.2018)
 * (Stübi) Bugfixing
