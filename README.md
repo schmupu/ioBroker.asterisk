@@ -149,7 +149,7 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 > - **language:** language take for text to speach (tts) function. (allowed values: 'DE', 'EN', ... Default is the ioBroker system language)
 > - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
 > - **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
-> - **text:** text message that will be send as audio (max 200 characters) 
+> - **text:** text message that will be send as audio
 > - **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
 > - **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
 > - **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
@@ -158,7 +158,7 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 ## Changelog
 
 ### 0.1.6 (23.11.2018)
-* (Stübi) Bugfixing and password will be saved encrypted and text message can be unlimited long
+* (Stübi) Bugfixing and password will be saved encrypted and text message size can be unlimited 
 
 ### 0.1.5 (17.11.2018)
 * (Stübi) Bugfixing
