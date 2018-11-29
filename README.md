@@ -14,7 +14,7 @@ The Asterisk adapter converts text messages to audio files and calls then over A
 
 ## Install & Configuration
 
-You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. The text message can not be longer than 200 characters.
+You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
 
 You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
 
@@ -158,7 +158,7 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 ## Changelog
 
 ### 0.1.6 (23.11.2018)
-* (Stübi) Bugfixing and password will be saved encrypted
+* (Stübi) Bugfixing and password will be saved encrypted and text message can be unlimited long
 
 ### 0.1.5 (17.11.2018)
 * (Stübi) Bugfixing
