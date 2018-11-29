@@ -51,6 +51,7 @@ adapter.on('message', (msg) => {
       let callback = msg.callback;
       let id = msg._id;
       let tmppath = adapter.config.path || '/tmp/';
+      let converter = new transcode();
 
       adapter.log.debug('Message: ' + JSON.stringify(msg));
 
