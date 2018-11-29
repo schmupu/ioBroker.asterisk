@@ -266,17 +266,6 @@ function asteriskDisconnect(callback) {
 // *****************************************************************************************************
 function main() {
 
-  /*
-  let converter = new transcode();
-  converter.textToMp3New("hallo ein Test", 'DE', 100, '/tmp/test.mp3')
-    .then((file) => {
-      let a = file;
-    })
-    .catch((err) => {
-      let a = err;
-    })
-    */
-
   adapter.log.info("Starting Adapter");
   asteriskConnect((err) => {
     if (!err) {
