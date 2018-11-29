@@ -51,7 +51,6 @@ adapter.on('message', (msg) => {
       let callback = msg.callback;
       let id = msg._id;
       let tmppath = adapter.config.path || '/tmp/';
-      let converter = new transcode();
 
       adapter.log.debug('Message: ' + JSON.stringify(msg));
 
@@ -265,6 +264,17 @@ function asteriskDisconnect(callback) {
 // Main function
 // *****************************************************************************************************
 function main() {
+
+  /*
+  let converter = new transcode();
+  converter.textToMp3New("hallo ein Test", 'DE', 100, '/tmp/test.mp3')
+    .then((file) => {
+      let a = file;
+    })
+    .catch((err) => {
+      let a = err;
+    })
+    */
 
   adapter.log.info("Starting Adapter");
   asteriskConnect((err) => {
