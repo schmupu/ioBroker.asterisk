@@ -1,12 +1,17 @@
+/* jshint -W097 */
+/* jshint -W030 */
+/* jshint strict:true */
+/* jslint node: true */
+/* jslint esversion: 6 */
 'use strict';
 
-var utils = require(__dirname + '/lib/utils'); // Get common adapter utils
+const utils = require('@iobroker/adapter-core');
 var dp = require(__dirname + '/lib/datapoints');
 var net = require('net');
 var adapter = new utils.Adapter('asterisk');
 var ami = require(__dirname + '/lib/ami');
 var transcode = require(__dirname + '/lib/transcode');
-var asterisk = undefined
+var asterisk;
 var systemLanguage = 'EN';
 
 
@@ -221,7 +226,7 @@ function asteriskWaitForConnection(callback, counter = 0) {
   if (!asterisk || counter > 1000) return callback && callback(true);
   if (!asterisk.isConnected()) {
     setTimeout(() => {
-      counter++
+      counter++;
       asteriskWaitForConnection(callback, counter);
     }, 5);
   } else {
@@ -234,7 +239,7 @@ function asteriskWaitForDisonnection(callback, counter = 0) {
   if (!asterisk || counter > 1000) return callback && callback(true);
   if (asterisk.isConnected()) {
     setTimeout(() => {
-      counter++
+      counter++;
       asteriskWaitForDisonnection(callback, counter);
     }, 5);
   } else {
@@ -259,7 +264,31 @@ function asteriskDisconnect(callback) {
   if (callback) callback();
 }
 
+function answerCall(parameter, callback) {
 
+  let converter = new transcode();
+  let language = parameter.language || systemLanguage;
+  parameter.audiofile = parameter.audiofile  || '/tmp/asterisk_dtmf';
+
+  converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
+  .then((file) => {
+    adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
+    adapter.log.debug('Listing vor Dial In Event');
+
+    asterisk.asteriskEvent('managerevent', (evt) => {
+      if (evt.event == "VarSet" && evt.variable && evt.variable.hasOwnProperty("dtmf")) {
+        adapter.log.info("DTMF: " + evt.value);
+        callback && callback(evt);
+      }
+    });
+   
+  })
+  .catch((err) => {
+    // An error occured
+    adapter.log.error('Error while Listing: ' + JSON.stringify(err));
+  });
+
+}
 
 // *****************************************************************************************************
 // Main function
@@ -270,11 +299,20 @@ function main() {
   asteriskConnect((err) => {
     if (!err) {
       adapter.log.info("Connected to Asterisk Manager");
+
+      let parameter = {
+        text: 'Bitte geben Sie in den nächsten 10 Sekunden Ihr Passwort ein und drücken sie anschließend die Raute Taste.',
+        language: 'DE',
+        audiofile: '/tmp/asterisk_dtmf'
+      };
+      answerCall(parameter);
+
     } else {
       adapter.log.error("Cound not connect to Asterisk Manager");
     }
   });
   asterisk.keepConnected();
+
   adapter.log.debug("Started function keepConnected()");
 
 }

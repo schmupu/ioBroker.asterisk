@@ -68,7 +68,7 @@ subscribecontext = default		; Do not change
 
 register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
 
-[iobroker]               		; Do not change
+[123456789]               		; Do not change
 type = friend			  	; Do not change
 username = 123456789      		; Change to username of Fritzbox WLAN/LAN telephone
 host = 192.168.1.1        		; Change hostname / IP address of Fritzbox
@@ -106,7 +106,12 @@ context ael-antwort {
 	10  => {
 		Answer();
 		Wait(1);
+		Playback(/tmp/asterisk_dtmf);
 		Playback(beep);
+		Read(dtmf,,,4,3);
+		if ("${dtmf}"  != "") {
+			SayDigits(${dtmf});
+		}
     	Wait(10);
     	Hangup();
 	}

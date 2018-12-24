@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "news": {
+      "0.1.7": {
+        "en": "Bugfixing and DTMF Code will be recognized",
+        "de": "Fehlerbehebung und Auswertung von DTMF Code"
+      },
       "0.1.6": {
         "en": "Bugfixing and password will be saved encrypted",
         "de": "Fehlerbehebung und Passwort wird verschlüsselt gespeichert"
