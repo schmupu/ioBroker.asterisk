@@ -42,6 +42,25 @@ adapter.on('unload', (callback) => {
 
 });
 
+// *****************************************************************************************************
+// is called when state changed
+// *****************************************************************************************************
+adapter.on('stateChange', function (id, state) {
+  // Warning, state can be null if it was deleted
+  if (state && !state.ack) {
+    let stateId = id.replace(adapter.namespace + '.', '');
+    adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
+    if (stateId == 'dialin.text') {
+      let parameter = {
+        'audiofile': '/tmp/asterisk_dtmf',
+        'text': state.val
+      };
+      if (state.val) convertDialInFile(parameter, () => { });
+      adapter.setState(stateId, state.val, true);
+    }
+  }
+});
+
 
 // *****************************************************************************************************
 // Listen for sendTo messages
@@ -264,30 +283,47 @@ function asteriskDisconnect(callback) {
   if (callback) callback();
 }
 
-function answerCall(parameter, callback) {
+function convertDialInFile(parameter, callback) {
 
   let converter = new transcode();
   let language = parameter.language || systemLanguage;
-  parameter.audiofile = parameter.audiofile  || '/tmp/asterisk_dtmf';
+  parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
+  parameter.text = parameter.text || 'Please enter after the beep tone your passwort and press hashtag.';
 
   converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
-  .then((file) => {
-    adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
-    adapter.log.debug('Listing vor Dial In Event');
+    .then((file) => {
+      adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
+      adapter.log.debug('Listing vor Dial In Event');
+      callback && callback();
+    })
+    .catch((err) => {
+      // An error occured
+      adapter.log.error('Error while Converting File: ' + JSON.stringify(err));
+    });
 
+}
+
+function answerCall(parameter, callback) {
+
+  let stateId = 'dialin.dtmf';
+  let converter = new transcode();
+  let language = parameter.language || systemLanguage;
+  parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
+  parameter.text = parameter.text || 'Please enter after the beep tone your passwort and press hashtag.';
+
+  convertDialInFile(parameter, () => {
     asterisk.asteriskEvent('managerevent', (evt) => {
-      if (evt.event == "VarSet" && evt.variable && evt.variable.hasOwnProperty("dtmf")) {
-        adapter.log.info("DTMF: " + evt.value);
-        callback && callback(evt);
+      if (evt.context == "ael-antwort" && evt.exten == "10") {
+        if (evt.event == "VarSet" && evt.variable && evt.value && evt.variable.hasOwnProperty("dtmf")) {
+          adapter.log.info("DTMF: " + evt.value);
+          adapter.setState(stateId, '', (err) => {
+            if (!err) adapter.setState(stateId, evt.value, true);
+          });
+          callback && callback(evt);
+        }
       }
     });
-   
-  })
-  .catch((err) => {
-    // An error occured
-    adapter.log.error('Error while Listing: ' + JSON.stringify(err));
   });
-
 }
 
 // *****************************************************************************************************
@@ -312,7 +348,7 @@ function main() {
     }
   });
   asterisk.keepConnected();
-
+  adapter.subscribeStates('*');
   adapter.log.debug("Started function keepConnected()");
 
 }

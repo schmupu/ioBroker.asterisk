@@ -54,7 +54,14 @@
     "materialize": true,
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
-    "keywords": ["voip", "asterisk", "sip", "voice", "speach", "call"],
+    "keywords": [
+      "voip",
+      "asterisk",
+      "sip",
+      "voice",
+      "speach",
+      "call"
+    ],
     "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
     "loglevel": "info",
     "type": "communication",
@@ -65,9 +72,43 @@
     "ip": "192.168.1.1",
     "user": "manager",
     "password": "manager",
-    "path": "/tmp/" 
-
+    "path": "/tmp/"
   },
   "objects": [],
-  "instanceObjects": []
+  "instanceObjects": [
+    {
+      "_id": "dialin",
+      "type": "channel",
+      "common": {
+        "name": "Dial In"
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialin.text",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "Text",
+        "type": "string",
+        "read": true,
+        "write": true,
+        "def": "Please enter after the beep tone your passwort and press hashtag."
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialin.dtmf",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "DTMF Code",
+        "type": "string",
+        "def": "",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    }
+  ]
 }
