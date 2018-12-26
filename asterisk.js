@@ -374,7 +374,7 @@ function answerCall(callback) {
                 'value': evt.value
               };
               adapter.log.debug("Variable: " + i + " = " + evt.value);
-
+            
               if (evt.context == "ael-antwort" && i == 'dtmf') {
                 let stateId = 'dialin.dtmf';
                 adapter.setState(stateId, '', (err) => {
@@ -408,13 +408,7 @@ function main() {
   asteriskConnect((err) => {
     if (!err) {
       adapter.log.info("Connected to Asterisk Manager");
-
-      let parameter = {
-        text: 'Bitte geben Sie in den nächsten 10 Sekunden Ihr Passwort ein und drücken sie anschließend die Raute Taste.',
-        language: 'DE',
-        audiofile: '/tmp/asterisk_dtmf'
-      };
-      answerCall(parameter);
+      answerCall();
 
     } else {
       adapter.log.error("Cound not connect to Asterisk Manager");
