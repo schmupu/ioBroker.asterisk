@@ -58,9 +58,178 @@ adapter.on('stateChange', function (id, state) {
       if (state.val) convertDialInFile(parameter, () => { });
       adapter.setState(stateId, state.val, true);
     }
+    if (stateId == 'dialout.call') {
+      let parameter = {};
+      adapter.getState('dialout.telnr', (err, state) => {
+        if (!err && state) {
+          parameter.telnr = state.val;
+          adapter.getState('dialout.text', (err, state) => {
+            if (!err && state) {
+              parameter.text = state.val;
+              dial('dial', parameter, state.ts, (res, err) => {
+                // check for error
+              });
+            }
+          });
+        }
+      });
+    }
+
   }
+
 });
 
+// *****************************************************************************************************
+// Dial
+// *****************************************************************************************************
+function dial(command, parameter, msgid, callback) {
+
+  let id = msgid;
+  let tmppath = adapter.config.path || '/tmp/';
+  let converter = new transcode();
+
+  adapter.log.debug('Message: ' + JSON.stringify(parameter));
+
+  if (tmppath.slice(-1) != '/' && tmppath.slice(-1) != '\\') {
+    tmppath = tmppath + '/';
+  }
+
+  if (parameter) {
+    if (command == 'dial') {
+      adapter.log.debug('Dial Command');
+
+      if (!parameter.extension) parameter.extension = adapter.config.sipuser;
+      if (parameter.telnr) { adapter.setState('dialout.telnr', parameter.telnr, true); }
+      if (parameter.text) { adapter.setState('dialout.text', parameter.text, true); }
+
+      if (parameter.text && parameter.telnr) {
+        xif (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
+        if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
+          parameter.audiofile = converter.getBasename(parameter.audiofile);
+        }
+        let language = parameter.language || systemLanguage;
+        adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+        adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
+        converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
+          .then((file) => {
+            adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
+            adapter.log.debug('Start dialing');
+            // The file is converted at path "file"
+            asterisk.dial(parameter, (err, res) => {
+              if (err) {
+                adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+              } else {
+                adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+              }
+              adapter.log.debug('Calling callback function: ' + callback);
+              callback && callback(res, err);
+            });
+          })
+          .catch((err) => {
+            // An error occured
+            adapter.log.error('Error while dialing (2). Error: ' + JSON.stringify(err));
+            callback && callback(null, err);
+          });
+      } else if (parameter.audiofile && parameter.telnr) {
+        if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'mp3') {
+          let fileNameMP3 = parameter.audiofile;
+          let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
+          parameter.audiofile = converter.getBasename(parameter.audiofile);
+          adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+          adapter.log.debug('Start converting MP3 audio file ' + fileNameMP3 + ' to GSM audio file ' + fileNameGSM);
+          converter.mp3ToGsm(fileNameMP3, fileNameGSM, false)
+            .then((file) => {
+              adapter.log.debug('Start dialing');
+              // The file is converted at path "file"
+              asterisk.dial(parameter, (err, res) => {
+                if (err) {
+                  adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                } else {
+                  adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                }
+                adapter.log.debug('Calling callback function: ' + callback);
+                callback && callback(res, err);
+              });
+            })
+            .catch((err) => {
+              // An error occured
+              adapter.log.error('Error while dialing (2). Error: ' + JSON.stringify(err));
+              callback && callback(null, err);
+            });
+        } else if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
+          // play audio file if exist
+          let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
+          parameter.audiofile = converter.getBasename(parameter.audiofile);
+          adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+          adapter.log.debug('Got GSM audio file ' + fileNameGSM);
+          adapter.log.debug('Start dialing');
+          asterisk.dial(parameter, (err, res) => {
+            if (err) {
+              adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+            } else {
+              adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+            }
+            adapter.log.debug('Calling callback function: ' + callback);
+            callback && callback(res, err);
+          });
+        } else {
+          adapter.log.error('MP3 or GSM audio file is missing');
+          callback && callback(null, 'MP3 or GSM audio file is missing');
+        }
+      } else {
+        adapter.log.error('Paramter telnr and/or text/audiofile is missing');
+        callback && callback(null, 'Paramter telnr and/or text/audiofile is missing');
+      }
+    }
+
+    if (command == 'action') {
+      adapter.log.debug('Action Command');
+      if (parameter.text) {
+        if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
+        let language = parameter.language || systemLanguage;
+        if (!parameter.extension) parameter.extension = adapter.config.sipuser;
+        adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+        adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
+        converter.textToGsm(parameter.text, language, 100, parameter.audiofile + ".gsm")
+          .then((file) => {
+            // The file is converted at path "file"
+            adapter.log.debug('Start Action');
+            asterisk.action(parameter, (err, res) => {
+              if (err) {
+                adapter.log.error('Error while Action (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+              } else {
+                adapter.log.debug('Action completed. Result: ' + JSON.stringify(res));
+              }
+              adapter.log.debug('Calling callback function: ' + callback);
+              callback && callback(res, err);
+            });
+          })
+          .catch((err) => {
+            // An error occured
+            adapter.log.error('Error while dialing (2). Error: ' + JSON.stringify(err));
+            callback && callback(null, err);
+          });
+      } else {
+        adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
+        adapter.log.debug('Start Action');
+        asterisk.action(parameter, (err, res) => {
+          if (err) {
+            adapter.log.error('Error while Action (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+          } else {
+            adapter.log.debug('Action completed. Result: ' + JSON.stringify(res));
+          }
+          adapter.log.debug('Calling callback function: ' + callback);
+          callback && callback(res, err);
+        });
+      }
+    }
+
+  } else {
+    adapter.log.error('Paramter missing');
+    callback && callback(null, 'Paramter missing');
+  }
+
+}
 
 // *****************************************************************************************************
 // Listen for sendTo messages
@@ -74,150 +243,30 @@ adapter.on('message', (msg) => {
       let parameter = msg.message;
       let callback = msg.callback;
       let id = msg._id;
-      let tmppath = adapter.config.path || '/tmp/';
-      let converter = new transcode();
-
-      adapter.log.debug('Message: ' + JSON.stringify(msg));
-
-      if (tmppath.slice(-1) != '/' && tmppath.slice(-1) != '\\') {
-        tmppath = tmppath + '/';
-      }
-
-      if (parameter) {
-        if (command == 'dial') {
-          adapter.log.debug('Dial Command');
-          if (parameter.text && parameter.telnr) {
-            if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
-            if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
-              parameter.audiofile = converter.getBasename(parameter.audiofile);
-            }
-            let language = parameter.language || systemLanguage;
-            adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
-            adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
-            converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
-              .then((file) => {
-                adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
-                adapter.log.debug('Start dialing');
-                // The file is converted at path "file"
-                asterisk.dial(parameter, (err, res) => {
-                  if (err) {
-                    adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                  } else {
-                    adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                  }
-                  adapter.log.debug('Calling callback function: ' + callback);
-                  adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
-                });
-              })
-              .catch((err) => {
-                // An error occured
-                adapter.log.error('Error while dialing (2). Error: ' + JSON.stringify(err));
-                adapter.sendTo(msg.from, msg.command, { result: null, error: err }, msg.callback);
-              });
-          } else if (parameter.audiofile && parameter.telnr) {
-            if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'mp3') {
-              let fileNameMP3 = parameter.audiofile;
-              let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
-              parameter.audiofile = converter.getBasename(parameter.audiofile);
-              adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
-              adapter.log.debug('Start converting MP3 audio file ' + fileNameMP3 + ' to GSM audio file ' + fileNameGSM);
-              converter.mp3ToGsm(fileNameMP3, fileNameGSM, false)
-                .then((file) => {
-                  adapter.log.debug('Start dialing');
-                  // The file is converted at path "file"
-                  asterisk.dial(parameter, (err, res) => {
-                    if (err) {
-                      adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                    } else {
-                      adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                    }
-                    adapter.log.debug('Calling callback function: ' + callback);
-                    adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
-                  });
-                })
-                .catch((err) => {
-                  // An error occured
-                  adapter.log.error('Error while dialing (2). Error: ' + JSON.stringify(err));
-                  adapter.sendTo(msg.from, msg.command, { result: null, error: err }, msg.callback);
-                });
-            } else if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
-              // play audio file if exist
-              let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
-              parameter.audiofile = converter.getBasename(parameter.audiofile);
-              adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
-              adapter.log.debug('Got GSM audio file ' + fileNameGSM);
-              adapter.log.debug('Start dialing');
-              asterisk.dial(parameter, (err, res) => {
-                if (err) {
-                  adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                } else {
-                  adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                }
-                adapter.log.debug('Calling callback function: ' + callback);
-                adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
-              });
-            } else {
-              adapter.log.error('MP3 or GSM audio file is missing');
-              adapter.sendTo(msg.from, msg.command, { result: null, error: 'MP3 or GSM audio file is missing' }, msg.callback);
-            }
-          } else {
-            adapter.log.error('Paramter telnr and/or text/audiofile is missing');
-            adapter.sendTo(msg.from, msg.command, { result: null, error: 'Paramter telnr and/or text/audiofile is missing' }, msg.callback);
-          }
-        }
-
-        if (command == 'action') {
-          adapter.log.debug('Action Command');
-          if (parameter.text) {
-            if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
-            let language = parameter.language || systemLanguage;
-            adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
-            adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
-            converter.textToGsm(parameter.text, language, 100, parameter.audiofile + ".gsm")
-              .then((file) => {
-                // The file is converted at path "file"
-                adapter.log.debug('Start Action');
-                asterisk.action(parameter, (err, res) => {
-                  if (err) {
-                    adapter.log.error('Error while Action (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                  } else {
-                    adapter.log.debug('Action completed. Result: ' + JSON.stringify(res));
-                  }
-                  adapter.log.debug('Calling callback function: ' + callback);
-                  adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
-                });
-              })
-              .catch((err) => {
-                // An error occured
-                adapter.log.error('Error while dialing (2). Error: ' + JSON.stringify(err));
-                adapter.sendTo(msg.from, msg.command, { result: null, error: err }, msg.callback);
-              });
-          } else {
-            adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
-            adapter.log.debug('Start Action');
-            asterisk.action(parameter, (err, res) => {
-              if (err) {
-                adapter.log.error('Error while Action (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-              } else {
-                adapter.log.debug('Action completed. Result: ' + JSON.stringify(res));
-              }
-              adapter.log.debug('Calling callback function: ' + callback);
-              adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
-            });
-          }
-        }
-
-      } else {
-        adapter.log.error('Paramter missing');
-        adapter.sendTo(msg.from, msg.command, { result: null, error: 'Paramter missing' }, msg.callback);
-      }
-
+      dial(command, parameter, id, (res, err) => {
+        adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
+      });
     } else {
       adapter.log.error('Could not connect to Asterisk');
     }
   });
 });
 
+
+function initSates() {
+
+  adapter.getState('dialin.text', (err, state) => {
+    if(!err && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
+  });
+  adapter.setState('dialin.dtmf', '', true);
+
+  adapter.getState('dialout.text', (err, state) => {
+    if(!err && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
+  });
+  adapter.setState('dialout.telnr', '', true);
+  adapter.setState('dialout.dtmf', '', true);
+
+}
 
 // *****************************************************************************************************
 // is called when databases are connected and adapter received configuration.
@@ -235,6 +284,7 @@ adapter.on('ready', () => {
         adapter.config.password = decrypt('Zgfr56gFe87jJOM', adapter.config.password);
       }
     }
+    initSates();
     main();
   });
 });
@@ -305,25 +355,47 @@ function convertDialInFile(parameter, callback) {
 
 function answerCall(parameter, callback) {
 
-  let stateId = 'dialin.dtmf';
   let converter = new transcode();
   let language = parameter.language || systemLanguage;
+  let vars = {};
+
+  let uniqueid;
+
   parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
   parameter.text = parameter.text || 'Please enter after the beep tone your passwort and press hashtag.';
 
   convertDialInFile(parameter, () => {
     asterisk.asteriskEvent('managerevent', (evt) => {
-      if (evt.context == "ael-antwort" && evt.exten == "10") {
-        if (evt.event == "VarSet" && evt.variable && evt.value && evt.variable.hasOwnProperty("dtmf")) {
-          adapter.log.info("DTMF: " + evt.value);
-          adapter.setState(stateId, '', (err) => {
-            if (!err) adapter.setState(stateId, evt.value, true);
-          });
-          callback && callback(evt);
+      if (evt.event == "VarSet" && evt.variable) {
+        for (let i in evt.variable) {
+          if (!vars[i] || vars[i].uniqueid != evt.uniqueid || vars[i].value != evt.value) {
+            vars[i] = {
+              'uniqueid': evt.uniqueid,
+              'value': evt.value
+            };
+            adapter.log.debug("Variable: " + i + " = " + evt.value);
+
+            if (evt.context == "ael-antwort" && i == 'dtmf') {
+              let stateId = 'dialin.dtmf';
+              adapter.setState(stateId, '', (err) => {
+                if (!err) adapter.setState(stateId, evt.value, true);
+              });
+            }
+
+            if (evt.context == "ael-ansage" && i == 'dtmf') {
+              let stateId = 'dialout.dtmf';
+              adapter.setState(stateId, '', (err) => {
+                if (!err) adapter.setState(stateId, evt.value, true);
+              });
+            }
+
+          }
         }
+        callback && callback(evt);
       }
     });
   });
+
 }
 
 // *****************************************************************************************************

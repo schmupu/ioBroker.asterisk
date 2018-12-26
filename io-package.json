@@ -72,6 +72,7 @@
     "ip": "192.168.1.1",
     "user": "manager",
     "password": "manager",
+    "sipuser": "123456789",
     "path": "/tmp/"
   },
   "objects": [],
@@ -107,6 +108,65 @@
         "def": "",
         "read": true,
         "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialout",
+      "type": "channel",
+      "common": {
+        "name": "Dial Out"
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialout.text",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "Text",
+        "type": "string",
+        "read": true,
+        "write": true,
+        "def": "ioBroker is calling you. Please call me back"
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialout.dtmf",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "DTMF Code",
+        "type": "string",
+        "def": "",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialout.telnr",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "Telephonenumber",
+        "type": "string",
+        "def": "",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialout.call",
+      "type": "state",
+      "common": {
+        "role": "button",
+        "name": "Start Call",
+        "type": "boolean",
+        "read": false,
+        "write": true
       },
       "native": {}
     }

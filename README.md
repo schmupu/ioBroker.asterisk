@@ -68,7 +68,7 @@ subscribecontext = default		; Do not change
 
 register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
 
-[123456789]               		; Do not change
+[123456789]               		; Change to username of Fritzbox WLAN/LAN telephone
 type = friend			  	; Do not change
 username = 123456789      		; Change to username of Fritzbox WLAN/LAN telephone
 host = 192.168.1.1        		; Change hostname / IP address of Fritzbox
@@ -91,29 +91,26 @@ context default {
 
 context ael-ansage {
 	10 => {
-		Answer();
-		Wait(1);
-		for (x=0; ${x} < ${repeat}; x=${x} + 1) {
-			Playback(${file});
-			Playback(beep);
-			Wait(1);
+        Answer();
+        Wait(1);
+		Read(dtmf,${file}&beep,0,s,${repeat},1);
+		if ("${dtmf}"  != "") {
+			SayDigits(${dtmf});
 		}
 		Hangup();
-	}
+        }
 }
 
 context ael-antwort {
 	10  => {
 		Answer();
 		Wait(1);
-		Playback(/tmp/asterisk_dtmf);
-		Playback(beep);
-		Read(dtmf,,,4,3);
+		Set(repeat=3);
+		Read(dtmf,/tmp/asterisk_dtmf&beep,0,s,${repeat});
 		if ("${dtmf}"  != "") {
 			SayDigits(${dtmf});
 		}
-    	Wait(10);
-    	Hangup();
+    		Hangup();
 	}
 }
 ```
@@ -121,7 +118,7 @@ Copy the content above into the */etc/asterisk/extensions.ael* and do not change
 
 
 For starting the asterisk server type */etc/init.d/asterisk start*
-Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf*. You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
+Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf* and the unsername of your sip.conf (for example 123456789). You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
 
 ![Iobroker1](admin/iobroker1.png)
 
@@ -162,6 +159,10 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 
 ## Changelog
 
+### 0.1.7 (26.12.2018)
+* (Stübi) A lot of new features. Now you can call ioBroker / Asterisk by telephonenumber and enter a DTMF Code. 
+* (Stübi) You can enter a DTMF Code if you get called by ioBroker / Asterisk 
+
 ### 0.1.6 (23.11.2018)
 * (Stübi) Bugfixing and password will be saved encrypted and text message size can be unlimited 
 
@@ -180,6 +181,8 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 ### 0.1.1 (11.11.2018)
 * (Stübi) First Version
 
+## Planed in the future
+* Change the logic from Asterisk AMI to Asterisk AGI
 
 ## License
 The MIT License (MIT)
