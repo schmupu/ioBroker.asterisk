@@ -125,7 +125,7 @@ Now you can use the adapter in your javascript or blocky programms.
 
 ```sh
 var number   = "040 666-7766";
-var callerid = '040 123 999'; // optional
+var callerid = '040 123 999'; // optional, if not set anonymous call
 var msg      = "Hello, this textmessage will be converted to audio"; 
 
 // call telephone nummber 040 666-7766 and play text message as audio
