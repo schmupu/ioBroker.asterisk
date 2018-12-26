@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "news": {
+      "0.1.8": {
+        "en": "DTMF Code will be recognized",
+        "de": "Auswertung von DTMF Code"
+      },
       "0.1.7": {
         "en": "Bugfixing and DTMF Code will be recognized",
         "de": "Fehlerbehebung und Auswertung von DTMF Code"
@@ -104,6 +108,19 @@
       "common": {
         "role": "state",
         "name": "DTMF Code",
+        "type": "string",
+        "def": "",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "dialin.callerid",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "Callerid",
         "type": "string",
         "def": "",
         "read": true,

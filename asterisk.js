@@ -259,6 +259,7 @@ function initSates() {
     if (!err && state && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
   });
   adapter.setState('dialin.dtmf', '', true);
+  adapter.setState('dialin.callerid', '', true);
 
   adapter.getState('dialout.text', (err, state) => {
     if (!err && state && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
@@ -386,6 +387,9 @@ function answerCall(callback) {
                   if (!err) adapter.setState(stateId, evt.value, true);
                 });
                 */
+                stateId = 'dialin.callerid';
+                adapter.setState(stateId, evt.calleridnum, true);
+
               }
 
               if (evt.context == "ael-ansage" && i == 'dtmf') {

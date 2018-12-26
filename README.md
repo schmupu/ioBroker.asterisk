@@ -75,7 +75,6 @@ host = 192.168.1.1        		; Change hostname / IP address of Fritzbox
 secret = mypassword       		; Change password of Fritzbox WLAN/LAN telephone
 fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
 fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
-callerid= 03047114711	  		; Change your telephone number defined in the Fritzbox
 ```
 You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. Important, the Fribox ustername 
 Change the *callerid* with your phone number configured in the Fritzbox. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
@@ -171,6 +170,9 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 > - **callerid:** Defines the identifier (your sender telephone number)	. If callerid is missing the transferred telephone number will be anonymous
 
 ## Changelog
+
+### 0.1.8 (26.12.2018)
+* (Stübi) Add Callerid to dialin states 
 
 ### 0.1.7 (26.12.2018)
 * (Stübi) A lot of new features. Now you can call ioBroker / Asterisk by telephonenumber and enter a DTMF Code. 
