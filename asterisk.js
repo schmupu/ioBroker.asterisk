@@ -380,16 +380,22 @@ function answerCall(callback) {
 
               if (evt.context == "ael-antwort" && i == 'dtmf') {
                 let stateId = 'dialin.dtmf';
+                adapter.setState(stateId, evt.value, true);
+                /*
                 adapter.setState(stateId, '', (err) => {
                   if (!err) adapter.setState(stateId, evt.value, true);
                 });
+                */
               }
 
               if (evt.context == "ael-ansage" && i == 'dtmf') {
                 let stateId = 'dialout.dtmf';
+                adapter.setState(stateId, evt.value, true);
+                /*
                 adapter.setState(stateId, '', (err) => {
                   if (!err) adapter.setState(stateId, evt.value, true);
                 });
+                */
               }
 
             }
