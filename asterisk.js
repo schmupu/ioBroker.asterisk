@@ -256,12 +256,12 @@ adapter.on('message', (msg) => {
 function initSates() {
 
   adapter.getState('dialin.text', (err, state) => {
-    if(!err && state && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
+    if (!err && state && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
   });
   adapter.setState('dialin.dtmf', '', true);
 
   adapter.getState('dialout.text', (err, state) => {
-    if(!err && state && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
+    if (!err && state && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
   });
   adapter.setState('dialout.telnr', '', true);
   adapter.setState('dialout.dtmf', '', true);
@@ -353,46 +353,47 @@ function convertDialInFile(parameter, callback) {
 
 }
 
-function answerCall(parameter, callback) {
+function answerCall(callback) {
 
-  let converter = new transcode();
-  let language = parameter.language || systemLanguage;
+  let parameter = {};
   let vars = {};
 
-  let uniqueid;
+  adapter.getState('dialin.text', (err, state) => {
 
-  parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
-  parameter.text = parameter.text || 'Please enter after the beep tone your passwort and press hashtag.';
+    parameter.language = systemLanguage;
+    parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
+    parameter.text = !err && state && state.val ? state.val : 'Please enter after the beep tone your passwort and press hashtag!';
 
-  convertDialInFile(parameter, () => {
-    asterisk.asteriskEvent('managerevent', (evt) => {
-      if (evt.event == "VarSet" && evt.variable) {
-        for (let i in evt.variable) {
-          if (!vars[i] || vars[i].uniqueid != evt.uniqueid || vars[i].value != evt.value) {
-            vars[i] = {
-              'uniqueid': evt.uniqueid,
-              'value': evt.value
-            };
-            adapter.log.debug("Variable: " + i + " = " + evt.value);
+    convertDialInFile(parameter, () => {
+      asterisk.asteriskEvent('managerevent', (evt) => {
+        if (evt.event == "VarSet" && evt.variable) {
+          for (let i in evt.variable) {
+            if (!vars[i] || vars[i].uniqueid != evt.uniqueid || vars[i].value != evt.value) {
+              vars[i] = {
+                'uniqueid': evt.uniqueid,
+                'value': evt.value
+              };
+              adapter.log.debug("Variable: " + i + " = " + evt.value);
 
-            if (evt.context == "ael-antwort" && i == 'dtmf') {
-              let stateId = 'dialin.dtmf';
-              adapter.setState(stateId, '', (err) => {
-                if (!err) adapter.setState(stateId, evt.value, true);
-              });
+              if (evt.context == "ael-antwort" && i == 'dtmf') {
+                let stateId = 'dialin.dtmf';
+                adapter.setState(stateId, '', (err) => {
+                  if (!err) adapter.setState(stateId, evt.value, true);
+                });
+              }
+
+              if (evt.context == "ael-ansage" && i == 'dtmf') {
+                let stateId = 'dialout.dtmf';
+                adapter.setState(stateId, '', (err) => {
+                  if (!err) adapter.setState(stateId, evt.value, true);
+                });
+              }
+
             }
-
-            if (evt.context == "ael-ansage" && i == 'dtmf') {
-              let stateId = 'dialout.dtmf';
-              adapter.setState(stateId, '', (err) => {
-                if (!err) adapter.setState(stateId, evt.value, true);
-              });
-            }
-
           }
+          callback && callback(evt);
         }
-        callback && callback(evt);
-      }
+      });
     });
   });
 
