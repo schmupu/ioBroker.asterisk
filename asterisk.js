@@ -256,12 +256,12 @@ adapter.on('message', (msg) => {
 function initSates() {
 
   adapter.getState('dialin.text', (err, state) => {
-    if(!err && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
+    if(!err && state && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
   });
   adapter.setState('dialin.dtmf', '', true);
 
   adapter.getState('dialout.text', (err, state) => {
-    if(!err && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
+    if(!err && state && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
   });
   adapter.setState('dialout.telnr', '', true);
   adapter.setState('dialout.dtmf', '', true);
