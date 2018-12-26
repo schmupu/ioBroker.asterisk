@@ -103,7 +103,7 @@ function dial(command, parameter, msgid, callback) {
       if (parameter.text) { adapter.setState('dialout.text', parameter.text, true); }
 
       if (parameter.text && parameter.telnr) {
-        xif (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
+        if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
         if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
           parameter.audiofile = converter.getBasename(parameter.audiofile);
         }
