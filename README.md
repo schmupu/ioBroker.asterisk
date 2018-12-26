@@ -145,6 +145,19 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/t
 sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.gsm'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
 });  
+
+// Show entered DTMF code
+on({ id: "asterisk.0.dialin.dtmf"/*DTMF Code*/ },  (obj) => {
+    let dtmf = obj.state.val;
+    console.log("DTMF: " + dtmf);
+});
+
+// Show entered DTMF code
+on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
+    let dtmf = obj.state.val;
+    console.log("DTMF: " + dtmf);
+});
+
 ```
 
 > You can use following parameter in the sendTo dial statement:
