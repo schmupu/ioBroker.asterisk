@@ -168,6 +168,19 @@
       "native": {}
     },
     {
+      "_id": "dialout.callerid",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "Callerid",
+        "type": "string",
+        "def": "",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
       "_id": "dialout.telnr",
       "type": "state",
       "common": {
