@@ -1,25 +1,23 @@
 <html>
 
 <head>
-  <!-- these 4 files always have to be included -->
-  <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+  <meta charset="UTF-8">
+  <!-- Materialze style -->
   <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+  <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
   <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-  <!-- these files always have to be included -->
+
   <script type="text/javascript" src="../../js/translate.js"></script>
   <script type="text/javascript" src="../../lib/js/materialize.js"></script>
   <script type="text/javascript" src="../../js/adapter-settings.js"></script>
   <script type="text/javascript" src="words.js"></script>
 
-
+  <!-- you have to define 2 functions in the global scope: -->
   <script type="text/javascript">
-    var devices = [];
-    var active = false;
-    var g_onChange;
-    var SEP = '_';
-
-    if (typeof _ !== 'function') _ = translateWord;
+    var convertComma = null;
+    var secret = null;
 
     function encrypt(key, value) {
       var result = '';
@@ -36,198 +34,111 @@
         result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
       }
       return result;
-
     }
 
-    function loadHelper(settings, onChange) {
+    function setValue(id, value, onChange) {
 
-      if (!settings) return;
-      if (settings.password === undefined) settings.password = '';
-      if (settings.user === undefined) settings.user = '';
+      var $value = $('#' + id + '.value');
+      if (value && $value.attr('data-crypt') == "1") {
+        value = decrypt(secret, value);
+      }
 
-      g_onChange = onChange;
+      if ($value.attr('type') === 'checkbox') {
+        $value.prop('checked', value).change(function () {
+          onChange();
+        });
+      } else {
+        $value.val(value).on('change', function () {
+          onChange();
+        }).keyup(function () {
+          // Check that only numbers entered
+          if ($(this).hasClass('number')) {
+            var val = $(this).val();
+            if (val) {
+              var newVal = '';
+              for (var i = 0; i < val.length; i++) {
+                if ((val[i] >= '0' && val[i] <= '9') || val[i] === '-' || val[i] === '+' || val[i] === '.' || val[i] === ',') {
+                  if (val[i] === '.' && convertComma === true) val[i] = ',';
+                  if (val[i] === ',' && convertComma === false) val[i] = '.';
+                  newVal += val[i];
+                }
+              }
 
-      getIPs(function (ips) {
-        for (var i = 0; i < ips.length; i++) {
-          $('#bind').append('<option value="' + ips[i].address + '">' + ips[i].name + '</option>');
-        }
-        $('#bind.value').val(settings.bind).select();
-      });
-
-
-      $('#values').on('click', function () {
-        //checkDevices();
-      });
-
-      function checkDevices() {
-        console.log("Ceck devices");
-        var oldDev = table2values('values');
-        var newDev = [];
-        var tmpIp = [];
-        for (var i = 0; i < oldDev.length; i++) {
-          console.log(JSON.stringify(tmpIp));
-          if (!tmpIp.includes(oldDev[i].ip)) {
-            tmpIp.push(oldDev[i].ip);
-            newDev.push(oldDev[i]);
-            if (i === oldDev.length - 1) {
-              console.log("safe");
-              values2table('values', newDev, true);
+              if (val != newVal) {
+                $(this).val(newVal);
+              }
             }
           }
-        }
-      };
-      //checkDevices();
-
-      socket.emit('getState', 'system.adapter.' + adapter + '.' + instance + '.alive', function (err, state) {
-        active = /*common.enabled ||*/ (state && state.val);
-      });
-
-      changed = true;
-      g_onChange = onChange;
-
-      function getVal(id) {
-        var ar = id.split(SEP);
-        var obj = settings;
-        for (var i = 0; i < ar.length - 1; i++) {
-          if (obj[ar[i]] === undefined) obj[ar[i]] = {};
-          obj = obj[ar[i]];
-        }
-        return obj[ar[ar.length - 1]];
+          $(this).trigger('change');
+        });
       }
-
-      function forAllKeys(obj, s, cb) {
-        var sep = SEP; //'.';
-        if (typeof s === 'function') {
-          cb = s;
-          s = '';
-        }
-        for (var i in obj) {
-          if (typeof obj[i] === 'object') {
-            if (Array.isArray(obj[i])) continue;
-            forAllKeys(obj[i], s ? s + sep + i : i, cb)
-          } else {
-            cb && cb(s ? s + sep + i : i);
-          }
-        }
-      }
-
-
-      //for (var key in settings) {
-      forAllKeys(settings, function (key) {
-        // example: select elements with id=key and class=value and insert value
-        var val = getVal(key);
-
-        if (val && $('#' + key + '.value').attr('data-crypt') == "1") {
-          val = decrypt(secret, val);
-        }
-        //var val = $key.data('crypt') && settings[key] ? decrypt(secret, settings[key]) : settings[key];
-        // var val = $key.data('crypt') && getVal(key) ? decrypt(secret, getVal(key)) : getVal(key);
-        if ($('#' + key + '.value').attr('type') == 'checkbox') {
-          $('#' + key + '.value').prop('checked', val).change(function () {
-            if ($('#auth').prop('checked')) {
-              $('#secure').prop('checked', true);
-            }
-            onChange();
-            //showHideSettings();
-          });
-        } else {
-          $('#' + key + '.value').val(val).change(function () {
-            onChange();
-          }).keyup(function () {
-            onChange();
-          });
-        }
-      });
-      // Set default language
-      if (!settings.language) {
-        settings.language = systemLang || 'en';
-        $('#language').val(settings.language).trigger('change');
-      }
-      devices = settings.keys; // || [ {name: '', ip: "", mac: ""} ];
-      values2table('values', devices, onChange);
-      //changed = true;
-      // $('#password_confirm').val($('#password').val());
-      onChange(false);
     }
 
     function load(settings, onChange) {
 
-      socket.emit('getObject', 'system.config', function (err, obj) {
-        secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
-        loadHelper(settings, onChange);
-      });
+      // works only with newest admin adapter
+      if (typeof systemConfig !== 'undefined') {
+        convertComma = systemConfig.common.isFloatComma;
+      }
+
+      if (settings.saveLastValue === undefined) {
+        settings.saveLastValue = false;
+      }
+      if (settings.writeNulls === undefined) settings.writeNulls = true;
+
+      secret = (systemConfig.native ? systemConfig.native.secret : '') || 'Zgfr56gFe87jJOM';
+
+      for (var key in settings) {
+        if (settings.hasOwnProperty(key)) {
+          setValue(key, settings[key], onChange);
+        }
+      }
+
 
       onChange(false);
-    }
-
-    function setVal(obj, id, val) {
-      var ar = id.split(SEP);
-      for (var i = 0; i < ar.length - 1; i++) {
-        if (obj[ar[i]] === undefined) obj[ar[i]] = {};
-        obj = obj[ar[i]];
-      }
-      obj[ar[ar.length - 1]] = val;
+      if (M) M.updateTextFields();
     }
 
     function save(callback) {
-      var obj = {};
-      changed = true;
+      var settings = {};
       $('.value').each(function () {
-        var $this = $(this),
-          val;
-        switch ($this.attr('type')) {
-          case 'checkbox':
-            val = $this.prop('checked');
-            break;
-          case 'number':
-          case 'value':
-            val = ~~$this.val();
-            break;
-          default:
-            val = $this.data('crypt') && $this.val() ? encrypt(secret, $this.val()) : $this.val();
+        var $this = $(this);
+        var id = $this.attr('id');
+
+        if ($this.attr('type') === 'checkbox') {
+          settings[id] = $this.prop('checked');
+        } else {
+          settings[id] = $this.data('crypt') && $this.val() ? encrypt(secret, $this.val()) : $this.val();
         }
-        setVal(obj, $this.attr('id'), val);
       });
-      obj.keys = table2values('values');
 
       /*
-       if ($('#password').val() !== $('#password_confirm').val()) {
-         showMessage(_('Password confirmation is not equal with password'));
-         return;
-       }
-       */
+      if ($('#password').val() !== $('#password_confirm').val()) {
+        showMessage(_('Password confirmation is not equal with password'));
+        return;
+      }
+      */
 
-      callback(obj);
+
+      callback(settings);
     }
-
-
   </script>
   <style>
-    .loader {
-      border: 4px solid #b8d1f3;
-      /* Light grey */
-      border-top: 4px solid #3498db;
-      /* Blue */
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      animation: spin 2s linear infinite;
+    .adapter-container>div {
+      margin-bottom: 0 !important;
     }
 
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    .page {
+      height: calc(100% - 50px) !important;
+    }
+
+    .marg {
+      margin-top: 5em;
     }
   </style>
 </head>
 
-
 <body>
-  <!-- you have to put your config page in a div with id adapter-container -->
   <div class="m adapter-container">
     <div class="row">
 
@@ -242,6 +153,23 @@
         <div class="row">
           <div class="input-field col s6">
             <img src="asterisk.png" class="logo">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s8 m8 l3">
+            <select id="language" class="value">
+              <option value="EN">english</option>
+              <option value="DE">deutsch</option>
+              <option value="RU">русский</option>
+              <option value="PT">português</option>
+              <option value="NL">Nederlands</option>
+              <option value="FR">français</option>
+              <option value="IT">italiano</option>
+              <option value="ES">español</option>
+              <option value="PL">polski</option>
+            </select>
+            <label class="translate" for="language">Audio language</label>
           </div>
         </div>
 
@@ -274,7 +202,7 @@
         <div class="row">
           <div class="col s12 m8 l3">
             <input class="value" id="sipuser" type="text" />
-            <label class="translate" for="sipuser">Username (Asterisk in sip.conf)</label>
+            <label class="translate" for="sipuser">Username in sip.conf</label>
           </div>
         </div>
 
@@ -299,7 +227,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </body>
 

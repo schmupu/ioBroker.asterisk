@@ -107,7 +107,7 @@ function dial(command, parameter, msgid, callback) {
         if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
           parameter.audiofile = converter.getBasename(parameter.audiofile);
         }
-        let language = parameter.language || systemLanguage;
+        let language = parameter.language || adapter.config.language || systemLanguage;
         adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
         adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
         converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
@@ -186,7 +186,7 @@ function dial(command, parameter, msgid, callback) {
       adapter.log.debug('Action Command');
       if (parameter.text) {
         if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
-        let language = parameter.language || systemLanguage;
+        let language = parameter.language || adapter.config.language || systemLanguage;
         if (!parameter.extension) parameter.extension = adapter.config.sipuser;
         adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
         adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
@@ -253,7 +253,7 @@ adapter.on('message', (msg) => {
 });
 
 
-function initSates() {
+function initStates() {
 
   adapter.getState('dialin.text', (err, state) => {
     if (!err && state && !state.val) adapter.setState('dialin.text', 'Please enter after the beep tone your passwort and press hashtag.', true);
@@ -285,7 +285,7 @@ adapter.on('ready', () => {
         adapter.config.password = decrypt('Zgfr56gFe87jJOM', adapter.config.password);
       }
     }
-    initSates();
+    initStates();
     main();
   });
 });
@@ -337,7 +337,7 @@ function asteriskDisconnect(callback) {
 function convertDialInFile(parameter, callback) {
 
   let converter = new transcode();
-  let language = parameter.language || systemLanguage;
+  let language = parameter.language || adapter.config.language || systemLanguage;
   parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
   parameter.text = parameter.text || 'Please enter after the beep tone your passwort and press hashtag.';
 
@@ -361,7 +361,7 @@ function answerCall(callback) {
 
   adapter.getState('dialin.text', (err, state) => {
 
-    parameter.language = systemLanguage;
+    parameter.language = adapter.config.language || systemLanguage;
     parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
     parameter.text = !err && state && state.val ? state.val : 'Please enter after the beep tone your passwort and press hashtag!';
 

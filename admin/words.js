@@ -78,5 +78,38 @@ systemDictionary = {
     "it": "Percorso per file audio temporanei. Deve essere accessibile e autorizzato per Asterisk e ioBroker",
     "es": "Ruta para archivos de audio temporales. Debe ser accesible y autorizado para Asterisk y ioBroker.",
     "pl": "Ścieżka do tymczasowych plików audio. Musi być dostępny i autoryzowany dla Asterisk i ioBroker"
+  },
+  "Language": {
+    "en": "Language",
+    "de": "Sprache",
+    "ru": "язык",
+    "pt": "Língua",
+    "nl": "Taal",
+    "fr": "La langue",
+    "it": "linguaggio",
+    "es": "Idioma",
+    "pl": "Język"
+  },
+  "Audio language": {
+    "en": "Audio language",
+    "de": "Audiosprache",
+    "ru": "Аудио язык",
+    "pt": "Idioma de áudio",
+    "nl": "Audiotaal",
+    "fr": "Langue audio",
+    "it": "Linguaggio audio",
+    "es": "Idioma de audio",
+    "pl": "Język audio"
+  },
+  "Username in sip.conf": {
+    "en": "Username in sip.conf",
+    "de": "Benutzername in der sip.conf",
+    "ru": "Имя пользователя в sip.conf",
+    "pt": "Nome de usuário no sip.conf",
+    "nl": "Gebruikersnaam in sip.conf",
+    "fr": "Nom d'utilisateur dans sip.conf",
+    "it": "Nome utente in sip.conf",
+    "es": "Nombre de usuario en sip.conf",
+    "pl": "Nazwa użytkownika w pliku sip.conf"
   }
 };

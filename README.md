@@ -171,6 +171,9 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 
 ## Changelog
 
+### 0.1.9 (27.12.2018)
+* (Stübi) Update with languages 
+
 ### 0.1.8 (26.12.2018)
 * (Stübi) Add Callerid to dialin states 
 

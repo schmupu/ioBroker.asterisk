@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "news": {
+      "0.1.9": {
+        "en": "Language Update",
+        "de": "Sprache angepaßt"
+      },
       "0.1.8": {
         "en": "DTMF Code will be recognized",
         "de": "Auswertung von DTMF Code"
@@ -77,7 +81,8 @@
     "user": "manager",
     "password": "manager",
     "sipuser": "123456789",
-    "path": "/tmp/"
+    "path": "/tmp/",
+    "language": "EN"
   },
   "objects": [],
   "instanceObjects": [
