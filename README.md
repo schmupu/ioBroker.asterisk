@@ -104,8 +104,8 @@ context ael-antwort {
 	10  => {
 		Answer();
 		Wait(1);
-		Set(repeat=3);
-		Read(dtmf,/tmp/asterisk_dtmf&beep,0,s,${repeat});
+		Set(repeat=5);
+		Read(dtmf,/tmp/asterisk_dtmf&beep,0,s,${repeat},1);
 		if ("${dtmf}"  != "") {
 			SayDigits(${dtmf});
 		}
