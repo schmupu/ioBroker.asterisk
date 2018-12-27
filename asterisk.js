@@ -60,14 +60,19 @@ adapter.on('stateChange', function (id, state) {
     }
     if (stateId == 'dialout.call') {
       let parameter = {};
-      adapter.getState('dialout.telnr', (err, state) => {
+      adapter.getState('dialout.callerid', (err, state) => {
         if (!err && state) {
-          parameter.telnr = state.val;
-          adapter.getState('dialout.text', (err, state) => {
+          parameter.callerid = state.val || '';
+          adapter.getState('dialout.telnr', (err, state) => {
             if (!err && state) {
-              parameter.text = state.val;
-              dial('dial', parameter, state.ts, (res, err) => {
-                // check for error
+              parameter.telnr = state.val;
+              adapter.getState('dialout.text', (err, state) => {
+                if (!err && state) {
+                  parameter.text = state.val;
+                  dial('dial', parameter, state.ts, (res, err) => {
+                    // check for error
+                  });
+                }
               });
             }
           });
@@ -101,6 +106,8 @@ function dial(command, parameter, msgid, callback) {
       if (!parameter.extension) parameter.extension = adapter.config.sipuser;
       if (parameter.telnr) { adapter.setState('dialout.telnr', parameter.telnr, true); }
       if (parameter.text) { adapter.setState('dialout.text', parameter.text, true); }
+      if (parameter.callerid) { adapter.setState('dialout.callerid', parameter.callerid, true); }
+      
 
       if (parameter.text && parameter.telnr) {
         if (!parameter.audiofile) parameter.audiofile = tmppath + 'audio_' + id;
@@ -266,6 +273,7 @@ function initStates() {
   });
   adapter.setState('dialout.telnr', '', true);
   adapter.setState('dialout.dtmf', '', true);
+  adapter.setState('dialout.callerid', '', true);
 
 }
 
