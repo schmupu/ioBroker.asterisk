@@ -378,13 +378,12 @@ function answerCall(callback) {
               };
               adapter.log.debug("Variable: " + i + " = " + evt.value);
 
-
               if (evt.context == "ael-antwort" && i == 'dtmf') {
-                let stateId = 'dialin.dtmf';
-                adapter.setState(stateId, evt.value, true);
+                let stateId;
                 stateId = 'dialin.callerid';
                 adapter.setState(stateId, evt.calleridnum, true);
-
+                stateId = 'dialin.dtmf';
+                adapter.setState(stateId, evt.value, true);
               }
 
               if (evt.context == "ael-ansage" && i == 'dtmf') {
