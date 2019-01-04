@@ -381,7 +381,6 @@ function convertDialInFile(parameter, callback) {
       // An error occured
       adapter.log.error('Error while Converting File: ' + JSON.stringify(err));
     });
-
 }
 
 function answerCall(callback) {
@@ -436,7 +435,7 @@ function answerCall(callback) {
 // *****************************************************************************************************
 function main() {
 
-  adapter.log.info("Starting Adapter");
+  adapter.log.info("Starting Adapter with transcoder " + adapter.config.transcoder + " and language " + adapter.config.language);
   asteriskConnect((err) => {
     if (!err) {
       adapter.log.info("Connected to Asterisk Manager");
