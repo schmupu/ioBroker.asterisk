@@ -91,7 +91,7 @@ function dial(command, parameter, msgid, callback) {
 
   let id = msgid;
   let tmppath = adapter.config.path || '/tmp/';
-  let converter = new transcode();
+  let converter = new transcode(adapter.config.transcoder);
 
   adapter.log.debug('Message: ' + JSON.stringify(parameter));
 
