@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "news": {
+      "1.0.1": {
+        "en": "Calling without extension",
+        "de": "Wählen ohne extension"
+      },
       "1.0.0": {
         "en": "Instead using ffmpeg you can use now sox too",
         "de": "Nutzung von sox statt ffmpeg bei Problemen"

@@ -180,6 +180,9 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 
 ## Changelog
 
+### 1.0.1 (04.01.2019)
+* (Stübi) Calling without extension, if you do not use the fritzbox for example (leave sip.conf username in adapter config empty)
+
 ### 1.0.0 (04.01.2019)
 * (Stübi) Instead of ffmpeg you can use now sox too
 
