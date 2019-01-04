@@ -29,6 +29,15 @@ sudo apt-get install ffmpeg
 sudo apt-get install asterisk
 ```
 
+If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
+
+```sh
+sudo apt-get install lame
+sudo apt-get install sox
+sudo apt-get install libsox-fmt-mp3
+sudo apt-get install asterisk
+```
+
 Asterisk has to connect for outgoing calls with your voip provider or with your fritz.box! If you use the fritz
 box! you have to add a new LAN/WLAN telephone device. In my example the frit.box! has the IP address 192.168.1.1 and the user name is *12345689* und the password is *mypassword* . The telphone number for outgoing and incoming calls is *03047114711*.
 
@@ -170,6 +179,9 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 > - **callerid:** Defines the identifier (your sender telephone number)	. If callerid is missing the transferred telephone number will be anonymous
 
 ## Changelog
+
+### 1.0.0 (04.01.2019)
+* (Stübi) Instead of ffmpeg you can use now sox too
 
 ### 0.1.9 (27.12.2018)
 * (Stübi) Update with languages 

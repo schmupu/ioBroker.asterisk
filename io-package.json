@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "0.1.9",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "Instead using ffmpeg you can use now sox too",
+        "de": "Nutzung von sox statt ffmpeg bei Problemen"
+      },
       "0.1.9": {
         "en": "Language Update",
         "de": "Sprache angepaßt"
@@ -82,7 +86,8 @@
     "password": "manager",
     "sipuser": "123456789",
     "path": "/tmp/",
-    "language": "EN"
+    "language": "EN",
+    "transcoder": "ffmpeg"
   },
   "objects": [],
   "instanceObjects": [

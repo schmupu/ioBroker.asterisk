@@ -111,5 +111,16 @@ systemDictionary = {
     "it": "Nome utente in sip.conf",
     "es": "Nombre de usuario en sip.conf",
     "pl": "Nazwa użytkownika w pliku sip.conf"
+  },
+  "Please choose transcoder": {
+    "en": "Please choose transcoder",
+    "de": "Bitte wählen Sie den Transcoder",
+    "ru": "Пожалуйста, выберите транскодер",
+    "pt": "Por favor, escolha o transcodificador",
+    "nl": "Kies alstublieft transcoder",
+    "fr": "S'il vous plaît choisir transcodeur",
+    "it": "Si prega di scegliere il transcoder",
+    "es": "Por favor, elija el transcodificador",
+    "pl": "Wybierz transkoder"
   }
 };

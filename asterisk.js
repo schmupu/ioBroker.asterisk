@@ -344,7 +344,7 @@ function asteriskDisconnect(callback) {
 
 function convertDialInFile(parameter, callback) {
 
-  let converter = new transcode();
+  let converter = new transcode(adapter.config.transcoder);
   let language = parameter.language || adapter.config.language || systemLanguage;
   parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
   parameter.text = parameter.text || 'Please enter after the beep tone your passwort and press hashtag.';
