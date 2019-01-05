@@ -181,7 +181,7 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 ## Changelog
 
 ### 1.0.2 (05.01.2019)
-* (Stübi) Support of compact mode
+* (Stübi) Support js-controller compact mode 
 
 ### 1.0.1 (04.01.2019)
 * (Stübi) Calling without extension, if you do not use the fritzbox for example (leave sip.conf username in adapter config empty)
