@@ -6,14 +6,125 @@
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
-var dp = require(__dirname + '/lib/datapoints');
-var net = require('net');
-var adapter = new utils.Adapter('asterisk');
-var ami = require(__dirname + '/lib/ami');
-var transcode = require(__dirname + '/lib/transcode');
-var asterisk;
-var systemLanguage = 'EN';
+const dp = require(__dirname + '/lib/datapoints');
+const net = require('net');
+const ami = require(__dirname + '/lib/ami');
+const transcode = require(__dirname + '/lib/transcode');
+let asterisk;
+let systemLanguage = 'EN';
+let rules = null;
 
+const adapterName = require('./package.json').name.split('.').pop();
+let adapter;
+
+function startAdapter(options) {
+  options = options || {};
+  options.name = adapterName;
+  adapter = new utils.Adapter(options);
+
+  // *****************************************************************************************************
+  // is called when adapter shuts down - callback has to be called under any circumstances!
+  // *****************************************************************************************************
+  adapter.on('unload', (callback) => {
+
+    try {
+      adapter.log.info('Closing Asterisk Adapter');
+      callback();
+    } catch (e) {
+      adapter.log.error(e);
+      callback();
+    }
+
+  });
+
+  // *****************************************************************************************************
+  // is called when state changed
+  // *****************************************************************************************************
+  adapter.on('stateChange', function (id, state) {
+    // Warning, state can be null if it was deleted
+    if (state && !state.ack) {
+      let stateId = id.replace(adapter.namespace + '.', '');
+      adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
+      if (stateId == 'dialin.text') {
+        let parameter = {
+          'audiofile': '/tmp/asterisk_dtmf',
+          'text': state.val
+        };
+        if (state.val) convertDialInFile(parameter, () => { });
+        adapter.setState(stateId, state.val, true);
+      }
+      if (stateId == 'dialout.call') {
+        let parameter = {};
+        adapter.getState('dialout.callerid', (err, state) => {
+          if (!err && state) {
+            parameter.callerid = state.val || '';
+            adapter.getState('dialout.telnr', (err, state) => {
+              if (!err && state) {
+                parameter.telnr = state.val;
+                adapter.getState('dialout.text', (err, state) => {
+                  if (!err && state) {
+                    parameter.text = state.val;
+                    dial('dial', parameter, state.ts, (res, err) => {
+                      // check for error
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+
+    }
+
+  });
+
+  // *****************************************************************************************************
+  // Listen for sendTo messages
+  // *****************************************************************************************************
+  adapter.on('message', (msg) => {
+
+    asteriskConnect((err) => {
+      if (!err) {
+        adapter.log.debug("Connected to Asterisk");
+        let command = msg.command;
+        let parameter = msg.message;
+        let callback = msg.callback;
+        let id = msg._id;
+        dial(command, parameter, id, (res, err) => {
+          adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
+        });
+      } else {
+        adapter.log.error('Could not connect to Asterisk');
+      }
+    });
+  });
+
+
+  // *****************************************************************************************************
+  // is called when databases are connected and adapter received configuration.
+  // start here!
+  // *****************************************************************************************************
+  adapter.on('ready', () => {
+    adapter.getForeignObject('system.config', (err, obj) => {
+      systemLanguage = (obj.common.language).toUpperCase();
+      if (adapter.config.password) {
+        if (obj && obj.native && obj.native.secret) {
+          //noinspection JSUnresolvedVariable
+          adapter.config.password = decrypt(obj.native.secret, adapter.config.password);
+        } else {
+          //noinspection JSUnresolvedVariable
+          adapter.config.password = decrypt('Zgfr56gFe87jJOM', adapter.config.password);
+        }
+      }
+      initStates();
+      main();
+    });
+  });
+
+
+  return adapter;
+}
 
 // *****************************************************************************************************
 // Decrypt Password
@@ -26,63 +137,6 @@ function decrypt(key, value) {
   return result;
 }
 
-
-// *****************************************************************************************************
-// is called when adapter shuts down - callback has to be called under any circumstances!
-// *****************************************************************************************************
-adapter.on('unload', (callback) => {
-
-  try {
-    adapter.log.info('Closing Asterisk Adapter');
-    callback();
-  } catch (e) {
-    adapter.log.error(e);
-    callback();
-  }
-
-});
-
-// *****************************************************************************************************
-// is called when state changed
-// *****************************************************************************************************
-adapter.on('stateChange', function (id, state) {
-  // Warning, state can be null if it was deleted
-  if (state && !state.ack) {
-    let stateId = id.replace(adapter.namespace + '.', '');
-    adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
-    if (stateId == 'dialin.text') {
-      let parameter = {
-        'audiofile': '/tmp/asterisk_dtmf',
-        'text': state.val
-      };
-      if (state.val) convertDialInFile(parameter, () => { });
-      adapter.setState(stateId, state.val, true);
-    }
-    if (stateId == 'dialout.call') {
-      let parameter = {};
-      adapter.getState('dialout.callerid', (err, state) => {
-        if (!err && state) {
-          parameter.callerid = state.val || '';
-          adapter.getState('dialout.telnr', (err, state) => {
-            if (!err && state) {
-              parameter.telnr = state.val;
-              adapter.getState('dialout.text', (err, state) => {
-                if (!err && state) {
-                  parameter.text = state.val;
-                  dial('dial', parameter, state.ts, (res, err) => {
-                    // check for error
-                  });
-                }
-              });
-            }
-          });
-        }
-      });
-    }
-
-  }
-
-});
 
 // *****************************************************************************************************
 // Dial
@@ -260,27 +314,6 @@ function dial(command, parameter, msgid, callback) {
 
 }
 
-// *****************************************************************************************************
-// Listen for sendTo messages
-// *****************************************************************************************************
-adapter.on('message', (msg) => {
-
-  asteriskConnect((err) => {
-    if (!err) {
-      adapter.log.debug("Connected to Asterisk");
-      let command = msg.command;
-      let parameter = msg.message;
-      let callback = msg.callback;
-      let id = msg._id;
-      dial(command, parameter, id, (res, err) => {
-        adapter.sendTo(msg.from, msg.command, { result: res, error: err }, msg.callback);
-      });
-    } else {
-      adapter.log.error('Could not connect to Asterisk');
-    }
-  });
-});
-
 
 function initStates() {
 
@@ -298,28 +331,6 @@ function initStates() {
   adapter.setState('dialout.callerid', '', true);
 
 }
-
-// *****************************************************************************************************
-// is called when databases are connected and adapter received configuration.
-// start here!
-// *****************************************************************************************************
-adapter.on('ready', () => {
-  adapter.getForeignObject('system.config', (err, obj) => {
-    systemLanguage = (obj.common.language).toUpperCase();
-    if (adapter.config.password) {
-      if (obj && obj.native && obj.native.secret) {
-        //noinspection JSUnresolvedVariable
-        adapter.config.password = decrypt(obj.native.secret, adapter.config.password);
-      } else {
-        //noinspection JSUnresolvedVariable
-        adapter.config.password = decrypt('Zgfr56gFe87jJOM', adapter.config.password);
-      }
-    }
-    initStates();
-    main();
-  });
-});
-
 
 
 function asteriskWaitForConnection(callback, counter = 0) {
@@ -449,4 +460,13 @@ function main() {
   adapter.subscribeStates('*');
   adapter.log.debug("Started function keepConnected()");
 
+}
+
+
+// If started as allInOne mode => return function to create instance
+if (typeof module !== undefined && module.parent) {
+  module.exports = startAdapter;
+} else {
+  // or start the instance directly
+  startAdapter();
 }

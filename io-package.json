@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "Support of compact mode",
+        "de": "Compact Modus Unterstützung"
+      },
       "1.0.1": {
         "en": "Calling without extension",
         "de": "Wählen ohne extension"
@@ -68,6 +72,7 @@
     "subscribe": "messagebox",
     "icon": "asterisk.png",
     "materialize": true,
+    "compact": true,
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
     "keywords": [
