@@ -405,8 +405,13 @@ function answerCall(callback) {
 
   adapter.getState('dialin.text', (err, state) => {
 
+    let tmppath = adapter.config.path || '/tmp/';
+    if (tmppath.slice(-1) != '/' && tmppath.slice(-1) != '\\') {
+      tmppath = tmppath + '/';
+    }
+
     parameter.language = adapter.config.language || systemLanguage;
-    parameter.audiofile = parameter.audiofile || '/tmp/asterisk_dtmf';
+    parameter.audiofile = parameter.audiofile || tmppath + 'asterisk_dtmf';
     parameter.text = !err && state && state.val ? state.val : 'Please enter after the beep tone your passwort and press hashtag!';
 
     convertDialInFile(parameter, () => {
