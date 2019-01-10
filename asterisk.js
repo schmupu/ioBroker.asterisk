@@ -46,8 +46,12 @@ function startAdapter(options) {
       let stateId = id.replace(adapter.namespace + '.', '');
       adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
       if (stateId == 'dialin.text') {
+        let tmppath = adapter.config.path || '/tmp/';
+        if (tmppath.slice(-1) != '/' && tmppath.slice(-1) != '\\') {
+          tmppath = tmppath + '/';
+        }
         let parameter = {
-          'audiofile': '/tmp/asterisk_dtmf',
+          'audiofile': tmppath + 'asterisk_dtmf',
           'text': state.val
         };
         if (state.val) convertDialInFile(parameter, () => { });
