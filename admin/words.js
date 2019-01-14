@@ -1,5 +1,5 @@
 /*global systemDictionary:true */
-'use strict';
+
 
 systemDictionary = {
   "on save adapter restarts with new config immediately": {
@@ -101,16 +101,16 @@ systemDictionary = {
     "es": "Idioma de audio",
     "pl": "Język audio"
   },
-  "Username in sip.conf": {
-    "en": "Username in sip.conf",
-    "de": "Benutzername in der sip.conf",
-    "ru": "Имя пользователя в sip.conf",
-    "pt": "Nome de usuário no sip.conf",
-    "nl": "Gebruikersnaam in sip.conf",
-    "fr": "Nom d'utilisateur dans sip.conf",
-    "it": "Nome utente in sip.conf",
-    "es": "Nombre de usuario en sip.conf",
-    "pl": "Nazwa użytkownika w pliku sip.conf"
+  "Username in sip.conf or pjsip.conf": {
+    "en": "Username in sip.conf or pjsip.conf",
+    "de": "Benutzername in der sip.conf / pjsip.conf",
+    "ru": "Имя пользователя в sip.conf / pjsip.conf",
+    "pt": "Nome de usuário no sip.conf / pjsip.conf",
+    "nl": "Gebruikersnaam in sip.conf / pjsip.conf",
+    "fr": "Nom d'utilisateur dans sip.conf / pjsip.conf",
+    "it": "Nome utente in sip.conf / pjsip.conf",
+    "es": "Nombre de usuario en sip.conf / pjsip.conf",
+    "pl": "Nazwa użytkownika w pliku sip.conf / pjsip.conf"
   },
   "Please choose transcoder": {
     "en": "Please choose transcoder",

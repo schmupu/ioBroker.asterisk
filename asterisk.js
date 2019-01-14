@@ -364,7 +364,13 @@ function asteriskWaitForDisonnection(callback, counter = 0) {
 
 function asteriskConnect(callback) {
   if (!asterisk) {
-    asterisk = new ami(adapter.config.port, adapter.config.ip, adapter.config.user, adapter.config.password, false);
+    asterisk = new ami( {
+      'port': adapter.config.port, 
+      'hostname': adapter.config.ip, 
+      'username': adapter.config.user, 
+      'password': adapter.config.password, 
+      'service': adapter.config.service
+    });
     // if(callback) callback();
   } else {
     asterisk.reconnect();

@@ -96,7 +96,8 @@
     "sipuser": "123456789",
     "path": "/tmp/",
     "language": "EN",
-    "transcoder": "ffmpeg"
+    "transcoder": "ffmpeg",
+    "service": "sip"
   },
   "objects": [],
   "instanceObjects": [

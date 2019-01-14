@@ -48,7 +48,7 @@ If you do not want, that ioBroker answer the phone, please leave "nur auf folgen
 
 ![Fritzbox2](admin/fritzbox2.png)
 
-Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 3 files! Do not change the user authority of the files.
+Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! Do not change the user authority of the files. You have to decide if you want to use the sip.conf or the pjsip.conf . Do not use both files, that would not work!
  
 **/etc/asterisk/manager.conf**
 ```sh
@@ -66,7 +66,7 @@ write = all						; Do not change
 You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask)
 
 
-**/etc/asterisk/sip.conf**
+**/etc/asterisk/sip.conf** 
 ```sh
 [general]				; Do not change
 port = 5060				; Do not change
@@ -78,22 +78,61 @@ subscribecontext = default		; Do not change
 register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
 
 [123456789]               		; Change to username of Fritzbox WLAN/LAN telephone
-type = friend			  	; Do not change
+type = friend			    	; Do not change
 username = 123456789      		; Change to username of Fritzbox WLAN/LAN telephone
 host = 192.168.1.1        		; Change hostname / IP address of Fritzbox
 secret = mypassword       		; Change password of Fritzbox WLAN/LAN telephone
 fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
 fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
 ```
-You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. Important, the Fribox ustername 
+If you would like to use the sip.conf, you have to leave the pjsip.conf empty. You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. 
 Change the *callerid* with your phone number configured in the Fritzbox. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
+
+
+**/etc/asterisk/pjsip.conf** 
+```sh
+[transport-udp]
+type = transport
+protocol = udp
+bind = 0.0.0.0:5060
+ 
+[iobroker]
+type = registration
+outbound_auth = iobroker
+server_uri = sip:123456789:mypassword@192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+client_uri = sip:123456789:mypassword@192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = auth
+auth_type = userpass
+password = mypassword ; Change password of Fritzbox WLAN/LAN telephone
+username = 123456789  ; Change username of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = aor
+contact = sip:192.168.1.1:5060 ; Change hostname / IP address of Fritzbox
+
+[iobroker]
+type = endpoint
+context = ael-antwort
+outbound_auth = iobroker
+aors = iobroker
+from_domain = 192.168.1.1 ; Change hostname / IP address of Fritzbox
+from_user = 123456789     ; Change username of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = identify
+endpoint = iobroker
+match = 192.168.1.1 ; Change hostname / IP address of Fritzbox
+```
+If you would like to use the pjsip.conf, you have to leave the sip.conf empty. You have to change in */etc/asterisk/psip.conf* the hostname, username and password configured in the Fritzbox or in the configruation of your VoIP Provider. Pleas do not change the other parameter. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
 
 
 **/etc/asterisk/extensions.ael**
 ```sh
 context default {
   	1000 => {
-        Goto(ael-antwort,10,1);
+        Goto(ael-antwort,s,1);
   	}
 }
 
@@ -110,7 +149,7 @@ context ael-ansage {
 }
 
 context ael-antwort {
-	10  => {
+	s  => {
 		Answer();
 		Wait(1);
 		Set(repeat=5);
@@ -181,6 +220,7 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 ## Changelog
 
 ### 1.0.2 (05.01.2019)
+* (Stübi) You can now use the service PJSIP instead of SIP.   
 * (Stübi) Support js-controller compact mode 
 
 ### 1.0.1 (04.01.2019)
