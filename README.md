@@ -43,7 +43,7 @@ box! you have to add a new LAN/WLAN telephone device. In my example the frit.box
 
 ![Fritzbox1](admin/fritzbox1.png)
 
-If you do not want, that ioBroker answer the phone, please leave "nur auf folgende Rufnummern reagieren" empty.  Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
+If you do not want, that ioBroker answer the phone, please leave "nur auf folgende Rufnummern reagieren" empty.  Important, the Fritzbox username (Benutzername) musst only consist of numbers. Example: 12345689, 00004711 or 47110815 !!
 
 
 ![Fritzbox2](admin/fritzbox2.png)
@@ -63,8 +63,8 @@ permit = 192.168.1.0/255.255.255.0  			; Change to your subnet and netmask
 read = all						; Do not change
 write = all						; Do not change
 ```
-You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask)
 
+You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask). 
 
 **/etc/asterisk/sip.conf** 
 ```sh
@@ -85,6 +85,7 @@ secret = mypassword       		; Change password of Fritzbox WLAN/LAN telephone
 fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
 fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
 ```
+
 If you would like to use the sip.conf, you have to leave the pjsip.conf empty. You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. 
 Change the *callerid* with your phone number configured in the Fritzbox. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
 
@@ -99,8 +100,8 @@ bind = 0.0.0.0:5060
 [iobroker]
 type = registration
 outbound_auth = iobroker
-server_uri = sip:123456789:mypassword@192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
-client_uri = sip:123456789:mypassword@192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+server_uri = sip:192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+client_uri = sip:123456789@192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
 
 [iobroker]
 type = auth
@@ -117,6 +118,10 @@ type = endpoint
 context = ael-antwort
 outbound_auth = iobroker
 aors = iobroker
+disallow=all
+allow=ulaw
+allow=alaw
+allow=gsm
 from_domain = 192.168.1.1 ; Change hostname / IP address of Fritzbox
 from_user = 123456789     ; Change username of Fritzbox WLAN/LAN telephone
 
@@ -220,7 +225,7 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 ## Changelog
 
 ### 1.0.2 (05.01.2019)
-* (Stübi) You can now use the service PJSIP instead of SIP.   
+* (Stübi) You can use the service PJSIP instead of SIP now.    
 * (Stübi) Support js-controller compact mode 
 
 ### 1.0.1 (04.01.2019)
