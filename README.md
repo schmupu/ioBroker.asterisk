@@ -38,13 +38,13 @@ sudo apt-get install libsox-fmt-mp3
 sudo apt-get install asterisk
 ```
 
-Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your fritz.box! 
+Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your FritzBox! 
 
-- Configuration ![Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
-- Configuration ![Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern aas sip)
-- Configuration ![Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELKOM.md) 
+- Configuration [Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
+- Configuration [Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
+- Configuration [Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELKOM.md) 
 
-If you are done with the configuration, restart asterisk.  Now you can use the adapter in your javascript or blocky programms.
+Now you can use the adapter in your javascript or blocky programms.
 
 ```sh
 var number   = "040 666-7766";
