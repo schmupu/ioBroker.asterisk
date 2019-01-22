@@ -50,10 +50,10 @@ protocol=tcp
 bind=0.0.0.0
 local_net=192.168.1.0/24	; Change here
 
-[telekom_iobroker]
+[iobroker]
 type=registration
 transport=transport-udp
-outbound_auth=telekom_iobroker_auth
+outbound_auth=iobroker
 server_uri=sip:tel.t-online.de
 client_uri=sip:%country-my-number%@tel.t-online.de	; Change here
 contact_user=%my-number%
@@ -62,44 +62,35 @@ forbidden_retry_interval=300
 expiration=480
 auth_rejection_permanent=false
 
-[telekom_iobroker_auth]
+[iobroker]
 type=auth
 auth_type=userpass
 password=%pin%:%zugangsnummer%-%mitbenutzernr%@t-online.de ; Change here
 username=%my-number%
 realm=tel.t-online.de
 
-[telekom_out]
-type=endpoint
-transport=transport-udp
-context=ael-ansage
-disallow=all
-allow=g722
-allow=alaw
-outbound_auth=telekom_iobroker_auth
-aors=telekom_out
-callerid=%my-number%	; Change here
-from_user=%my-number%	; Change here
-from_domain=tel.t-online.de
-timers=no
-rtp_symmetric=yes
-
-[telekom_out]
-type=aor
-contact=sip:%country-my-number%@tel.t-online.de	; Change here
-
-[telekom_in]
+[iobroker]
 type=endpoint
 transport=transport-udp
 context=ael-antwort
 disallow=all
 allow=g722
 allow=alaw
-outbound_auth=telekom_iobroker_auth
+outbound_auth=iobroker
+aors=iobroker
+callerid=%my-number%	; Change here
+from_user=%my-number%	; Change here
+from_domain=tel.t-online.de
+timers=no
+rtp_symmetric=yes
 
-[telekom_in]
+[iobroker]
+type=aor
+contact=sip:%country-my-number%@tel.t-online.de	; Change here
+
+[iobroker]
 type=identify
-endpoint=telekom_in
+endpoint=iobroker
 match=217.0.0.0/13
 
 ```
@@ -144,6 +135,11 @@ context ael-antwort {
 		}
     		Hangup();
 	}
+
+	_. => {
+        Goto(ael-antwort,s,1);
+  	}
+	  
 }
 ```
 Copy the content above into the */etc/asterisk/extensions.ael* and do not change anything! If you change something here, your ioBroker dial command will not work.
@@ -151,4 +147,4 @@ Copy the content above into the */etc/asterisk/extensions.ael* and do not change
 For starting the asterisk server type */etc/init.d/asterisk start*
 Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf*. For username sip.conf or pjsip.conf enter *iobroker*. You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
 
-![Iobroker1](iobroker_telekom_pjsip.png)
+![Iobroker1](iobroker_fritzbox_pjsip.png)
