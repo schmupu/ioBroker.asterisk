@@ -105,11 +105,11 @@ match=217.0.0.0/13
 ```
 You have to change in */etc/asterisk/psip.conf* a view things. Please replace the place holder **%my-number%**, ... like described:
 
-**%my-number%**			: my telephonenumber with areacode. For example: 03047114711 (no spaces)
-**%country-my-number%**	: my telephonenumber with countrycode. For example: +493047114711 (no spaces)
-**%zugangsnummer%**		: zungangsnummer like 532496966969
-**%mitbenutzernr%**		: Mitbenutzernummer like 0001
-**%pin%**					: your Telekom password (persönliches Kennwort) like 34242322
+- **%my-number%**			: my telephonenumber with areacode. For example: 03047114711 (no spaces)
+- **%country-my-number%**	: my telephonenumber with countrycode. For example: +493047114711 (no spaces)
+- **%zugangsnummer%**		: zungangsnummer like 532496966969
+- **%mitbenutzernr%**		: Mitbenutzernummer like 0001
+- **%pin%**					: your Telekom password (persönliches Kennwort) like 34242322
 
 the hostname, username and password configured in the Fritzbox or in the configruation of your VoIP Provider. Pleas do not change the other parameter. 
 
