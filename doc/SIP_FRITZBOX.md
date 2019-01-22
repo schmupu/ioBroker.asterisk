@@ -95,3 +95,4 @@ Copy the content above into the */etc/asterisk/extensions.ael* and do not change
 For starting the asterisk server type */etc/init.d/asterisk start*
 Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf* and the unsername of your sip.conf (for example 123456789). You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
 
+![Iobroker1](iobroker_fritzbox_sip.png)
