@@ -55,8 +55,8 @@ type=registration
 transport=transport-udp
 outbound_auth=telekom_iobroker_auth
 server_uri=sip:tel.t-online.de
-client_uri=sip:**%country-my-number%**@tel.t-online.de	; Change here
-contact_user=**%my-number%**
+client_uri=sip:%country-my-number%@tel.t-online.de	; Change here
+contact_user=%my-number%
 retry_interval=60
 forbidden_retry_interval=300
 expiration=480
@@ -65,8 +65,8 @@ auth_rejection_permanent=false
 [telekom_iobroker_auth]
 type=auth
 auth_type=userpass
-password=**%pin%**:**%zugangsnummer%**-**%mitbenutzernr%**@t-online.de ; Change here
-username=**%my-number%**
+password=%pin%:%zugangsnummer%-%mitbenutzernr%@t-online.de ; Change here
+username=%my-number%
 realm=tel.t-online.de
 
 [telekom_out]
@@ -78,15 +78,15 @@ allow=g722
 allow=alaw
 outbound_auth=telekom_iobroker_auth
 aors=telekom_out
-callerid=**%my-number%**	; Change here
-from_user=**%my-number%**	; Change here
+callerid=%my-number%	; Change here
+from_user=%my-number%	; Change here
 from_domain=tel.t-online.de
 timers=no
 rtp_symmetric=yes
 
 [telekom_out]
 type=aor
-contact=sip:**%country-my-number%**@tel.t-online.de	; Change here
+contact=sip:%country-my-number%@tel.t-online.de	; Change here
 
 [telekom_in]
 type=endpoint
