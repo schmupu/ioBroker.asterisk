@@ -42,7 +42,7 @@ Asterisk has to connect for outgoing calls with your voip provider like Telekom 
 
 - Configuration [Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
 - Configuration [Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
-- Configuration [Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELKOM.md) 
+- Configuration [Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELEKOM.md) 
 
 Now you can use the adapter in your javascript or blocky programms.
 
