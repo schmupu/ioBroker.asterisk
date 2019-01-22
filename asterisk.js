@@ -88,7 +88,7 @@ function startAdapter(options) {
 
     asteriskConnect((err) => {
       if (!err) {
-        adapter.log.debug("Connected to Asterisk");
+        adapter.log.debug('Connected to Asterisk');
         let command = msg.command;
         let parameter = msg.message;
         let callback = msg.callback;
@@ -177,7 +177,7 @@ function dial(command, parameter, msgid, callback) {
           .then((file) => {
             adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
             adapter.log.debug('Start dialing');
-            // The file is converted at path "file"
+            // The file is converted at path 'file'
             asterisk.dial(parameter, (err, res) => {
               if (err) {
                 adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -204,7 +204,7 @@ function dial(command, parameter, msgid, callback) {
             converter.mp3ToGsmSox(fileNameMP3, fileNameGSM, false)
               .then((file) => {
                 adapter.log.debug('Start dialing');
-                // The file is converted at path "file"
+                // The file is converted at path 'file'
                 asterisk.dial(parameter, (err, res) => {
                   if (err) {
                     adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -224,7 +224,7 @@ function dial(command, parameter, msgid, callback) {
             converter.mp3ToGsmFfmpeg(fileNameMP3, fileNameGSM, false)
               .then((file) => {
                 adapter.log.debug('Start dialing');
-                // The file is converted at path "file"
+                // The file is converted at path 'file'
                 asterisk.dial(parameter, (err, res) => {
                   if (err) {
                     adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -275,9 +275,9 @@ function dial(command, parameter, msgid, callback) {
         if (!parameter.extension) parameter.extension = adapter.config.sipuser;
         adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
         adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
-        converter.textToGsm(parameter.text, language, 100, parameter.audiofile + ".gsm")
+        converter.textToGsm(parameter.text, language, 100, parameter.audiofile + '.gsm')
           .then((file) => {
-            // The file is converted at path "file"
+            // The file is converted at path 'file'
             adapter.log.debug('Start Action');
             asterisk.action(parameter, (err, res) => {
               if (err) {
@@ -421,17 +421,17 @@ function answerCall(callback) {
     convertDialInFile(parameter, () => {
 
       asterisk.asteriskEvent('managerevent', (evt) => {
-        adapter.log.debug("Management Events: " + JSON.stringify(evt));
-        if (evt.event == "VarSet" && evt.variable) {
+        adapter.log.debug('Management Events: ' + JSON.stringify(evt));
+        if (evt.event == 'VarSet' && evt.variable) {
           for (let i in evt.variable) {
             if (!vars[i] || vars[i].uniqueid != evt.uniqueid || vars[i].value != evt.value) {
               vars[i] = {
                 'uniqueid': evt.uniqueid,
                 'value': evt.value
               };
-              adapter.log.debug("Variable: " + i + " = " + evt.value);
+              adapter.log.debug('Variable: ' + i + ' = ' + evt.value);
 
-              if (evt.context == "ael-antwort" && i == 'dtmf') {
+              if (evt.context == 'ael-antwort' && i == 'dtmf') {
                 let stateId;
                 stateId = 'dialin.callerid';
                 adapter.setState(stateId, evt.calleridnum, true);
@@ -439,7 +439,7 @@ function answerCall(callback) {
                 adapter.setState(stateId, evt.value, true);
               }
 
-              if (evt.context == "ael-ansage" && i == 'dtmf') {
+              if (evt.context == 'ael-ansage' && i == 'dtmf') {
                 let stateId = 'dialout.dtmf';
                 adapter.setState(stateId, evt.value, true);
               }
@@ -459,25 +459,25 @@ function answerCall(callback) {
 // *****************************************************************************************************
 function main() {
 
-  adapter.log.info("Starting Adapter with transcoder " + adapter.config.transcoder + " and language " + adapter.config.language);
+  adapter.log.info('Starting Adapter with transcoder ' + adapter.config.transcoder + ' and language ' + adapter.config.language);
   asteriskConnect((err) => {
     if (!err) {
-      adapter.log.info("Connected to Asterisk Manager");
+      adapter.log.info('Connected to Asterisk Manager');
       answerCall();
 
     } else {
-      adapter.log.error("Cound not connect to Asterisk Manager");
+      adapter.log.error('Cound not connect to Asterisk Manager');
     }
   });
   asterisk.keepConnected();
   adapter.subscribeStates('*');
-  adapter.log.debug("Started function keepConnected()");
+  adapter.log.debug('Started function keepConnected()');
 
 }
 
 
 // If started as allInOne mode => return function to create instance
-if (typeof module !== "undefined" && module.parent) {
+if (typeof module !== 'undefined' && module.parent) {
   module.exports = startAdapter;
 } else {
   // or start the instance directly

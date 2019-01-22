@@ -27,13 +27,15 @@
     "url": "https://github.com/schmupu/ioBroker.asterisk"
   },
   "dependencies": {
-    "asterisk-manager": "^0.1.16",
-    "@iobroker/adapter-core": "^1.0.1"
+    "@iobroker/adapter-core": "^1.0.3",
+    "asterisk-manager": "^0.1.16"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "mocha": "^4.1.0",
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "eslint": "^5.12.1",
+    "eslint-plugin-react": "^7.12.4"
   },
   "main": "asterisk.js",
   "scripts": {

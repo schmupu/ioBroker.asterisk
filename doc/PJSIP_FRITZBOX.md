@@ -4,32 +4,9 @@
 
 ## Install & Configuration of Asterisk with the Fritzbox by using PJSIP 
 
-You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
+First you have to install all the packages described [here](../README.md).
 
-You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
-
-Important: asterisk and ffmpeg has to be on the same hardware as ioBroker! The reason is that the audio files are stored locally and accesable from both aplication. Maybe I will add an SFTP tranfer of audio files in one of the following versions.
-
-If you still want to use separated server for ioBroker and Asterisk there is a work around. You still install ffmpeg on the ioBroker server. You have to share a path on a server (for example with cifs), where both ioBroker and Asterisk have read and write access. The path name must on the asterisk and ioBroker server completle identical. The command *ln -s* will help! You have to enter the path in the ioBroker asterisk adapter configuraton (see screenshot below).
-
-if you use Linux (Raspbery for example) you have to install ffmpeg and asterisk like this: 
-
-```sh
-sudo apt-get install ffmpeg
-sudo apt-get install asterisk
-```
-
-If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
-
-```sh
-sudo apt-get install lame
-sudo apt-get install sox
-sudo apt-get install libsox-fmt-mp3
-sudo apt-get install asterisk
-```
-
-Asterisk has to connect for outgoing calls with your voip provider or with your fritz.box! If you use the fritz
-box! you have to add a new LAN/WLAN telephone device. In my example the frit.box! has the IP address 192.168.1.1 and the user name is *12345689* und the password is *mypassword* . The telphone number for outgoing and incoming calls is *03047114711*.
+First you have to open the Fritzbox configuration and add a new LAN/WLAN telephone device. In my example, the FritzBox has the IP address 192.168.1.1 and the user name is *12345689* und the password is *mypassword* . The telphone number for outgoing and incoming calls is *03047114711*.
 
 ![Fritzbox1](fritzbox1.png)
 
@@ -38,7 +15,7 @@ If you do not want, that ioBroker answer the phone, please leave "nur auf folgen
 
 ![Fritzbox2](fritzbox2.png)
 
-Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! Do not change the user authority of the files. You have to decide if you want to use the sip.conf or the pjsip.conf . Do not use both files, that would not work!
+Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 3 files! Do not change the user authority of the files. You have to decide if you want to use the sip.conf or the pjsip.conf . Do not use both files, that would not work!
  
 **/etc/asterisk/manager.conf**
 ```sh
