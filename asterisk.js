@@ -6,13 +6,11 @@
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
-const dp = require(__dirname + '/lib/datapoints');
-const net = require('net');
 const ami = require(__dirname + '/lib/ami');
 const transcode = require(__dirname + '/lib/transcode');
+
 let asterisk;
 let systemLanguage = 'EN';
-let rules = null;
 
 const adapterName = require('./package.json').name.split('.').pop();
 let adapter;

@@ -38,13 +38,143 @@ sudo apt-get install libsox-fmt-mp3
 sudo apt-get install asterisk
 ```
 
-Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your fritz.box! 
+Asterisk has to connect for outgoing calls with your voip provider or with your fritz.box! If you use the fritz
+box! you have to add a new LAN/WLAN telephone device. In my example the frit.box! has the IP address 192.168.1.1 and the user name is *12345689* und the password is *mypassword* . The telphone number for outgoing and incoming calls is *03047114711*.
 
-- Configuration ![Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
-- Configuration ![Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern aas sip)
-- Configuration ![Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELKOM.md) 
+![Fritzbox1](doc/fritzbox1.png)
 
-If you are done with the configuration, restart asterisk.  Now you can use the adapter in your javascript or blocky programms.
+If you do not want, that ioBroker answer the phone, please leave "nur auf folgende Rufnummern reagieren" empty.  Important, the Fritzbox username (Benutzername) musst only consist of numbers. Example: 12345689, 00004711 or 47110815 !!
+
+
+![Fritzbox2](doc/fritzbox2.png)
+
+Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! Do not change the user authority of the files. You have to decide if you want to use the sip.conf or the pjsip.conf . Do not use both files, that would not work!
+ 
+**/etc/asterisk/manager.conf**
+```sh
+[general]						; Do not change
+enabled = yes						; Do not change
+port = 5038						; Do not change
+bindaddr = 0.0.0.0					; Do not change
+
+[manager]						; Do not change
+secret = managerpassword				; Change Manager password for ioBroker asterisk adapter
+permit = 192.168.1.0/255.255.255.0  			; Change to your subnet and netmask
+read = all						; Do not change
+write = all						; Do not change
+```
+
+You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask). 
+
+**/etc/asterisk/sip.conf** 
+```sh
+[general]				; Do not change
+port = 5060				; Do not change
+bindaddr = 0.0.0.0			; Do not change
+context = default			; Do not change
+subscribecontext = default		; Do not change
+
+
+register => 12345689:mypassword@192.168.1.1/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+[123456789]               		; Change to username of Fritzbox WLAN/LAN telephone
+type = friend			    	; Do not change
+username = 123456789      		; Change to username of Fritzbox WLAN/LAN telephone
+host = 192.168.1.1        		; Change hostname / IP address of Fritzbox
+secret = mypassword       		; Change password of Fritzbox WLAN/LAN telephone
+fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
+fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
+```
+
+If you would like to use the sip.conf, you have to leave the pjsip.conf empty. You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. 
+Change the *callerid* with your phone number configured in the Fritzbox. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
+
+
+**/etc/asterisk/pjsip.conf** 
+```sh
+[transport-udp]
+type = transport
+protocol = udp
+bind = 0.0.0.0:5060
+ 
+[iobroker]
+type = registration
+outbound_auth = iobroker
+server_uri = sip:192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+client_uri = sip:123456789@192.168.1.1:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = auth
+auth_type = userpass
+password = mypassword ; Change password of Fritzbox WLAN/LAN telephone
+username = 123456789  ; Change username of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = aor
+contact = sip:192.168.1.1:5060 ; Change hostname / IP address of Fritzbox
+
+[iobroker]
+type = endpoint
+context = ael-antwort
+outbound_auth = iobroker
+aors = iobroker
+disallow=all
+allow=ulaw
+allow=alaw
+allow=gsm
+from_domain = 192.168.1.1 ; Change hostname / IP address of Fritzbox
+from_user = 123456789     ; Change username of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = identify
+endpoint = iobroker
+match = 192.168.1.1 ; Change hostname / IP address of Fritzbox
+```
+If you would like to use the pjsip.conf, you have to leave the sip.conf empty. You have to change in */etc/asterisk/psip.conf* the hostname, username and password configured in the Fritzbox or in the configruation of your VoIP Provider. Pleas do not change the other parameter. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
+
+
+**/etc/asterisk/extensions.ael**
+```sh
+context default {
+  	1000 => {
+        Goto(ael-antwort,s,1);
+  	}
+}
+
+context ael-ansage {
+	10 => {
+        Answer();
+        Wait(1);
+		Read(dtmf,${file}&beep,0,s,${repeat},1);
+		if ("${dtmf}"  != "") {
+			SayDigits(${dtmf});
+		}
+		Hangup();
+        }
+}
+
+context ael-antwort {
+	s  => {
+		Answer();
+		Wait(1);
+		Set(repeat=5);
+		Read(dtmf,/tmp/asterisk_dtmf&beep,0,s,${repeat},1);
+		if ("${dtmf}"  != "") {
+			SayDigits(${dtmf});
+		}
+    		Hangup();
+	}
+}
+```
+Copy the content above into the */etc/asterisk/extensions.ael* and do not change anything! If you change something here, your ioBroker dial command will not work.
+
+
+For starting the asterisk server type */etc/init.d/asterisk start*
+Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf* and the unsername of your sip.conf (for example 123456789). You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
+
+![Iobroker1](doc/iobroker1.png)
+
+Now you can use the adapter in your javascript or blocky programms.
 
 ```sh
 var number   = "040 666-7766";
@@ -91,10 +221,6 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 > - **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
 > - **audiofile:** if you using the text parameter. The converted text to audio will be saved in  audiofile. If the audiofile exist, it will be overwritten. If you do not use the parameter text, the audiofile will be played. 
 > - **callerid:** Defines the identifier (your sender telephone number)	. If callerid is missing the transferred telephone number will be anonymous
-
-## Resolving problems
-
-If you have problems with asterisk, you can try to find something in the logfiles under /var/log/asterisk. After you started asterisk you can call asterisk with asterisk -rvvvvvv on the comand shell for debugging. After you started asterisk -rvvvvvv you can initialize a call by iobroker and see what happens.  
 
 ## Changelog
 
