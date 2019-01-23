@@ -8,6 +8,7 @@
 const utils = require('@iobroker/adapter-core');
 const ami = require(__dirname + '/lib/ami');
 const transcode = require(__dirname + '/lib/transcode');
+const node_ssh = require('node-ssh');
 
 let asterisk;
 let systemLanguage = 'EN';
@@ -139,6 +140,45 @@ function decrypt(key, value) {
   return result;
 }
 
+// *****************************************************************************************************
+// Basename
+// *****************************************************************************************************
+function getBasename(filename) {
+  return filename.split(/[\\/]/).pop() || filename;
+}
+
+// *****************************************************************************************************
+// SSH
+// *****************************************************************************************************
+function sendSSH(srcfile) {
+
+  let ssh = new node_ssh();
+  let password = '!';
+  let username = '';
+  let dstfile = '/' + getBasename(srcfile);
+
+  ssh.connect({
+    host: '192.168.20.80',
+    username: username,
+    port: 22,
+    password,
+    tryKeyboard: true,
+    onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
+      if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
+        finish([password]);
+      }
+    }
+  }).then(() => {
+    adapter.log.info('scp ' + srcfile + ' ' + dstfile);
+    ssh.putFile(srcfile, dstfile)
+      .then(() => {
+        adapter.log.info('transfer of file ' + srcfile + ' is done');
+      }, (error) => {
+        adapter.log.info('tranfer error ' + error);
+      });
+  });
+
+}
 
 // *****************************************************************************************************
 // Dial
@@ -148,6 +188,9 @@ function dial(command, parameter, msgid, callback) {
   let id = msgid;
   let tmppath = adapter.config.path || '/tmp/';
   let converter = new transcode(adapter.config.transcoder);
+  let ssh = new node_ssh();
+  let password = '';
+  let username = '';
 
   adapter.log.debug('Message: ' + JSON.stringify(parameter));
 
@@ -178,15 +221,50 @@ function dial(command, parameter, msgid, callback) {
             adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
             adapter.log.debug('Start dialing');
             // The file is converted at path 'file'
-            asterisk.dial(parameter, (err, res) => {
-              if (err) {
-                adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-              } else {
-                adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-              }
-              adapter.log.debug('Calling callback function: ' + callback);
-              callback && callback(res, err);
-            });
+            if (1 === 2) {
+              ssh.connect({
+                host: '192.168.20.80',
+                username: username,
+                port: 22,
+                password,
+                tryKeyboard: true,
+                onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
+                  if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
+                    finish([password]);
+                  }
+                }
+              }).then(() => {
+                let srcfile = file.fileNameGSM;
+                let dstfile = adapter.config.path + '/' + getBasename(srcfile);
+                adapter.log.info('scp ' + srcfile + ' ' + dstfile);
+                ssh.putFile(srcfile, dstfile)
+                  .then(() => {
+                    adapter.log.info('transfer of file ' + srcfile + ' is done');
+                    asterisk.dial(parameter, (err, res) => {
+                      if (err) {
+                        adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                      } else {
+                        adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                      }
+                      adapter.log.debug('Calling callback function: ' + callback);
+                      callback && callback(res, err);
+                    });
+
+                  }, (error) => {
+                    adapter.log.info('tranfer error ' + error);
+                  });
+              });
+            } else {
+              asterisk.dial(parameter, (err, res) => {
+                if (err) {
+                  adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                } else {
+                  adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                }
+                adapter.log.debug('Calling callback function: ' + callback);
+                callback && callback(res, err);
+              });
+            }
           })
           .catch((err) => {
             // An error occured
@@ -362,11 +440,11 @@ function asteriskWaitForDisonnection(callback, counter = 0) {
 
 function asteriskConnect(callback) {
   if (!asterisk) {
-    asterisk = new ami( {
-      'port': adapter.config.port, 
-      'hostname': adapter.config.ip, 
-      'username': adapter.config.user, 
-      'password': adapter.config.password, 
+    asterisk = new ami({
+      'port': adapter.config.port,
+      'hostname': adapter.config.ip,
+      'username': adapter.config.user,
+      'password': adapter.config.password,
       'service': adapter.config.service
     });
     // if(callback) callback();

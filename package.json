@@ -1,6 +1,6 @@
 {
   "name": "iobroker.asterisk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Asterisk VoIP",
   "author": {
     "name": "Thorsten Stueben",
@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^1.0.3",
-    "asterisk-manager": "^0.1.16"
+    "asterisk-manager": "^0.1.16",
+    "node-ssh": "^5.1.2"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

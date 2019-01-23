@@ -98,6 +98,9 @@ If you have problems with asterisk, you can try to find something in the logfile
 
 ## Changelog
 
+### 1.0.3 (23.01.2019)
+* (Stübi) implemented scp tranfer   
+
 ### 1.0.2 (05.01.2019)
 * (Stübi) You can use the service PJSIP instead of SIP now.    
 * (Stübi) Support js-controller compact mode 

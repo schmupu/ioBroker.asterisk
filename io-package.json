@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "asterisk",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "news": {
+      "1.0.3": {
+        "en": "scp tranfer",
+        "de": "scp übertragung"
+      },
       "1.0.2": {
         "en": "Support of compact mode",
         "de": "Compact Modus Unterstützung"
