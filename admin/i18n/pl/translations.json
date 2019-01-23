@@ -1,0 +1,13 @@
+{
+    "Audio language": "Język audio",
+    "IP": "Adres IP",
+    "Language": "Język",
+    "Main settings": "Ustawienia główne",
+    "Password (Manager)": "Hasło (menedżer)",
+    "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker": "Ścieżka do tymczasowych plików audio. Musi być dostępny i autoryzowany dla Asterisk i ioBroker",
+    "Please choose transcoder": "Wybierz transkoder",
+    "Port": "Port",
+    "Username (Manager)": "Nazwa użytkownika (menedżer)",
+    "Username in sip.conf or pjsip.conf": "Nazwa użytkownika w pliku sip.conf / pjsip.conf",
+    "on save adapter restarts with new config immediately": "na karcie save natychmiast uruchamia się z nową konfiguracją"
+}

@@ -1,224 +1,336 @@
 {
-  "common": {
-    "name": "asterisk",
-    "version": "1.0.2",
-    "news": {
-      "1.0.2": {
-        "en": "Support of compact mode",
-        "de": "Compact Modus Unterstützung"
-      },
-      "1.0.1": {
-        "en": "Calling without extension",
-        "de": "Wählen ohne extension"
-      },
-      "1.0.0": {
-        "en": "Instead using ffmpeg you can use now sox too",
-        "de": "Nutzung von sox statt ffmpeg bei Problemen"
-      },
-      "0.1.9": {
-        "en": "Language Update",
-        "de": "Sprache angepaßt"
-      },
-      "0.1.8": {
-        "en": "DTMF Code will be recognized",
-        "de": "Auswertung von DTMF Code"
-      },
-      "0.1.7": {
-        "en": "Bugfixing and DTMF Code will be recognized",
-        "de": "Fehlerbehebung und Auswertung von DTMF Code"
-      },
-      "0.1.6": {
-        "en": "Bugfixing and password will be saved encrypted",
-        "de": "Fehlerbehebung und Passwort wird verschlüsselt gespeichert"
-      },
-      "0.1.5": {
-        "en": "Bugfixing",
-        "de": "Fehlerbehebung"
-      },
-      "0.1.4": {
-        "en": "Bugfixing",
-        "de": "Fehlerbehebung"
-      },
-      "0.1.3": {
-        "en": "Bugfixing",
-        "de": "Fehlerbehebung"
-      },
-      "0.1.2": {
-        "en": "First version of ioBroker Asterisk VoIP Adapter",
-        "de": "Erste Version vom ioBroker Asterisk VoIP Adapter"
-      },
-      "0.1.1": {
-        "en": "First version of ioBroker Asterisk VoIP Adapter",
-        "de": "Erste Version vom ioBroker Asterisk VoIP Adapter"
-      }
+    "common": {
+        "name": "asterisk",
+        "version": "1.0.2",
+        "news": {
+            "1.0.2": {
+                "en": "Support of compact mode",
+                "de": "Compact Modus Unterstützung",
+                "ru": "Поддержка компактного режима",
+                "pt": "Suporte do modo compacto",
+                "nl": "Ondersteuning van de compacte modus",
+                "fr": "Prise en charge du mode compact",
+                "it": "Supporto della modalità compatta",
+                "es": "Soporte de modo compacto.",
+                "pl": "Obsługa trybu kompaktowego",
+                "zh-cn": "支持紧凑模式"
+            },
+            "1.0.1": {
+                "en": "Calling without extension",
+                "de": "Wählen ohne extension",
+                "ru": "Звонок без расширения",
+                "pt": "Chamando sem extensão",
+                "nl": "Bellen zonder extensie",
+                "fr": "Appeler sans extension",
+                "it": "Chiamare senza estensione",
+                "es": "Llamando sin extensión",
+                "pl": "Dzwonienie bez rozszerzenia",
+                "zh-cn": "无延期通话"
+            },
+            "1.0.0": {
+                "en": "Instead using ffmpeg you can use now sox too",
+                "de": "Nutzung von sox statt ffmpeg bei Problemen",
+                "ru": "Вместо использования ffmpeg вы можете использовать и сейчас sox",
+                "pt": "Em vez disso, usando ffmpeg você pode usar agora sox também",
+                "nl": "In plaats van ffmpeg te gebruiken, kun je nu ook sox gebruiken",
+                "fr": "Au lieu d’utiliser ffmpeg, vous pouvez aussi utiliser maintenant sox",
+                "it": "Invece usando ffmpeg puoi usare anche ora sox",
+                "es": "En lugar de usar ffmpeg, puedes usar ahora también sox",
+                "pl": "Zamiast używania ffmpeg możesz teraz używać sox",
+                "zh-cn": "相反，使用ffmpeg你现在也可以使用sox"
+            },
+            "0.1.9": {
+                "en": "Language Update",
+                "de": "Sprache angepaßt",
+                "ru": "Обновление языка",
+                "pt": "Atualização de idioma",
+                "nl": "Taal update",
+                "fr": "Mise à jour de la langue",
+                "it": "Aggiornamento della lingua",
+                "es": "Actualización de idioma",
+                "pl": "Aktualizacja językowa",
+                "zh-cn": "语言更新"
+            },
+            "0.1.8": {
+                "en": "DTMF Code will be recognized",
+                "de": "Auswertung von DTMF Code",
+                "ru": "Код DTMF будет распознан",
+                "pt": "Código DTMF será reconhecido",
+                "nl": "DTMF-code wordt herkend",
+                "fr": "Le code DTMF sera reconnu",
+                "it": "Il codice DTMF sarà riconosciuto",
+                "es": "El código DTMF será reconocido",
+                "pl": "Kod DTMF zostanie rozpoznany",
+                "zh-cn": "DTMF代码将被识别"
+            },
+            "0.1.7": {
+                "en": "Bugfixing and DTMF Code will be recognized",
+                "de": "Fehlerbehebung und Auswertung von DTMF Code",
+                "ru": "Исправление ошибок и код DTMF будут распознаны",
+                "pt": "Bugfixing e Código DTMF serão reconhecidos",
+                "nl": "Bugfixing en DTMF-code worden herkend",
+                "fr": "La correction de bugs et le code DTMF seront reconnus",
+                "it": "Bugfixing e codice DTMF saranno riconosciuti",
+                "es": "Se reconocerán las correcciones de errores y el código DTMF.",
+                "pl": "Poprawione błędy i kod DTMF zostaną rozpoznane",
+                "zh-cn": "将识别错误修正和DTMF代码"
+            },
+            "0.1.6": {
+                "en": "Bugfixing and password will be saved encrypted",
+                "de": "Fehlerbehebung und Passwort wird verschlüsselt gespeichert",
+                "ru": "Исправление ошибок и пароль будут сохранены в зашифрованном виде",
+                "pt": "Correção de bugs e senha serão salvos criptografados",
+                "nl": "Bugfixing en wachtwoord worden versleuteld opgeslagen",
+                "fr": "La correction de bugs et le mot de passe seront enregistrés cryptés",
+                "it": "Bugfixing e password verranno salvati crittografati",
+                "es": "La corrección de errores y la contraseña se guardarán encriptadas",
+                "pl": "Naprawianie błędów i hasło zostaną zapisane w postaci zaszyfrowanej",
+                "zh-cn": "错误修正和密码将被加密保存"
+            },
+            "0.1.5": {
+                "en": "Bugfixing",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Corrigindo erro",
+                "nl": "bugfixing",
+                "fr": "Correction de bugs",
+                "it": "bugfixing",
+                "es": "Corrección de errores",
+                "pl": "Naprawa błędów",
+                "zh-cn": "Bugfixing"
+            },
+            "0.1.4": {
+                "en": "Bugfixing",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Corrigindo erro",
+                "nl": "bugfixing",
+                "fr": "Correction de bugs",
+                "it": "bugfixing",
+                "es": "Corrección de errores",
+                "pl": "Naprawa błędów",
+                "zh-cn": "Bugfixing"
+            },
+            "0.1.3": {
+                "en": "Bugfixing",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Corrigindo erro",
+                "nl": "bugfixing",
+                "fr": "Correction de bugs",
+                "it": "bugfixing",
+                "es": "Corrección de errores",
+                "pl": "Naprawa błędów",
+                "zh-cn": "Bugfixing"
+            },
+            "0.1.2": {
+                "en": "First version of ioBroker Asterisk VoIP Adapter",
+                "de": "Erste Version vom ioBroker Asterisk VoIP Adapter",
+                "ru": "Первая версия ioBroker Asterisk VoIP Adapter",
+                "pt": "Primeira versão do ioBroker Asterisk VoIP Adapter",
+                "nl": "Eerste versie van ioBroker Asterisk VoIP-adapter",
+                "fr": "Première version de l'adaptateur VoIP Asterisk ioBroker",
+                "it": "Prima versione di ioBroker Asterisk VoIP Adapter",
+                "es": "Primera versión de ioBroker Asterisk VoIP Adapter",
+                "pl": "Pierwsza wersja adaptera VoIP firmy ioBroker Asterisk",
+                "zh-cn": "第一版ioBroker Asterisk VoIP适配器"
+            },
+            "0.1.1": {
+                "en": "First version of ioBroker Asterisk VoIP Adapter",
+                "de": "Erste Version vom ioBroker Asterisk VoIP Adapter",
+                "ru": "Первая версия ioBroker Asterisk VoIP Adapter",
+                "pt": "Primeira versão do ioBroker Asterisk VoIP Adapter",
+                "nl": "Eerste versie van ioBroker Asterisk VoIP-adapter",
+                "fr": "Première version de l'adaptateur VoIP Asterisk ioBroker",
+                "it": "Prima versione di ioBroker Asterisk VoIP Adapter",
+                "es": "Primera versión de ioBroker Asterisk VoIP Adapter",
+                "pl": "Pierwsza wersja adaptera VoIP firmy ioBroker Asterisk",
+                "zh-cn": "第一版ioBroker Asterisk VoIP适配器"
+            }
+        },
+        "title": "Asterisk VoIP",
+        "titleLang": {
+            "en": "Asterisk VoIP",
+            "de": "Asterisk VoIP",
+            "ru": "Asterisk VoIP",
+            "pt": "VoIP Asterisco",
+            "nl": "Asterisk VoIP",
+            "fr": "Asterisk VoIP",
+            "it": "Asterisk VoIP",
+            "es": "Asterisco VoIP",
+            "pl": "Asterisk VoIP",
+            "zh-cn": "星号VoIP"
+        },
+        "desc": {
+            "en": "Asterisk VoIP Adapter",
+            "de": "Asterisk VoIP Adapter",
+            "ru": "Asterisk VoIP адаптер",
+            "pt": "Adaptador VoIP Asterisk",
+            "nl": "Asterisk VoIP-adapter",
+            "fr": "Adaptateur VoIP Asterisk",
+            "it": "Asterisk VoIP Adapter",
+            "es": "Adaptador VoIP Asterisco",
+            "pl": "Adapter Asterisk VoIP",
+            "zh-cn": "Asterisk VoIP适配器"
+        },
+        "license": "MIT",
+        "authors": [
+            "Thorsten Stueben <thorsten@stueben.de>"
+        ],
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "messagebox": true,
+        "stopBeforeUpdate": true,
+        "subscribe": "messagebox",
+        "icon": "asterisk.png",
+        "materialize": true,
+        "compact": true,
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
+        "keywords": [
+            "voip",
+            "asterisk",
+            "sip",
+            "voice",
+            "speach",
+            "call"
+        ],
+        "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
+        "loglevel": "info",
+        "type": "communication",
+        "restartAdapters": []
     },
-    "title": "Asterisk VoIP",
-    "titleLang": {
-      "en": "Asterisk VoIP",
-      "de": "Asterisk VoIP"
+    "native": {
+        "port": 5038,
+        "ip": "192.168.1.1",
+        "user": "manager",
+        "password": "manager",
+        "sipuser": "123456789",
+        "path": "/tmp/",
+        "language": "EN",
+        "transcoder": "ffmpeg",
+        "service": "sip"
     },
-    "desc": {
-      "en": "Asterisk VoIP Adapter",
-      "de": "Asterisk VoIP Adapter"
-    },
-    "license": "MIT",
-    "authors": [
-      "Thorsten Stueben <thorsten@stueben.de>"
-    ],
-    "platform": "Javascript/Node.js",
-    "mode": "daemon",
-    "messagebox": true,
-    "stopBeforeUpdate": true,
-    "subscribe": "messagebox",
-    "icon": "asterisk.png",
-    "materialize": true,
-    "compact": true,
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
-    "keywords": [
-      "voip",
-      "asterisk",
-      "sip",
-      "voice",
-      "speach",
-      "call"
-    ],
-    "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
-    "loglevel": "info",
-    "type": "communication",
-    "restartAdapters": []
-  },
-  "native": {
-    "port": 5038,
-    "ip": "192.168.1.1",
-    "user": "manager",
-    "password": "manager",
-    "sipuser": "123456789",
-    "path": "/tmp/",
-    "language": "EN",
-    "transcoder": "ffmpeg",
-    "service": "sip"
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "dialin",
-      "type": "channel",
-      "common": {
-        "name": "Dial In"
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.text",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Text",
-        "type": "string",
-        "read": true,
-        "write": true,
-        "def": "Please enter after the beep tone your passwort and press hashtag."
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.dtmf",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "DTMF Code",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.callerid",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Callerid",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout",
-      "type": "channel",
-      "common": {
-        "name": "Dial Out"
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.text",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Text",
-        "type": "string",
-        "read": true,
-        "write": true,
-        "def": "ioBroker is calling you. Please call me back"
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.dtmf",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "DTMF Code",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.callerid",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Callerid",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": true
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.telnr",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Telephonenumber",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": true
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.call",
-      "type": "state",
-      "common": {
-        "role": "button",
-        "name": "Start Call",
-        "type": "boolean",
-        "read": false,
-        "write": true
-      },
-      "native": {}
-    }
-  ]
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "dialin",
+            "type": "channel",
+            "common": {
+                "name": "Dial In"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.text",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "def": "Please enter after the beep tone your passwort and press hashtag."
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.dtmf",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "DTMF Code",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.callerid",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Callerid",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout",
+            "type": "channel",
+            "common": {
+                "name": "Dial Out"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.text",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "def": "ioBroker is calling you. Please call me back"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.dtmf",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "DTMF Code",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.callerid",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Callerid",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.telnr",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Telephonenumber",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.call",
+            "type": "state",
+            "common": {
+                "role": "button",
+                "name": "Start Call",
+                "type": "boolean",
+                "read": false,
+                "write": true
+            },
+            "native": {}
+        }
+    ]
 }
