@@ -122,5 +122,41 @@ systemDictionary = {
     "it": "Si prega di scegliere il transcoder",
     "es": "Por favor, elija el transcodificador",
     "pl": "Wybierz transkoder"
+  },
+  "Using SSH": {
+    "en": "Using SSH",
+    "de": "SSH verwenden",
+    "ru": "Использование SSH",
+    "pt": "Usando o SSH",
+    "nl": "SSH gebruiken",
+    "fr": "Utiliser SSH",
+    "it": "Utilizzando SSH",
+    "es": "Usando SSH",
+    "pl": "Korzystanie z SSH",
+    "zh-cn": "使用SSH"
+  },
+  "SSH Username": {
+    "en": "SSH Username",
+    "de": "SSH-Benutzername",
+    "ru": "Имя пользователя SSH",
+    "pt": "Nome de Usuário SSH",
+    "nl": "SSH-gebruikersnaam",
+    "fr": "Nom d'utilisateur SSH",
+    "it": "Nome utente SSH",
+    "es": "Nombre de usuario de SSH",
+    "pl": "Nazwa SSH",
+    "zh-cn": "SSH用户名"
+  },
+  "SSH Password": {
+    "en": "SSH Password",
+    "de": "SSH-Passwort",
+    "ru": "Пароль SSH",
+    "pt": "Senha SSH",
+    "nl": "SSH wachtwoord",
+    "fr": "Mot de passe SSH",
+    "it": "Password SSH",
+    "es": "Contraseña SSH",
+    "pl": "Hasło SSH",
+    "zh-cn": "SSH密码"
   }
 };

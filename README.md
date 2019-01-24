@@ -38,11 +38,19 @@ sudo apt-get install libsox-fmt-mp3
 sudo apt-get install asterisk
 ```
 
+If you would like to use SSH suport, you have to install the sshd server on the asterisk server if it is not installed.
+```sh
+sudo apt-get install open-ssh
+```
+
 Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your FritzBox! 
 
 - Configuration [Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
 - Configuration [Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
 - Configuration [Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELEKOM.md) 
+
+- Configuration [SSH Support ](doc/SSH.md) 
+
 
 Now you can use the adapter in your javascript or blocky programms.
 
@@ -99,7 +107,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 ## Changelog
 
 ### 1.0.3 (23.01.2019)
-* (Stübi) implemented scp tranfer   
+* (Stübi) implemented scp tranfer. Now it is possible to have ioBroker and asterisk on different server
 
 ### 1.0.2 (05.01.2019)
 * (Stübi) You can use the service PJSIP instead of SIP now.    

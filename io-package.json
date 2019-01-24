@@ -4,8 +4,8 @@
     "version": "1.0.3",
     "news": {
       "1.0.3": {
-        "en": "scp tranfer",
-        "de": "scp übertragung"
+        "en": "SSH Support. You can have ioBroker and asterisk on different server",
+        "de": "SSH Unterstütztung. ioBroker und Asterisk können auf verschidenen Servern installiert werden"
       },
       "1.0.2": {
         "en": "Support of compact mode",
