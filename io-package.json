@@ -101,7 +101,10 @@
     "path": "/tmp/",
     "language": "EN",
     "transcoder": "ffmpeg",
-    "service": "sip"
+    "service": "sip",
+    "ssh": false,
+    "sshuser": "",
+    "sshpassword": ""
   },
   "objects": [],
   "instanceObjects": [

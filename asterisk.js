@@ -120,6 +120,15 @@ function startAdapter(options) {
           adapter.config.password = decrypt('Zgfr56gFe87jJOM', adapter.config.password);
         }
       }
+      if (adapter.config.sshpassword) {
+        if (obj && obj.native && obj.native.secret) {
+          //noinspection JSUnresolvedVariable
+          adapter.config.sshpassword = decrypt(obj.native.secret, adapter.config.sshpassword);
+        } else {
+          //noinspection JSUnresolvedVariable
+          adapter.config.sshpassword = decrypt('Zgfr56gFe87jJOM', adapter.config.sshpassword);
+        }
+      }
       initStates();
       main();
     });
@@ -221,12 +230,12 @@ function dial(command, parameter, msgid, callback) {
             adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
             adapter.log.debug('Start dialing');
             // The file is converted at path 'file'
-            if (1 === 2) {
+            if (adapter.config.ssh) {
               ssh.connect({
-                host: '192.168.20.80',
-                username: username,
+                host: adapter.config.ip,
+                username: adapter.config.sshuser,
                 port: 22,
-                password,
+                password:  adapter.config.sshpassword,
                 tryKeyboard: true,
                 onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
                   if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
