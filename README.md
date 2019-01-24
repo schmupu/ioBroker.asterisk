@@ -40,6 +40,7 @@ sudo apt-get install asterisk
 
 If you would like to use SSH suport, you have to install the sshd server on the asterisk server if it is not installed.
 ```sh
+sudo apt-get install asterisk
 sudo apt-get install open-ssh
 ```
 
