@@ -12,23 +12,25 @@
 
 The Asterisk adapter converts text messages to audio files and calls then over Asterisk by voip any telephone number you want and plays the audo message.
 
-## Install & Configuration
+## Install
 
 You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
 
 You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
 
-Important: asterisk and ffmpeg has to be on the same hardware as ioBroker! The reason is that the audio files are stored locally and accesable from both aplication. Maybe I will add an SFTP tranfer of audio files in one of the following versions.
+You shall install asterisk and ffmpeg on the same hardware as ioBroker! The reason is that the audio files are stored locally and accessible from ioBroker and asterisk. 
 
-If you still want to use separated server for ioBroker and Asterisk there is a work around. You still install ffmpeg on the ioBroker server. You have to share a path on a server (for example with cifs), where both ioBroker and Asterisk have read and write access. The path name must on the asterisk and ioBroker server completle identical. The command *ln -s* will help! You have to enter the path in the ioBroker asterisk adapter configuraton (see screenshot below).
+If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](doc/SSH.md).
 
-if you use Linux (Raspbery for example) you have to install ffmpeg and asterisk like this: 
+if you use Linux (Raspbery for example) and ioBroker and asterisk runs on the same server, you have to install ffmpeg and asterisk like this: 
 
+### Linux Packages / ioBroker & asterisk running on same server with ffmpeg 
 ```sh
 sudo apt-get install ffmpeg
 sudo apt-get install asterisk
 ```
 
+### Linux Packages / ioBroker & asterisk running on same server with sox 
 If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
 
 ```sh
@@ -38,19 +40,14 @@ sudo apt-get install libsox-fmt-mp3
 sudo apt-get install asterisk
 ```
 
-If you would like to use SSH suport, you have to install the sshd server on the asterisk server if it is not installed.
-```sh
-sudo apt-get install asterisk
-sudo apt-get install open-ssh
-```
+ ## Configuration
 
 Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your FritzBox! 
 
 - Configuration [Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
 - Configuration [Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
 - Configuration [Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELEKOM.md) 
-
-- Configuration [SSH Support ](doc/SSH.md) 
+- Configuration [ssh/scp ](doc/SSH.md) (ioBroker and asterisk runs on different server)  
 
 
 Now you can use the adapter in your javascript or blocky programms.
@@ -94,7 +91,7 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 > You can use following parameter in the sendTo dial statement:
 > - **language:** language take for text to speach (tts) function. (allowed values: 'DE', 'EN', ... Default is the ioBroker system language)
 > - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
-> - **priority:** if you send “parallel” many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
+> - **priority:** if you send parallel many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
 > - **text:** text message that will be send as audio
 > - **timeout:** Timeout in milliseconds waiting for connection to be happen (defaults to 60000 ms)
 > - **async:** Allows multiple calls to be generated without waiting for a response (allowed values: false/true, default false)
@@ -108,7 +105,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 ## Changelog
 
 ### 1.0.3 (23.01.2019)
-* (Stübi) implemented scp tranfer. Now it is possible to have ioBroker and asterisk on different server
+* (Stübi) You can install asterisk on a different server and use scp to transfer audio files from ioBroker to asterisk.
 
 ### 1.0.2 (05.01.2019)
 * (Stübi) You can use the service PJSIP instead of SIP now.    
@@ -127,7 +124,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 * (Stübi) Add Callerid to dialin states 
 
 ### 0.1.7 (26.12.2018)
-* (Stübi) A lot of new features. Now you can call ioBroker / Asterisk by telephonenumber and enter a DTMF Code. 
+* (Stübi) A lot of new features. Now you can call ioBroker / Asterisk by telephone number and enter a DTMF Code. 
 * (Stübi) You can enter a DTMF Code if you get called by ioBroker / Asterisk 
 
 ### 0.1.6 (23.11.2018)

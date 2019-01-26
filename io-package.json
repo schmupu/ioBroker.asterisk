@@ -103,6 +103,7 @@
     "transcoder": "ffmpeg",
     "service": "sip",
     "ssh": false,
+    "sshport": 22,
     "sshuser": "",
     "sshpassword": ""
   },

@@ -123,6 +123,30 @@ systemDictionary = {
     "es": "Por favor, elija el transcodificador",
     "pl": "Wybierz transkoder"
   },
+  "SSH IP is same as Asterisk IP (see main tab)": {
+    "en": "SSH IP is same as Asterisk IP (see main tab)",
+    "de": "SSH-IP ist identisch mit Asterisk-IP (siehe Hauptregisterkarte)",
+    "ru": "IP-адрес SSH совпадает с IP-адресом Asterisk (см. Главную вкладку)",
+    "pt": "O SSH IP é o mesmo que o Asterisk IP (veja a aba principal)",
+    "nl": "SSH IP is hetzelfde als Asterisk IP (zie hoofdtabblad)",
+    "fr": "SSH IP est identique à Asterisk IP (voir onglet principal)",
+    "it": "SSH IP è uguale a Asterisk IP (vedere la scheda principale)",
+    "es": "SSH IP es igual que Asterisk IP (vea la pestaña principal)",
+    "pl": "Adres SSH IP jest taki sam jak adres Asterisk IP (patrz karta główna)",
+    "zh-cn": "SSH IP与Asterisk IP相同（参见主选项卡）"
+  },
+  "SSH Port": {
+    "en": "SSH Port",
+    "de": "SSH-Port",
+    "ru": "Порт SSH",
+    "pt": "Porta SSH",
+    "nl": "SSH-poort",
+    "fr": "Port SSH",
+    "it": "SSH Port",
+    "es": "Puerto SSH",
+    "pl": "Port SSH",
+    "zh-cn": "SSH端口"
+  },
   "Using SSH": {
     "en": "Using SSH",
     "de": "SSH verwenden",

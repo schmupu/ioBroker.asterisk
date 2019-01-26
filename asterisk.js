@@ -25,7 +25,6 @@ function startAdapter(options) {
   // is called when adapter shuts down - callback has to be called under any circumstances!
   // *****************************************************************************************************
   adapter.on('unload', (callback) => {
-
     try {
       adapter.log.info('Closing Asterisk Adapter');
       callback();
@@ -33,7 +32,6 @@ function startAdapter(options) {
       adapter.log.error(e);
       callback();
     }
-
   });
 
   // *****************************************************************************************************
@@ -79,14 +77,12 @@ function startAdapter(options) {
       }
 
     }
-
   });
 
   // *****************************************************************************************************
   // Listen for sendTo messages
   // *****************************************************************************************************
   adapter.on('message', (msg) => {
-
     asteriskConnect((err) => {
       if (!err) {
         adapter.log.debug('Connected to Asterisk');
@@ -133,8 +129,6 @@ function startAdapter(options) {
       main();
     });
   });
-
-
   return adapter;
 }
 
@@ -185,34 +179,39 @@ function addSlashToPath(path) {
 // *****************************************************************************************************
 // SSH
 // *****************************************************************************************************
-function sendSSH(srcfile) {
-
-  let ssh = new node_ssh();
-  let password = '!';
-  let username = '';
-  let dstfile = '/' + basename(srcfile);
-
-  ssh.connect({
-    host: '192.168.20.80',
-    username: username,
-    port: 22,
-    password,
-    tryKeyboard: true,
-    onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-      if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-        finish([password]);
+function sendSSH(srcfile, dstfile) {
+  return new Promise((resolve, reject) => {
+    let ssh = new node_ssh();
+    ssh.connect({
+      host: adapter.config.ip,
+      username: adapter.config.sshuser,
+      port: adapter.config.sshport,
+      password: adapter.config.sshpassword,
+      tryKeyboard: true,
+      onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
+        if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
+          finish([adapter.config.sshpassword]);
+        }
       }
-    }
-  }).then(() => {
-    adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-    ssh.putFile(srcfile, dstfile)
+    })
       .then(() => {
-        adapter.log.info('transfer of file ' + srcfile + ' is done');
-      }, (error) => {
-        adapter.log.info('tranfer error ' + error);
+        adapter.log.info('scp ' + srcfile + ' ' + dstfile);
+        ssh.putFile(srcfile, dstfile)
+          .then(() => {
+            adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
+            resolve('Transfer of file with scp ' + srcfile + ' is done');
+          })
+          .catch((err) => {
+            adapter.log.error('scp tranfer error: ' + err);
+            reject(err);
+          });
+      })
+      .catch((err) => {
+        // An error occured
+        adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
+        reject(err);
       });
   });
-
 }
 
 // *****************************************************************************************************
@@ -223,7 +222,6 @@ function dial(command, parameter, msgid, callback) {
   let id = msgid;
   let tmppath;
   let converter = new transcode(adapter.config.transcoder);
-  let ssh = new node_ssh();
 
   if (!adapter.config.ssh) {
     tmppath = addSlashToPath(adapter.config.path || '/tmp/');
@@ -258,46 +256,22 @@ function dial(command, parameter, msgid, callback) {
             // The file is converted at path 'file'
             if (adapter.config.ssh) {
               adapter.log.debug('Start scp transfer');
-              ssh.connect({
-                host: adapter.config.ip,
-                username: adapter.config.sshuser,
-                port: 22,
-                password: adapter.config.sshpassword,
-                tryKeyboard: true,
-                onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-                  if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-                    finish([adapter.config.sshpassword]);
-                  }
-                }
-              })
+              let srcfile = parameter.audiofile + '.gsm';
+              let dstfile = adapter.config.path + '/' + basename(srcfile);
+              parameter.audiofile = converter.getBasename(dstfile);
+              sendSSH(srcfile, dstfile)
                 .then(() => {
-                  let srcfile = parameter.audiofile + '.gsm';
-                  let dstfile = adapter.config.path + '/' + basename(srcfile);
-                  parameter.audiofile = converter.getBasename(dstfile);
-                  adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-                  ssh.putFile(srcfile, dstfile)
-                    .then(() => {
-                      adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
-                      adapter.log.debug('Start dialing');
-                      asterisk.dial(parameter, (err, res) => {
-                        if (err) {
-                          adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                        } else {
-                          adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                        }
-                        adapter.log.debug('Calling callback function: ' + callback);
-                        callback && callback(res, err);
-                      });
-
-                    })
-                    .catch((err) => {
-                      adapter.log.error('scp tranfer error: ' + err);
-                      callback && callback(null, err);
-                    });
+                  asterisk.dial(parameter, (err, res) => {
+                    if (err) {
+                      adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                    } else {
+                      adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                    }
+                    adapter.log.debug('Calling callback function: ' + callback);
+                    callback && callback(res, err);
+                  });
                 })
                 .catch((err) => {
-                  // An error occured
-                  adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
                   callback && callback(null, err);
                 });
             } else {
@@ -331,46 +305,22 @@ function dial(command, parameter, msgid, callback) {
                 // The file is converted at path 'file'
                 if (adapter.config.ssh) {
                   adapter.log.debug('Start scp transfer');
-                  ssh.connect({
-                    host: adapter.config.ip,
-                    username: adapter.config.sshuser,
-                    port: 22,
-                    password: adapter.config.sshpassword,
-                    tryKeyboard: true,
-                    onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-                      if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-                        finish([adapter.config.sshpassword]);
-                      }
-                    }
-                  })
+                  let srcfile = parameter.audiofile + '.gsm';
+                  let dstfile = adapter.config.path + '/' + basename(srcfile);
+                  parameter.audiofile = converter.getBasename(dstfile);
+                  sendSSH(srcfile, dstfile)
                     .then(() => {
-                      let srcfile = parameter.audiofile + '.gsm';
-                      let dstfile = adapter.config.path + '/' + basename(srcfile);
-                      parameter.audiofile = converter.getBasename(dstfile);
-                      adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-                      ssh.putFile(srcfile, dstfile)
-                        .then(() => {
-                          adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
-                          adapter.log.debug('Start dialing');
-                          asterisk.dial(parameter, (err, res) => {
-                            if (err) {
-                              adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                            } else {
-                              adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                            }
-                            adapter.log.debug('Calling callback function: ' + callback);
-                            callback && callback(res, err);
-                          });
-
-                        })
-                        .catch((err) => {
-                          adapter.log.error('scp tranfer error: ' + err);
-                          callback && callback(null, err);
-                        });
+                      asterisk.dial(parameter, (err, res) => {
+                        if (err) {
+                          adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                        } else {
+                          adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                        }
+                        adapter.log.debug('Calling callback function: ' + callback);
+                        callback && callback(res, err);
+                      });
                     })
                     .catch((err) => {
-                      // An error occured
-                      adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
                       callback && callback(null, err);
                     });
                 } else {
@@ -397,46 +347,22 @@ function dial(command, parameter, msgid, callback) {
                 // The file is converted at path 'file'
                 if (adapter.config.ssh) {
                   adapter.log.debug('Start scp transfer');
-                  ssh.connect({
-                    host: adapter.config.ip,
-                    username: adapter.config.sshuser,
-                    port: 22,
-                    password: adapter.config.sshpassword,
-                    tryKeyboard: true,
-                    onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-                      if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-                        finish([adapter.config.sshpassword]);
-                      }
-                    }
-                  })
+                  let srcfile = parameter.audiofile + '.gsm';
+                  let dstfile = adapter.config.path + '/' + basename(srcfile);
+                  parameter.audiofile = converter.getBasename(dstfile);
+                  sendSSH(srcfile, dstfile)
                     .then(() => {
-                      let srcfile = parameter.audiofile + '.gsm';
-                      let dstfile = adapter.config.path + '/' + basename(srcfile);
-                      parameter.audiofile = converter.getBasename(dstfile);
-                      adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-                      ssh.putFile(srcfile, dstfile)
-                        .then(() => {
-                          adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
-                          adapter.log.debug('Start dialing');
-                          asterisk.dial(parameter, (err, res) => {
-                            if (err) {
-                              adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                            } else {
-                              adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                            }
-                            adapter.log.debug('Calling callback function: ' + callback);
-                            callback && callback(res, err);
-                          });
-
-                        })
-                        .catch((err) => {
-                          adapter.log.error('scp tranfer error: ' + err);
-                          callback && callback(null, err);
-                        });
+                      asterisk.dial(parameter, (err, res) => {
+                        if (err) {
+                          adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                        } else {
+                          adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                        }
+                        adapter.log.debug('Calling callback function: ' + callback);
+                        callback && callback(res, err);
+                      });
                     })
                     .catch((err) => {
-                      // An error occured
-                      adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
                       callback && callback(null, err);
                     });
                 } else {
@@ -464,15 +390,37 @@ function dial(command, parameter, msgid, callback) {
           adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
           adapter.log.debug('Got GSM audio file ' + fileNameGSM);
           adapter.log.debug('Start dialing');
-          asterisk.dial(parameter, (err, res) => {
-            if (err) {
-              adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-            } else {
-              adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-            }
-            adapter.log.debug('Calling callback function: ' + callback);
-            callback && callback(res, err);
-          });
+          if (adapter.config.ssh) {
+            adapter.log.debug('Start scp transfer');
+            let srcfile = parameter.audiofile + '.gsm';
+            let dstfile = adapter.config.path + '/' + basename(srcfile);
+            parameter.audiofile = converter.getBasename(dstfile);
+            sendSSH(srcfile, dstfile)
+              .then(() => {
+                asterisk.dial(parameter, (err, res) => {
+                  if (err) {
+                    adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                  } else {
+                    adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                  }
+                  adapter.log.debug('Calling callback function: ' + callback);
+                  callback && callback(res, err);
+                });
+              })
+              .catch((err) => {
+                callback && callback(null, err);
+              });
+          } else {
+            asterisk.dial(parameter, (err, res) => {
+              if (err) {
+                adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+              } else {
+                adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+              }
+              adapter.log.debug('Calling callback function: ' + callback);
+              callback && callback(res, err);
+            });
+          }
         } else {
           adapter.log.error('MP3 or GSM audio file is missing');
           callback && callback(null, 'MP3 or GSM audio file is missing');
@@ -482,7 +430,6 @@ function dial(command, parameter, msgid, callback) {
         callback && callback(null, 'Paramter telnr and/or text/audiofile is missing');
       }
     }
-
     if (command == 'action') {
       adapter.log.debug('Action Command');
       if (parameter.text) {
@@ -497,46 +444,22 @@ function dial(command, parameter, msgid, callback) {
             adapter.log.debug('Start Action');
             if (adapter.config.ssh) {
               adapter.log.debug('Start scp transfer');
-              ssh.connect({
-                host: adapter.config.ip,
-                username: adapter.config.sshuser,
-                port: 22,
-                password: adapter.config.sshpassword,
-                tryKeyboard: true,
-                onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-                  if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-                    finish([adapter.config.sshpassword]);
-                  }
-                }
-              })
+              let srcfile = parameter.audiofile + '.gsm';
+              let dstfile = adapter.config.path + '/' + basename(srcfile);
+              parameter.audiofile = converter.getBasename(dstfile);
+              sendSSH(srcfile, dstfile)
                 .then(() => {
-                  let srcfile = parameter.audiofile + '.gsm';
-                  let dstfile = adapter.config.path + '/' + basename(srcfile);
-                  parameter.audiofile = converter.getBasename(dstfile);
-                  adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-                  ssh.putFile(srcfile, dstfile)
-                    .then(() => {
-                      adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
-                      adapter.log.debug('Start dialing');
-                      asterisk.dial(parameter, (err, res) => {
-                        if (err) {
-                          adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                        } else {
-                          adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                        }
-                        adapter.log.debug('Calling callback function: ' + callback);
-                        callback && callback(res, err);
-                      });
-
-                    })
-                    .catch((err) => {
-                      adapter.log.error('scp tranfer error: ' + err);
-                      callback && callback(null, err);
-                    });
+                  asterisk.dial(parameter, (err, res) => {
+                    if (err) {
+                      adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                    } else {
+                      adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                    }
+                    adapter.log.debug('Calling callback function: ' + callback);
+                    callback && callback(res, err);
+                  });
                 })
                 .catch((err) => {
-                  // An error occured
-                  adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
                   callback && callback(null, err);
                 });
             } else {
@@ -561,46 +484,22 @@ function dial(command, parameter, msgid, callback) {
         adapter.log.debug('Start Action');
         if (adapter.config.ssh) {
           adapter.log.debug('Start scp transfer');
-          ssh.connect({
-            host: adapter.config.ip,
-            username: adapter.config.sshuser,
-            port: 22,
-            password: adapter.config.sshpassword,
-            tryKeyboard: true,
-            onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-              if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-                finish([adapter.config.sshpassword]);
-              }
-            }
-          })
+          let srcfile = parameter.audiofile + '.gsm';
+          let dstfile = adapter.config.path + '/' + basename(srcfile);
+          parameter.audiofile = converter.getBasename(dstfile);
+          sendSSH(srcfile, dstfile)
             .then(() => {
-              let srcfile = parameter.audiofile + '.gsm';
-              let dstfile = adapter.config.path + '/' + basename(srcfile);
-              parameter.audiofile = converter.getBasename(dstfile);
-              adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-              ssh.putFile(srcfile, dstfile)
-                .then(() => {
-                  adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
-                  adapter.log.debug('Start dialing');
-                  asterisk.dial(parameter, (err, res) => {
-                    if (err) {
-                      adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
-                    } else {
-                      adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
-                    }
-                    adapter.log.debug('Calling callback function: ' + callback);
-                    callback && callback(res, err);
-                  });
-
-                })
-                .catch((err) => {
-                  adapter.log.error('scp tranfer error: ' + err);
-                  callback && callback(null, err);
-                });
+              asterisk.dial(parameter, (err, res) => {
+                if (err) {
+                  adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                } else {
+                  adapter.log.debug('Dialing completed. Result: ' + JSON.stringify(res));
+                }
+                adapter.log.debug('Calling callback function: ' + callback);
+                callback && callback(res, err);
+              });
             })
             .catch((err) => {
-              // An error occured
-              adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
               callback && callback(null, err);
             });
         } else {
@@ -696,9 +595,7 @@ function convertDialInFile(parameter, callback) {
   let converter = new transcode(adapter.config.transcoder);
   let language = parameter.language || adapter.config.language || systemLanguage;
   let tmpfile;
-  let ssh = new node_ssh();
-
-
+  
   if (!adapter.config.ssh) {
     tmpfile = parameter.audiofile || '/tmp/asterisk_dtmf';
   } else {
@@ -712,35 +609,15 @@ function convertDialInFile(parameter, callback) {
       adapter.log.debug('Converting completed. Result: ' + JSON.stringify(file));
       if (adapter.config.ssh) {
         adapter.log.debug('Start scp transfer');
-        ssh.connect({
-          host: adapter.config.ip,
-          username: adapter.config.sshuser,
-          port: 22,
-          password: adapter.config.sshpassword,
-          tryKeyboard: true,
-          onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-            if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')) {
-              finish([adapter.config.sshpassword]);
-            }
-          }
-        })
+        let srcfile = tmpfile + '.gsm';
+        let dstfile = parameter.audiofile + '.gsm';
+        sendSSH(srcfile, dstfile)
           .then(() => {
-            let srcfile = tmpfile + '.gsm';
-            let dstfile = parameter.audiofile + '.gsm';
-            adapter.log.info('scp ' + srcfile + ' ' + dstfile);
-            ssh.putFile(srcfile, dstfile)
-              .then(() => {
-                adapter.log.debug('Listing vor Dial In Event after scp');
-                callback && callback();
-              })
-              .catch((err) => {
-                adapter.log.error('scp tranfer error: ' + err);
-                callback && callback(null, err);
-              });
+            adapter.log.debug('Listing vor Dial In Event after scp');
+            callback && callback();
           })
           .catch((err) => {
-            // An error occured
-            adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
+            adapter.log.error('scp tranfer error: ' + err);
             callback && callback(null, err);
           });
       } else {
