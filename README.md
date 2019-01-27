@@ -20,9 +20,9 @@ You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs
 
 You shall install asterisk and ffmpeg on the same hardware as ioBroker! The reason is that the audio files are stored locally and accessible from ioBroker and asterisk. 
 
-If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](doc/SSH.md).
+If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](docs/SSH.md).
 
-if you use Linux (Raspbery for example) and ioBroker and asterisk runs on the same server, you have to install ffmpeg and asterisk like this: 
+if you use Linux (Raspberry for example) and ioBroker and asterisk runs on the same server, you have to install ffmpeg and asterisk like this: 
 
 ### Linux Packages / ioBroker & asterisk running on same server with ffmpeg 
 ```sh
@@ -44,10 +44,10 @@ sudo apt-get install asterisk
 
 Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your FritzBox! 
 
-- Configuration [Asterisk via SIP with the FritzBox](doc/SIP_FRITZBOX.md) (the easiest way)
-- Configuration [Asterisk via PJSIP with the FriztBox](doc/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
-- Configuration [Asterisk via PJSIP with the Telekom as provider](doc/PJSIP_TELEKOM.md) 
-- Configuration [ssh/scp ](doc/SSH.md) (ioBroker and asterisk runs on different server)  
+- Configuration [Asterisk via SIP with the FritzBox](docs/SIP_FRITZBOX.md) (the easiest way)
+- Configuration [Asterisk via PJSIP with the FriztBox](docs/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
+- Configuration [Asterisk via PJSIP with the Telekom as provider](docs/PJSIP_TELEKOM.md) 
+- Configuration [ssh/scp ](docs/SSH.md) (ioBroker and asterisk runs on different server)  
 
 
 Now you can use the adapter in your javascript or blocky programms.
@@ -89,7 +89,7 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 ```
 
 > You can use following parameter in the sendTo dial statement:
-> - **language:** language take for text to speach (tts) function. (allowed values: 'DE', 'EN', ... Default is the ioBroker system language)
+> - **language:** language take for text to speech (tts) function. (allowed values: 'DE', 'EN', ... Default is the ioBroker system language)
 > - **repeat:** how many times shall the audio message repeated (allowed values 1 to n, default 5)
 > - **priority:** if you send parallel many sendTo dial  statements, the messages with a smallest priority will be send first (allowed values 1 to n, default 1)
 > - **text:** text message that will be send as audio

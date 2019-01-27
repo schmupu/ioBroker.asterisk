@@ -8,6 +8,7 @@
 const utils = require('@iobroker/adapter-core');
 const ami = require(__dirname + '/lib/ami');
 const transcode = require(__dirname + '/lib/transcode');
+const fs = require('fs');
 const node_ssh = require('node-ssh');
 
 let asterisk;
@@ -144,6 +145,13 @@ function decrypt(key, value) {
 }
 
 // *****************************************************************************************************
+// OS System Windows
+// *****************************************************************************************************
+function isWindow() {
+  return process.platform.startsWith('win');
+}
+
+// *****************************************************************************************************
 // Basename
 // *****************************************************************************************************
 function basename(filename) {
@@ -199,6 +207,14 @@ function sendSSH(srcfile, dstfile) {
         ssh.putFile(srcfile, dstfile)
           .then(() => {
             adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
+            // deleting src file. Will not be needed anymore after tranfering
+            fs.unlink(srcfile, (err) => {
+              if (!err) {
+                adapter.log.debug('Deleting file : ' + srcfile);
+              } else {
+                adapter.log.error('Error deleting srcfile ' + srcfile + ' : ' + err);
+              }
+            });
             resolve('Transfer of file with scp ' + srcfile + ' is done');
           })
           .catch((err) => {
@@ -261,6 +277,7 @@ function dial(command, parameter, msgid, callback) {
               parameter.audiofile = converter.getBasename(dstfile);
               sendSSH(srcfile, dstfile)
                 .then(() => {
+                  adapter.log.debug('Start dialing');
                   asterisk.dial(parameter, (err, res) => {
                     if (err) {
                       adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -275,6 +292,7 @@ function dial(command, parameter, msgid, callback) {
                   callback && callback(null, err);
                 });
             } else {
+              adapter.log.debug('Start dialing');
               asterisk.dial(parameter, (err, res) => {
                 if (err) {
                   adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -301,7 +319,6 @@ function dial(command, parameter, msgid, callback) {
           if (adapter.config.transcoder == 'sox') {
             converter.mp3ToGsmSox(fileNameMP3, fileNameGSM, false)
               .then((file) => {
-                adapter.log.debug('Start dialing');
                 // The file is converted at path 'file'
                 if (adapter.config.ssh) {
                   adapter.log.debug('Start scp transfer');
@@ -310,6 +327,7 @@ function dial(command, parameter, msgid, callback) {
                   parameter.audiofile = converter.getBasename(dstfile);
                   sendSSH(srcfile, dstfile)
                     .then(() => {
+                      adapter.log.debug('Start dialing');
                       asterisk.dial(parameter, (err, res) => {
                         if (err) {
                           adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -343,7 +361,6 @@ function dial(command, parameter, msgid, callback) {
           } else {
             converter.mp3ToGsmFfmpeg(fileNameMP3, fileNameGSM, false)
               .then((file) => {
-                adapter.log.debug('Start dialing');
                 // The file is converted at path 'file'
                 if (adapter.config.ssh) {
                   adapter.log.debug('Start scp transfer');
@@ -352,6 +369,7 @@ function dial(command, parameter, msgid, callback) {
                   parameter.audiofile = converter.getBasename(dstfile);
                   sendSSH(srcfile, dstfile)
                     .then(() => {
+                      adapter.log.debug('Start dialing');
                       asterisk.dial(parameter, (err, res) => {
                         if (err) {
                           adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -366,6 +384,7 @@ function dial(command, parameter, msgid, callback) {
                       callback && callback(null, err);
                     });
                 } else {
+                  adapter.log.debug('Start dialing');
                   asterisk.dial(parameter, (err, res) => {
                     if (err) {
                       adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -389,7 +408,6 @@ function dial(command, parameter, msgid, callback) {
           parameter.audiofile = converter.getBasename(parameter.audiofile);
           adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
           adapter.log.debug('Got GSM audio file ' + fileNameGSM);
-          adapter.log.debug('Start dialing');
           if (adapter.config.ssh) {
             adapter.log.debug('Start scp transfer');
             let srcfile = parameter.audiofile + '.gsm';
@@ -397,6 +415,7 @@ function dial(command, parameter, msgid, callback) {
             parameter.audiofile = converter.getBasename(dstfile);
             sendSSH(srcfile, dstfile)
               .then(() => {
+                adapter.log.debug('Start dialing');
                 asterisk.dial(parameter, (err, res) => {
                   if (err) {
                     adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -411,6 +430,7 @@ function dial(command, parameter, msgid, callback) {
                 callback && callback(null, err);
               });
           } else {
+            adapter.log.debug('Start dialing');
             asterisk.dial(parameter, (err, res) => {
               if (err) {
                 adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -449,6 +469,7 @@ function dial(command, parameter, msgid, callback) {
               parameter.audiofile = converter.getBasename(dstfile);
               sendSSH(srcfile, dstfile)
                 .then(() => {
+                  adapter.log.debug('Start dialing');
                   asterisk.dial(parameter, (err, res) => {
                     if (err) {
                       adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -463,6 +484,7 @@ function dial(command, parameter, msgid, callback) {
                   callback && callback(null, err);
                 });
             } else {
+              adapter.log.debug('Start dialing');
               asterisk.dial(parameter, (err, res) => {
                 if (err) {
                   adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -489,6 +511,7 @@ function dial(command, parameter, msgid, callback) {
           parameter.audiofile = converter.getBasename(dstfile);
           sendSSH(srcfile, dstfile)
             .then(() => {
+              adapter.log.debug('Start dialing');
               asterisk.dial(parameter, (err, res) => {
                 if (err) {
                   adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -503,6 +526,7 @@ function dial(command, parameter, msgid, callback) {
               callback && callback(null, err);
             });
         } else {
+          adapter.log.debug('Start dialing');
           asterisk.dial(parameter, (err, res) => {
             if (err) {
               adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
@@ -535,10 +559,11 @@ function initStates() {
   adapter.getState('dialout.text', (err, state) => {
     if (!err && state && !state.val) adapter.setState('dialout.text', 'ioBroker is calling you. Please call me back', true);
   });
+  /*
   adapter.setState('dialout.telnr', '', true);
   adapter.setState('dialout.dtmf', '', true);
   adapter.setState('dialout.callerid', '', true);
-
+  */
 }
 
 
@@ -595,7 +620,7 @@ function convertDialInFile(parameter, callback) {
   let converter = new transcode(adapter.config.transcoder);
   let language = parameter.language || adapter.config.language || systemLanguage;
   let tmpfile;
-  
+
   if (!adapter.config.ssh) {
     tmpfile = parameter.audiofile || '/tmp/asterisk_dtmf';
   } else {
@@ -687,8 +712,7 @@ function answerCall(callback) {
 // Main function
 // *****************************************************************************************************
 function main() {
-
-  adapter.log.info('Starting Adapter with transcoder ' + adapter.config.transcoder + ' and language ' + adapter.config.language);
+  adapter.log.info('Starting Adapter ' + adapter.namespace + ' in version ' + adapter.version + 'with transcoder ' + adapter.config.transcoder + ' and language ' + adapter.config.language);
   asteriskConnect((err) => {
     if (!err) {
       adapter.log.info('Connected to Asterisk Manager');
@@ -701,7 +725,6 @@ function main() {
   asterisk.keepConnected();
   adapter.subscribeStates('*');
   adapter.log.debug('Started function keepConnected()');
-
 }
 
 
