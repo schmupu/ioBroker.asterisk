@@ -1,0 +1,19 @@
+{
+    "Audio language": "Audiotaal",
+    "IP": "IP adres",
+    "Language": "Taal",
+    "Main settings": "Belangrijkste instellingen",
+    "Password (Manager)": "Wachtwoord (Manager)",
+    "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker": "Pad voor tijdelijke audiobestanden. Moet toegankelijk en geautoriseerd zijn voor Asterisk en ioBroker",
+    "Please choose transcoder": "Kies alstublieft transcoder",
+    "Port": "Port",
+    "SSH IP is same as Asterisk IP (see main tab)": "SSH IP is hetzelfde als Asterisk IP (zie hoofdtabblad)",
+    "SSH Password": "SSH wachtwoord",
+    "SSH Port": "SSH-poort",
+    "SSH Username": "SSH-gebruikersnaam",
+    "Username (Manager)": "Gebruikersnaam (manager)",
+    "Username in sip.conf or pjsip.conf": "Gebruikersnaam in sip.conf / pjsip.conf",
+    "Using SSH": "SSH gebruiken",
+    "hello I am asterisk": "hallo ik ben asterisk",
+    "on save adapter restarts with new config immediately": "on save-adapter wordt onmiddellijk opnieuw opgestart met nieuwe config"
+}

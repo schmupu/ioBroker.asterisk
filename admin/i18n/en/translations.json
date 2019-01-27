@@ -1,0 +1,19 @@
+{
+    "Audio language": "Audio language",
+    "IP": "IP-Address",
+    "Language": "Language",
+    "Main settings": "Main settings",
+    "Password (Manager)": "Password (Manager)",
+    "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker": "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker",
+    "Please choose transcoder": "Please choose transcoder",
+    "Port": "Port",
+    "SSH IP is same as Asterisk IP (see main tab)": "SSH IP is same as Asterisk IP (see main tab)",
+    "SSH Password": "SSH Password",
+    "SSH Port": "SSH Port",
+    "SSH Username": "SSH Username",
+    "Username (Manager)": "Username (Manager)",
+    "Username in sip.conf or pjsip.conf": "Username in sip.conf or pjsip.conf",
+    "Using SSH": "Using SSH",
+    "hello I am asterisk": "hello I am asterisk",
+    "on save adapter restarts with new config immediately": "on save adapter restarts with new config immediately"
+}

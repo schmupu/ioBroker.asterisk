@@ -1,0 +1,19 @@
+{
+    "Audio language": "音频语言",
+    "IP": "IP地址",
+    "Language": "语言",
+    "Main settings": "主要设置",
+    "Password (Manager)": "密码（经理）",
+    "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker": "临时音频文件的路径。",
+    "Please choose transcoder": "请选择代码转换器",
+    "Port": "港口",
+    "SSH IP is same as Asterisk IP (see main tab)": "SSH IP与Asterisk IP相同（参见主选项卡）",
+    "SSH Password": "SSH密码",
+    "SSH Port": "SSH端口",
+    "SSH Username": "SSH用户名",
+    "Username (Manager)": "用户名（经理）",
+    "Username in sip.conf or pjsip.conf": "sip.conf或pjsip.conf中的用户名",
+    "Using SSH": "使用SSH",
+    "hello I am asterisk": "你好，我是星号",
+    "on save adapter restarts with new config immediately": "保存适配器立即重新启动新配置"
+}
