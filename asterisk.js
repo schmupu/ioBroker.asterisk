@@ -127,6 +127,7 @@ function startAdapter(options) {
         }
       }
       initStates();
+      adapter.log.info('Starting Adapter ' + adapter.namespace + ' in version ' + adapter.version + ' with transcoder ' + adapter.config.transcoder + ' and language ' + adapter.config.language);
       main();
     });
   });
@@ -712,19 +713,20 @@ function answerCall(callback) {
 // Main function
 // *****************************************************************************************************
 function main() {
-  adapter.log.info('Starting Adapter ' + adapter.namespace + ' in version ' + adapter.version + 'with transcoder ' + adapter.config.transcoder + ' and language ' + adapter.config.language);
   asteriskConnect((err) => {
     if (!err) {
       adapter.log.info('Connected to Asterisk Manager');
+      asterisk.keepConnected();
+      adapter.subscribeStates('*');
       answerCall();
-
     } else {
-      adapter.log.error('Cound not connect to Asterisk Manager');
+      let wait = 30;
+      adapter.log.error('Cound not connect to Asterisk Manager! Try to connect in ' + wait + ' seconds again!');
+      setTimeout(() => {
+        main();
+      }, wait * 1000);
     }
   });
-  asterisk.keepConnected();
-  adapter.subscribeStates('*');
-  adapter.log.debug('Started function keepConnected()');
 }
 
 

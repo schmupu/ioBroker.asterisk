@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "asterisk",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "news": {
+            "1.0.4": {
+                "en": "New instruction how to use adapter with Sipgate",
+                "de": "Neue Anleitung zur Verwendung des Adapters mit Sipgate",
+                "ru": "Новая инструкция как использовать адаптер с Sipgate",
+                "pt": "Nova instrução de como usar o adaptador com o Sipgate",
+                "nl": "Nieuwe instructie voor het gebruik van de adapter met Sipgate",
+                "fr": "Nouvelle instruction sur l'utilisation de l'adaptateur avec Sipgate",
+                "it": "Nuove istruzioni su come utilizzare l'adattatore con Sipgate",
+                "es": "Nuevas instrucciones de uso del adaptador con Sipgate.",
+                "pl": "Nowa instrukcja użycia adaptera z Sipgate",
+                "zh-cn": "新指令如何使用Sipgate的适配器"
+            },
             "1.0.3": {
                 "en": "SSH Support. You can have ioBroker and asterisk on different server",
                 "de": "SSH Unterstütztung. ioBroker und Asterisk können auf verschidenen Servern installiert werden",

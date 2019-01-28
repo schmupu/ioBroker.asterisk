@@ -47,6 +47,7 @@ Asterisk has to connect for outgoing calls with your voip provider like Telekom 
 - Configuration [Asterisk via SIP with the FritzBox](docs/SIP_FRITZBOX.md) (the easiest way)
 - Configuration [Asterisk via PJSIP with the FriztBox](docs/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
 - Configuration [Asterisk via PJSIP with the Telekom as provider](docs/PJSIP_TELEKOM.md) 
+- Configuration [Asterisk via PJSIP with the Sip as provider](docs/PJSIP_SIPGATE.md) 
 - Configuration [ssh/scp ](docs/SSH.md) (ioBroker and asterisk runs on different server)  
 
 
@@ -103,6 +104,9 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 If you have problems with asterisk, you can try to find something in the logfiles under /var/log/asterisk. After you started asterisk you can call asterisk with asterisk -rvvvvvv on the comand shell for debugging. After you started asterisk -rvvvvvv you can initialize a call by iobroker and see what happens.  
 
 ## Changelog
+
+### 1.0.4 (28.01.2019)
+* (Stübi) a new documentation for using Sipgate as provide
 
 ### 1.0.3 (23.01.2019)
 * (Stübi) You can install asterisk on a different server and use scp to transfer audio files from ioBroker to asterisk.
