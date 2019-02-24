@@ -66,7 +66,7 @@ context default {
 }
 
 context ael-ansage {
-	10 => {
+	_. => {
         Answer();
         Wait(1);
 		Read(dtmf,${file}&beep,0,s,${repeat},1);

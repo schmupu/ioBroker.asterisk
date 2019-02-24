@@ -105,8 +105,9 @@ If you have problems with asterisk, you can try to find something in the logfile
 
 ## Changelog
 
-### 1.0.4 (28.01.2019)
-* (Stübi) a new documentation for using Sipgate as provide
+### 1.0.4 (24.02.2019)
+* (Stübi) a new documentation for using Sipgate as provide. 
+* (Stübi) you can call internal fritzbox numbers. You have to change your extensions.ael fort that (replace **10 => { ... }**  with **_. => { ... }**) 
 
 ### 1.0.3 (23.01.2019)
 * (Stübi) You can install asterisk on a different server and use scp to transfer audio files from ioBroker to asterisk.
