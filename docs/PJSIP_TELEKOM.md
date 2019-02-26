@@ -139,7 +139,12 @@ You have to change in */etc/asterisk/psip.conf* a view things. Please replace th
 - **$mitbenutzernr**		: Mitbenutzernummer like 0001
 - **$pin**					: your Telekom password (persönliches Kennwort) like 34242322
 
-the hostname, username and password configured in the Fritzbox or in the configuration of your VoIP Provider. Pleas do not change the other parameter. 
+In the ioBroker Asterisk Admin you have to do following adjustments
+The IP/Hostname of SIP Server must be **tel.t-online.de**
+The Username of SIP Server must be **iobroker**
+The Password of SIP Server must be **$pin:$zugangsnummer-$mitbenutzernr** of your telekom account
+
+![iobroker_telekom_pjsip_man](iobroker_telekom_pjsip_man.png)
 
 **/etc/asterisk/extensions.ael**
 ```sh

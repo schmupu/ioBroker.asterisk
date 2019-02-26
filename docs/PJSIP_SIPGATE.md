@@ -129,7 +129,12 @@ You have to change in */etc/asterisk/psip.conf* a view things. Please replace th
 - **$sipid** 				: your sip id without leading $ 
 - **$sippw** 				: your sip password without $ 
 
-the hostname, username and password configured in the Fritzbox or in the configuration of your VoIP Provider. Pleas do not change the other parameter. 
+In the ioBroker Asterisk Admin you have to do following adjustments
+The IP/Hostname of SIP Server must be **sipgate.de**
+The Username of SIP Server must be **iobroker**
+The Password of SIP Server must be **password** of your Sigate account
+
+![iobroker_sipgate_pjsip_man](iobroker_sipgate_pjsip_man.png)
 
 **/etc/asterisk/extensions.ael**
 ```sh

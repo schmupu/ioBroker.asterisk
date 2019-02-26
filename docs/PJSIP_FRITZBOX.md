@@ -119,7 +119,12 @@ type = identify
 endpoint = iobroker
 match = 192.168.1.1 ; Change hostname / IP address of Fritzbox
 ```
-You have to change in */etc/asterisk/psip.conf* the hostname, username and password configured in the Fritzbox or in the configuration of your VoIP Provider. Pleas do not change the other parameter. 
+You have to change in */etc/asterisk/psip.conf* the IP/hostname of SIP Server, Username of SIP server  and Password of SIP Server.
+The IP/Hostname of SIP Server shall be the IP Adress of your Fritzbox.
+The Username of SIP Server must be **iobroker**
+The Password of SIP Server must be the Kennwort of your Fritzbox (Telefonie -> Anmeldedaten)
+
+![iobroker_fritzbox_pjsip_man](iobroker_fritzbox_pjsip_man.png)
 
 **/etc/asterisk/extensions.ael**
 ```sh

@@ -12,10 +12,10 @@ type = transport
 protocol = tcp
 bind = 0.0.0.0
 
-[iobroker]
+[${sipuser}]
 type = registration
 transport = transport-udp
-outbound_auth = iobroker
+outbound_auth = ${sipuser}
 server_uri = sip:${siphost}
 client_uri = sip:${sipusercountry}@${siphost}
 contact_user = ${sipuser}
@@ -24,34 +24,34 @@ forbidden_retry_interval = 300
 expiration = 480
 auth_rejection_permanent = false
 
-[iobroker]
+[${sipuser}]
 type = auth
 auth_type = userpass
 password = ${sippassword}@t-online.de
 username = ${sipuser}
 realm = ${siphost}
 
-[iobroker]
+[${sipuser}]
 type = identify
-endpoint = iobroker
+endpoint = ${sipuser}
 match = 217.0.0.0/13
 
-[iobroker]
+[${sipuser}]
 type = endpoint
 transport = transport-udp
 context = ael-antwort
 disallow = all
 allow = g722
 allow = alaw
-outbound_auth = iobroker
-aors = iobroker
+outbound_auth = ${sipuser}
+aors = ${sipuser}
 callerid = ${sipuser}
 from_user = ${sipuser}
 from_domain = ${siphost}
 timers = no
 rtp_symmetric = yes
 
-[iobroker]
+[${sipuser}]
 type = aor
 contact = sip:${sipusercountry}@${siphost}
 
