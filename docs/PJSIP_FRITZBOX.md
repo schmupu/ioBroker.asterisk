@@ -23,12 +23,12 @@ This configuration is independent if you use as SIP Provider your Fritzbox, Tele
 If you are done with the configuration of "Asterisk Settings" you switch to the "SIP Settings" tab. Choose **pjsip** as Service. Now you have to enter following:
 
 1. IP/Hostname of SIP Server : your IP address of your Fritzbox (in our example 192.18.1.1)  
-2. Username of SIP Server: insert your Benutzername on Anmeldedaten of your Fritbox Telefoniegerät (in our example 123456789)
-3. Password of SIP Server: insert your Kennwort on Anmeldedaten of your Fritbox Telefoniegerät (in our example 123456789)
+2. Username of SIP Server: insert your Benutzername on Anmeldedaten of your Fritzbox Telefoniegerät (in our example 123456789)
+3. Password of SIP Server: insert your Kennwort on Anmeldedaten of your Fritzbox Telefoniegerät 
 
-![iobroker_fritzbox_psip](iobroker_fritzbox_psip.png)
+![iobroker_fritzbox_pjsip](iobroker_fritzbox_pjsip.png)
 
-### Automatic creating asterisk configruation files
+### Automatic creating asterisk configuration files
 
 Now you go on the "Asterisk Settings" tab and activate the checkbox "create asterisk config files (once)". Save and start the Asterisk instance. 
 copy following files from your /tmp/ to the /etc/asterisk/ directory. Please take a look first which user rights the files have before copying in  /etc/asterisk . Maybe you have to adjust the user rights afterwards.
@@ -50,9 +50,9 @@ Now start asterisk again. For example with /etc/init.d/asterisk restart and rest
 Everything shall work now and you are done with the configuration.
 Please delete all config files in the /tmp/ directory, because your password is provide in the files.
 
-### Manual creating asterisk configruation files
+### Manual creating asterisk configuration files
 
-Instead of creating the config files automaticly, you can do it by your own. 
+Instead of creating the config files automatically, you can do it by your own. 
 Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! Do not change the user authority of the files. You have to decide if you want to use the sip.conf or the pjsip.conf . Do not use both files, that would not work!
  
 **/etc/asterisk/manager.conf**
@@ -119,7 +119,7 @@ type = identify
 endpoint = iobroker
 match = 192.168.1.1 ; Change hostname / IP address of Fritzbox
 ```
-You have to change in */etc/asterisk/psip.conf* the hostname, username and password configured in the Fritzbox or in the configruation of your VoIP Provider. Pleas do not change the other parameter. 
+You have to change in */etc/asterisk/psip.conf* the hostname, username and password configured in the Fritzbox or in the configuration of your VoIP Provider. Pleas do not change the other parameter. 
 
 **/etc/asterisk/extensions.ael**
 ```sh

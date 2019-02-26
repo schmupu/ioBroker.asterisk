@@ -17,9 +17,9 @@ If you are done with the configuration of "Asterisk Settings" you switch to the 
 2. Username of SIP Server: insert your Sipgate Id. For example 2456379f
 3. Password of SIP Server: insert your Sipgate Password
 
-![iobroker_sipgate_psip](iobroker_sipgate_psip.png)
+![iobroker_sipgate_pjsip](iobroker_sipgate_pjsip.png)
 
-### Automatic creating asterisk configruation files
+### Automatic creating asterisk configuration files
 
 Now you go on the "Asterisk Settings" tab and activate the checkbox "create asterisk config files (once)". Save and start the Asterisk instance. 
 copy following files from your /tmp/ to the /etc/asterisk/ directory. Please take a look first which user rights the files have before copying in  /etc/asterisk . Maybe you have to adjust the user rights afterwards.
@@ -41,9 +41,9 @@ Now start asterisk again. For example with /etc/init.d/asterisk restart and rest
 Everything shall work now and you are done with the configuration.
 Please delete all config files in the /tmp/ directory, because your password is provide in the files.
 
-### Manual creating asterisk configruation files
+### Manual creating asterisk configuration files
 
-Instead of creating the config files automaticly, you can do it by your own. 
+Instead of creating the config files automatically, you can do it by your own. 
 Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! Do not change the user authority of the files. 
  
 **/etc/asterisk/manager.conf**
@@ -129,7 +129,7 @@ You have to change in */etc/asterisk/psip.conf* a view things. Please replace th
 - **$sipid** 				: your sip id without leading $ 
 - **$sippw** 				: your sip password without $ 
 
-the hostname, username and password configured in the Fritzbox or in the configruation of your VoIP Provider. Pleas do not change the other parameter. 
+the hostname, username and password configured in the Fritzbox or in the configuration of your VoIP Provider. Pleas do not change the other parameter. 
 
 **/etc/asterisk/extensions.ael**
 ```sh
