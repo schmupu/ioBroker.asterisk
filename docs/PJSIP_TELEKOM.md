@@ -15,7 +15,7 @@ If you are done with the configuration of "Asterisk Settings" you switch to the 
 
 1. IP/Hostname of SIP Server : enter **tel.t-online.de** as hostname 
 2. Username of SIP Server: insert your telephonenumber with areacode here (no country code!). For example: 03047114711 (no spaces)
-3. Password of SIP Server: Your Password has to be like this  <PIN>:<ZUGANGSNUMMER>-<MITBENUTZERNUMMER> . For Example: 23457830:323127211711-0001
+3. Password of SIP Server: Your Password has to be like this  **PIN:ZUGANGSNUMMER-MITBENUTZERNUMMER** . For Example: 23457830:323127211711-0001
 
 ![iobroker_telekom_pjsip](iobroker_telekom_pjsip.png)
 
