@@ -14,10 +14,50 @@ If you do not want, that ioBroker answer the phone, please leave "nur auf folgen
 
 
 ![Fritzbox2](fritzbox2.png)
-
-Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 3 files! 
-Do not change the user authority and user rights of the files. 
  
+First you have to configure the connection from ioBroker to the Asterisk server on "Asterisk Settings" tab. 
+This configuration is independent if you use as SIP Provider your Fritzbox, Telekom, Sipgate or an other vendor. Normaly the username is **manager** . You can choose any password you want. But manager username and manager password in ioBroker must be the same as in the manager.conf later.
+
+![iobroker_main](iobroker_main.png)
+
+If you are done with the configuration of "Asterisk Settings" you switch to the "SIP Settings" tab. Choose **sip** as Service. Now you have to enter following:
+
+1. IP/Hostname of SIP Server : your IP address of your Fritzbox (in our example 192.18.1.1)  
+2. Username of SIP Server: insert your Benutzername on Anmeldedaten of your Fritbox Telefoniegerät (in our example 123456789)
+3. Password of SIP Server: insert your Kennwort on Anmeldedaten of your Fritbox Telefoniegerät (in our example 123456789)
+
+![Iobroker_fritzbox_sip](iobroker_fritzbox_sip.png)
+
+Leave the "SSH" tab empty if asterisk and iobroker runs on the same machine (server). If you want to use ssh look here: Configuration [ssh/scp ](docs/SSH.md) (ioBroker and asterisk runs on different server).
+
+### Automatic creating asterisk configruation files
+
+Now you go on the "Asterisk Settings" tab and activate the checkbox "create asterisk config files (once)". Save and start the Asterisk instance. 
+copy following files from your /tmp/ to the /etc/asterisk/ directory. Please take a look first which user rights the files have before copying in  /etc/asterisk . Maybe you have to adjust the user rights afterwards.
+
+```sh
+sudo mv /tmp/extensions.ael /etc/asterisk/extensions.ael
+sudo mv /tmp/manager.conf /etc/asterisk/manager.conf
+sudo mv /tmp/sip_fritzbox.conf /etc/asterisk/sip.conf
+sudo mv /tmp/rtp.conf /etc/asterisk/rtp.conf
+
+# Example if userrights of files have owner asterisk and group asterisk
+sudo chown asterisk:asterisk  /etc/asterisk/extensions.ael
+sudo chown asterisk:asterisk /etc/asterisk/manager.conf
+sudo chown asterisk:asterisk /etc/asterisk/sip.conf
+sudo chown asterisk:asterisk /etc/asterisk/rtp.conf
+```
+
+Now start asterisk again. For example with /etc/init.d/asterisk restart and restart the Asterisk iobroker instance. 
+Everything shall work now and you are done with the configuration.
+Please delete all config files in the /tmp/ directory, because your password is provide in the files.
+
+### Manual creating asterisk configruation files
+
+Instead of creating the config files automaticly, you can do it by your own. 
+Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! 
+Do not change the user authority and user rights of the files. 
+
 **/etc/asterisk/manager.conf**
 ```sh
 [general]						; Do not change
@@ -33,6 +73,14 @@ write = all						; Do not change
 ```
 
 You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask). 
+
+**/etc/asterisk/rtp.conf**
+```sh
+[general]
+rtpstart=30000
+rtpend=30100
+```
+You have to change in */etc/asterisk/rtp.conf* nothing. Copy only this file.
 
 **/etc/asterisk/sip.conf** 
 ```sh
@@ -95,4 +143,3 @@ Copy the content above into the */etc/asterisk/extensions.ael* and do not change
 For starting the asterisk server type */etc/init.d/asterisk start*
 Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf* and the unsername of your sip.conf (for example 123456789). You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
 
-![Iobroker1](iobroker_fritzbox_sip.png)

@@ -126,6 +126,30 @@ function startAdapter(options) {
           adapter.config.sshpassword = decrypt('Zgfr56gFe87jJOM', adapter.config.sshpassword);
         }
       }
+      if (adapter.config.sippassword) {
+        if (obj && obj.native && obj.native.secret) {
+          //noinspection JSUnresolvedVariable
+          adapter.config.sippassword = decrypt(obj.native.secret, adapter.config.sippassword);
+        } else {
+          //noinspection JSUnresolvedVariable
+          adapter.config.sippassword = decrypt('Zgfr56gFe87jJOM', adapter.config.sippassword);
+        }
+      }
+      if (adapter.config.forceReInit) {
+        let configfiles = [
+          'pjsip_telekom.conf.template',
+          'pjsip_fritzbox.conf.template',
+          'pjsip_sipgate.conf.template',
+          'sip_fritzbox.conf.template',
+          'extensions.ael.template',
+          'manager.conf.template',
+          'rtp.conf.template'
+        ];
+        createConfigFile(configfiles, () => {
+          adapter.extendForeignObject('system.adapter.' + adapter.namespace, { native: { forceReInit: false } });
+        });
+      }
+
       initStates();
       adapter.log.info('Starting Adapter ' + adapter.namespace + ' in version ' + adapter.version + ' with transcoder ' + adapter.config.transcoder + ' and language ' + adapter.config.language);
       main();
@@ -182,6 +206,55 @@ function addSlashToPath(path) {
     return path + '/';
   } else {
     return path;
+  }
+}
+
+// *****************************************************************************************************
+// Create Config Files
+// *****************************************************************************************************
+function createConfigFile(configfiles, callback) {
+  let file = configfiles.pop();
+  if (file) {
+    if((file.startsWith('pjsip') || file.startsWith('sip')) && !file.startsWith(adapter.config.service)) {
+      return createConfigFile(configfiles, callback); // next
+    }
+    let srcfile = __dirname + '/template/' + file;
+    let dstfile = '/tmp/' + file.replace('.template', '');
+    fs.readFile(srcfile, 'utf8', (err, contents) => {
+      if (!err && contents) {
+        let dstcontent = contents;
+        if(file.endsWith('pjsip_telekom.conf.template') && adapter.config.sipuser) {
+          adapter.config.sipusercountry = '+49' + adapter.config.sipuser.slice(1);
+        }
+        for (let i in adapter.config) {
+          let search = '${' + i + '}';
+          let value = adapter.config[i];
+          dstcontent = dstcontent.split(search).join(value);
+        }
+        fs.writeFile(dstfile, dstcontent, (err) => {
+          if (err) {
+            adapter.log.error('Error creating config file ' + dstfile + ' / ' + err);
+          } else {
+            if (adapter.config.ssh) {
+              adapter.log.info('Transfering Config File: scp ' + dstfile + ' ' + adapter.config.sshuser + '@' + adapter.config.ip + ':' + dstfile);
+              sendSSH(dstfile, dstfile)
+                .then(() => {
+                  // adapter.log.info('scp ' + adapter.config.sshuser + '@' + adapter.config.ip + ':' + dstfile + ' ' + dstfile);
+                })
+                .catch((err) => {
+                  adapter.log.error('Error tranfering confifile ' + dstfile + ' by scp / ' + err);
+                });
+            }
+            adapter.log.info('Create config file ' + dstfile + ' for asterisk. Please move it to /etc/asterisk/ or delete it!');
+          }
+          createConfigFile(configfiles, callback);
+        });
+      } else {
+        adapter.log.error('Error reading template file ' + srcfile + ' / ' + err);
+      }
+    });
+  } else {
+    callback && callback();
   }
 }
 

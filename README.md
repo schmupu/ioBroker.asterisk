@@ -105,6 +105,9 @@ If you have problems with asterisk, you can try to find something in the logfile
 
 ## Changelog
 
+### 1.0.5 (26.02.2019)
+* (Stübi) Asterisk adapter can create now asterisk configuration files. You have to rename and move them afterwards to the /etc/asterisk directory 
+
 ### 1.0.4 (24.02.2019)
 * (Stübi) a new documentation for using Sipgate as provide. 
 * (Stübi) Now you can call internal fritzbox numbers. You must change your extensions.ael if you install the version 1.0.4! (replace **10 => { ... }**  with **_. => { ... }**) 

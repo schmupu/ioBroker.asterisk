@@ -1,0 +1,30 @@
+context default {
+  	1000 => {
+        Goto(ael-antwort,s,1);
+  	}
+}
+
+context ael-ansage {
+	_. => {
+        Answer();
+        Wait(1);
+		Read(dtmf,${file}&beep,0,s,${repeat},1);
+		if ("${dtmf}"  != "") {
+			SayDigits(${dtmf});
+		}
+		Hangup();
+        }
+}
+
+context ael-antwort {
+	s  => {
+		Answer();
+		Wait(1);
+		Set(repeat=5);
+		Read(dtmf,${path}/asterisk_dtmf&beep,0,s,${repeat},1);
+		if ("${dtmf}"  != "") {
+			SayDigits(${dtmf});
+		}
+    		Hangup();
+	}
+}

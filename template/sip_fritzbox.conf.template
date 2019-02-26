@@ -1,0 +1,17 @@
+[general]				; Do not change
+port = 5060				; Do not change
+bindaddr = 0.0.0.0			; Do not change
+context = default			; Do not change
+subscribecontext = default		; Do not change
+
+
+register => ${sipuser}:${sippassword}@${siphost}/1000 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+[${sipuser}]               		; Change to username of Fritzbox WLAN/LAN telephone
+type = friend			    	; Do not change
+username = ${sipuser}      		; Change to username of Fritzbox WLAN/LAN telephone
+host = ${siphost}          		; Change hostname / IP address of Fritzbox
+secret = ${sippassword}         ; Change password of Fritzbox WLAN/LAN telephone
+fromdomain =  ${siphost}  		; Change hostname / IP address of Fritzbox
+fromuser = ${sipuser}   	  	; Change username of Fritzbox WLAN/LAN telephone
+

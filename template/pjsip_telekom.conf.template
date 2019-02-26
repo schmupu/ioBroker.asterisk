@@ -1,0 +1,57 @@
+[global]
+type = global
+endpoint_identifier_order = ip,username
+
+[transport-udp]
+type = transport
+protocol = udp
+bind = 0.0.0.0
+
+[transport-tcp]
+type = transport
+protocol = tcp
+bind = 0.0.0.0
+
+[iobroker]
+type = registration
+transport = transport-udp
+outbound_auth = iobroker
+server_uri = sip:${siphost}
+client_uri = sip:${sipusercountry}@${siphost}
+contact_user = ${sipuser}
+retry_interval = 60
+forbidden_retry_interval = 300
+expiration = 480
+auth_rejection_permanent = false
+
+[iobroker]
+type = auth
+auth_type = userpass
+password = ${sippassword}@t-online.de
+username = ${sipuser}
+realm = ${siphost}
+
+[iobroker]
+type = identify
+endpoint = iobroker
+match = 217.0.0.0/13
+
+[iobroker]
+type = endpoint
+transport = transport-udp
+context = ael-antwort
+disallow = all
+allow = g722
+allow = alaw
+outbound_auth = iobroker
+aors = iobroker
+callerid = ${sipuser}
+from_user = ${sipuser}
+from_domain = ${siphost}
+timers = no
+rtp_symmetric = yes
+
+[iobroker]
+type = aor
+contact = sip:${sipusercountry}@${siphost}
+

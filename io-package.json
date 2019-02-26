@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "asterisk",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "news": {
+            "1.0.5": {
+                "en": "adapter can create now asterisk configuration files",
+                "de": "Adapter kann jetzt Asterisk Konfigurationsdateien erstellen",
+                "ru": "Адаптер Asterisk теперь может создавать файлы конфигурации Asterisk",
+                "pt": "O adaptador Asterisk pode criar agora arquivos de configuração do asterisco",
+                "nl": "Asterisk-adapter kan nu asterisk-configuratiebestanden maken",
+                "fr": "Adaptateur astérisque peut créer maintenant des fichiers de configuration astérisque",
+                "it": "L'adattatore Asterisk può creare ora i file di configurazione dell'asterisco",
+                "es": "El adaptador de asterisco puede crear ahora archivos de configuración de asterisco",
+                "pl": "Adapter Asterisk może tworzyć teraz pliki konfiguracyjne z gwiazdką",
+                "zh-cn": "星号适配器可以创建现在的星号配置文件"
+            },
             "1.0.4": {
                 "en": "New instruction how to use adapter with Sipgate",
                 "de": "Neue Anleitung zur Verwendung des Adapters mit Sipgate",
@@ -229,7 +241,9 @@
         "ip": "192.168.1.1",
         "user": "manager",
         "password": "manager",
+        "siphost": "192.168.1.2",
         "sipuser": "123456789",
+        "sippassword": "",
         "path": "/tmp/",
         "language": "EN",
         "transcoder": "ffmpeg",
@@ -237,7 +251,8 @@
         "ssh": false,
         "sshport": 22,
         "sshuser": "",
-        "sshpassword": ""
+        "sshpassword": "",
+        "forceReInit": false
     },
     "objects": [],
     "instanceObjects": [

@@ -1,0 +1,38 @@
+[transport-udp]
+type = transport
+protocol = udp
+bind = 0.0.0.0:5060
+ 
+[iobroker]
+type = registration
+outbound_auth = iobroker
+server_uri = sip:${siphost}:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+client_uri = sip:${sipuser}@${siphost}:5060 ; Username, Password and IP address of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = auth
+auth_type = userpass
+password = ${sippassword} ; Change password of Fritzbox WLAN/LAN telephone
+username = ${sipuser}  ; Change username of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = aor
+contact = sip: ${siphost}:5060 ; Change hostname / IP address of Fritzbox
+
+[iobroker]
+type = endpoint
+context = ael-antwort
+outbound_auth = iobroker
+aors = iobroker
+disallow=all
+allow=ulaw
+allow=alaw
+allow=gsm
+from_domain = ${siphost} ; Change hostname / IP address of Fritzbox
+from_user = ${sipuser}     ; Change username of Fritzbox WLAN/LAN telephone
+
+[iobroker]
+type = identify
+endpoint = iobroker
+match = ${siphost} ; Change hostname / IP address of Fritzbox
+

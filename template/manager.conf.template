@@ -1,0 +1,12 @@
+[general]                                               ; Do not change
+enabled = yes                                           ; Do not change
+port = ${port}                                             ; Do not change
+bindaddr = 0.0.0.0                                      ; Do not change
+
+[${user}]                                               ; Do not change
+secret = ${password}                                    ; Change Manager password for ioBroker asterisk adapter
+permit = 0.0.0.0/0.0.0.0                                ; Change to your subnet and netmask
+read = all                                              ; Do not change
+write = all                                             ; Do not change
+
+
