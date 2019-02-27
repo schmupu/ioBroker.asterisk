@@ -2,6 +2,34 @@
 
 # ioBroker Asterisk VoIP Adapter
 
+## Install / Basic setting
+
+You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
+
+You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
+
+You shall install asterisk and ffmpeg on the same hardware as ioBroker! The reason is that the audio files are stored locally and accessible from ioBroker and asterisk. 
+
+If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](docs/SSH.md).
+
+if you use Linux (Raspberry for example) and ioBroker and asterisk runs on the same server, you have to install ffmpeg and asterisk like this: 
+
+### Linux Packages / ioBroker & asterisk running on same server with ffmpeg 
+```sh
+sudo apt-get install ffmpeg
+sudo apt-get install asterisk
+```
+
+### Linux Packages / ioBroker & asterisk running on same server with sox 
+If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
+
+```sh
+sudo apt-get install lame
+sudo apt-get install sox
+sudo apt-get install libsox-fmt-mp3
+sudo apt-get install asterisk
+```
+
 ## Install & Configuration of Asterisk with the Fritzbox by using PJSIP 
 
 First you have to install all the packages described [here](../README.md).

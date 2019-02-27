@@ -10,39 +10,12 @@
 
 [![NPM](https://nodei.co/npm/iobroker.asterisk.png?downloads=true)](https://nodei.co/npm/iobroker.asterisk/)
 
-The Asterisk adapter converts text messages to audio files and calls then over Asterisk by voip any telephone number you want and plays the audo message.
+The Asterisk adapter converts text messages to audio files and calls then over Asterisk by VoIP any telephone number you want and plays the audio message.
 
-## Install
+## Install / Configurations
 
-You have to install asterisk for voip calls and ffmpeg to transcode mp3 audofiles to GSM audiofiles on your ioBroker hardware. For creating text messages to audio messages the online text to speach tool from Google will be used. 
-
-You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs Computer. If you want to install asterisk in a docker container in bridge modus, you have to expose the UDP ports 5038,5060 and the UDP Ports 7078 to 7097. 
-
-You shall install asterisk and ffmpeg on the same hardware as ioBroker! The reason is that the audio files are stored locally and accessible from ioBroker and asterisk. 
-
-If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](docs/SSH.md).
-
-if you use Linux (Raspberry for example) and ioBroker and asterisk runs on the same server, you have to install ffmpeg and asterisk like this: 
-
-### Linux Packages / ioBroker & asterisk running on same server with ffmpeg 
-```sh
-sudo apt-get install ffmpeg
-sudo apt-get install asterisk
-```
-
-### Linux Packages / ioBroker & asterisk running on same server with sox 
-If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
-
-```sh
-sudo apt-get install lame
-sudo apt-get install sox
-sudo apt-get install libsox-fmt-mp3
-sudo apt-get install asterisk
-```
-
- ## Configuration
-
-Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your FritzBox! 
+Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone  or with your FritzBox! Please follow one
+of these installation guides. 
 
 - Configuration [Asterisk via SIP with the FritzBox](docs/SIP_FRITZBOX.md) (the easiest way)
 - Configuration [Asterisk via PJSIP with the FriztBox](docs/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
@@ -50,6 +23,30 @@ Asterisk has to connect for outgoing calls with your voip provider like Telekom 
 - Configuration [Asterisk via PJSIP with Sipgate as provider](docs/PJSIP_SIPGATE.md) 
 - Configuration [ssh/scp ](docs/SSH.md) (ioBroker and asterisk runs on different server)  
 
+## Using Asterisk
+
+### Using Asterisk with objects / states for dialing out
+
+The easiest way to use asterisk is through the ioBroker objects page. There, fill the following values under dialout parameter:
+* call: push button to initiate a call
+* callerid: telephonenumber which will be shown the callee
+* dtmf: the callee pressed numbers on the keypad
+* telnr: the number to be dialed
+* text: the text that will be played to the callee 
+
+![iobroker_dialout](iobroker_dialout.png)
+
+### Using Asterisk with objects / states for dialing in
+
+If you configured your SIP Provider (for example Fritzbox, Sipgate, ...) and the Asterisk Configuration to allow dialin calls you can set following parameter
+
+* callerid: telephonenumber which called asteriks
+* dtmf: callers pressed numbers on the keypad
+* text: the text that will be played to the caller  
+
+![iobroker_dialin](iobroker_dialin.png)
+
+### Using Asterisk with javascript or blocky for dialing out
 
 Now you can use the adapter in your javascript or blocky programms.
 
@@ -106,7 +103,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 ## Changelog
 
 ### 1.0.6 (27.02.2019)
-* (Stübi) Update documentation
+* (Stübi) Update documentation and templates
 
 ### 1.0.5 (26.02.2019)
 * (Stübi) Asterisk adapter can create now asterisk configuration files. You have to rename and move them afterwards to the /etc/asterisk directory 
