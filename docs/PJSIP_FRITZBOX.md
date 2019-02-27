@@ -84,7 +84,12 @@ You have to change in */etc/asterisk/rtp.conf* nothing. Copy only this file.
 [transport-udp]
 type = transport
 protocol = udp
-bind = 0.0.0.0:5060
+bind = 0.0.0.0
+ 
+[transport-tcp]
+type=transport
+protocol=tcp
+bind=0.0.0.0
  
 [iobroker]
 type = registration
@@ -95,14 +100,14 @@ client_uri = sip:123456789@192.168.1.1:5060 ; Username, Password and IP address 
 [iobroker]
 type = auth
 auth_type = userpass
-password = mypassword ; Change password of Fritzbox WLAN/LAN telephone
-username = 123456789  ; Change username of Fritzbox WLAN/LAN telephone
+password = mypassword ; Change to password of Fritzbox WLAN/LAN telephone
+username = 123456789  ; Change to username of Fritzbox WLAN/LAN telephone
 
 [iobroker]
 type = aor
 contact = sip:192.168.1.1:5060 ; Change hostname / IP address of Fritzbox
 
-[iobroker]
+[123456789]			 ; Change to username of Fritzbox WLAN/LAN telephone
 type = endpoint
 context = ael-antwort
 outbound_auth = iobroker
@@ -111,20 +116,20 @@ disallow=all
 allow=ulaw
 allow=alaw
 allow=gsm
-from_domain = 192.168.1.1 ; Change hostname / IP address of Fritzbox
-from_user = 123456789     ; Change username of Fritzbox WLAN/LAN telephone
+from_domain = 192.168.1.1 ; Change to hostname / IP address of Fritzbox
+from_user = 123456789     ; Change to username of Fritzbox WLAN/LAN telephone
 
 [iobroker]
 type = identify
-endpoint = iobroker
-match = 192.168.1.1 ; Change hostname / IP address of Fritzbox
+endpoint = 123456789 ; Change to username of Fritzbox WLAN/LAN telephone
+match = 192.168.1.1  ; Change to hostname / IP address of Fritzbox
 ```
 You have to change in */etc/asterisk/psip.conf* the IP/hostname of SIP Server, Username of SIP server  and Password of SIP Server.
 The IP/Hostname of SIP Server shall be the IP Adress of your Fritzbox.
-The Username of SIP Server must be **iobroker**
-The Password of SIP Server must be the Kennwort of your Fritzbox (Telefonie -> Anmeldedaten)
+The Username of SIP Server must be **Benutzername of your Fritzbox** (Telefonie -> Anmeldedaten)
+The Password of SIP Server must be the **Kennwort of your Fritzbox** (Telefonie -> Anmeldedaten)
 
-![iobroker_fritzbox_pjsip_man](iobroker_fritzbox_pjsip_man.png)
+![iobroker_fritzbox_pjsip](iobroker_fritzbox_pjsip.png)
 
 **/etc/asterisk/extensions.ael**
 ```sh

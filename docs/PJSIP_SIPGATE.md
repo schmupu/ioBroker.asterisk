@@ -79,7 +79,6 @@ endpoint_identifier_order=ip,username
 type = transport
 protocol = udp
 bind = 0.0.0.0
-local_net = 192.168.1.0/24	; Change here
 
 [iobroker]
 type = registration
@@ -102,12 +101,7 @@ realm = sipgate.de
 type = aor
 contact = sip:$sipid@sipgate.de
 
-[iobroker]
-type = identify
-endpoint = iobroker
-match = sipgate.de
-
-[iobroker]
+[$sipid]
 type = endpoint
 context = ael-antwort
 dtmf_mode = rfc4733
@@ -123,6 +117,12 @@ language = en
 outbound_auth = iobroker
 aors = iobroker
 
+[iobroker]
+type = identify
+endpoint = $sipid
+match = sipgate.de
+
+
 ```
 You have to change in */etc/asterisk/psip.conf* a view things. Please replace the place holder **sipid** and **sippw** like described:
 
@@ -131,10 +131,10 @@ You have to change in */etc/asterisk/psip.conf* a view things. Please replace th
 
 In the ioBroker Asterisk Admin you have to do following adjustments
 The IP/Hostname of SIP Server must be **sipgate.de**
-The Username of SIP Server must be **iobroker**
-The Password of SIP Server must be **password** of your Sigate account
+The Username of SIP Server must be **Sipgate Id ($sipid)**
+The Password of SIP Server must be **Sipgate password ($sippw)** of your Sipgate account
 
-![iobroker_sipgate_pjsip_man](iobroker_sipgate_pjsip_man.png)
+![iobroker_sipgate_pjsip](iobroker_sipgate_pjsip.png)
 
 **/etc/asterisk/extensions.ael**
 ```sh

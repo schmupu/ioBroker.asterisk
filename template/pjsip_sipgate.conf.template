@@ -12,31 +12,26 @@ type=transport
 protocol=tcp
 bind=0.0.0.0
 
-[${sipuser}]
+[iobroker]
 type = registration
 retry_interval = 20
 max_retries = 10
 contact_user = sipid
 expiration = 120
 transport = transport-udp
-outbound_auth = ${sipuser}
+outbound_auth = iobroker
 client_uri = sip:${sipuser}@${siphost}:5060
 server_uri = sip:${siphost}:5060
 
-[${sipuser}]
+[iobroker]
 type = auth
 username = ${sipuser}
 password = ${sippassword}
 realm = ${siphost}
 
-[${sipuser}]
+[iobroker]
 type = aor
 contact = sip:${sipuser}@${siphost}
-
-[${sipuser}]
-type = identify
-endpoint = ${sipuser}
-match = ${siphost}
 
 [${sipuser}]
 type = endpoint
@@ -51,6 +46,11 @@ timers = yes
 from_user = ${sipuser}
 from_domain = ${siphost}
 language = en
-outbound_auth = ${sipuser}
-aors = ${sipuser}
+outbound_auth = iobroker
+aors = iobroker
+
+[iobroker]
+type = identify
+endpoint = ${sipuser}
+match = ${siphost}
 

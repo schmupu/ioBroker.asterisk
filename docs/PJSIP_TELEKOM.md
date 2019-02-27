@@ -79,13 +79,11 @@ endpoint_identifier_order = ip,username
 type = transport
 protocol = udp
 bind = 0.0.0.0
-local_net = 192.168.1.0/24	; Change here
 
 [transport-tcp]
 type = transport
 protocol = tcp
 bind = 0.0.0.0
-local_net = 192.168.1.0/24	; Change here
 
 [iobroker]
 type = registration
@@ -107,6 +105,10 @@ username = $mynumber
 realm = tel.t-online.de
 
 [iobroker]
+type = aor
+contact = sip:$countrymynumber@tel.t-online.de	; Change here
+
+[$mynumber]
 type = endpoint
 transport = transport-udp
 context = ael-antwort
@@ -122,12 +124,8 @@ timers = no
 rtp_symmetric = yes
 
 [iobroker]
-type = aor
-contact = sip:$countrymynumber@tel.t-online.de	; Change here
-
-[iobroker]
 type = identify
-endpoint = iobroker
+endpoint = $mynumber
 match = 217.0.0.0/13
 
 ```
@@ -141,10 +139,10 @@ You have to change in */etc/asterisk/psip.conf* a view things. Please replace th
 
 In the ioBroker Asterisk Admin you have to do following adjustments
 The IP/Hostname of SIP Server must be **tel.t-online.de**
-The Username of SIP Server must be **iobroker**
-The Password of SIP Server must be **$pin:$zugangsnummer-$mitbenutzernr** of your telekom account
+The Username of SIP Server must be **Telekom telphonenumber ($mynumber)** (with area code, no spaces, no contry code)
+The Password of SIP Server must be **pin:zugangsnummer-mitbenutzernr** of your telekom account
 
-![iobroker_telekom_pjsip_man](iobroker_telekom_pjsip_man.png)
+![iobroker_telekom_pjsip](iobroker_telekom_pjsip.png)
 
 **/etc/asterisk/extensions.ael**
 ```sh

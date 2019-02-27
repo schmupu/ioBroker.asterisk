@@ -3,6 +3,18 @@
         "name": "asterisk",
         "version": "1.0.5",
         "news": {
+            "1.0.6": {
+                "en": "Update of the documentation and template files",
+                "de": "Update der Dokumentations- und Vorlagendateien",
+                "ru": "Обновление документации и шаблонов файлов",
+                "pt": "Atualização da documentação e arquivos de modelo",
+                "nl": "Update van de documentatie en sjabloonbestanden",
+                "fr": "Mise à jour de la documentation et des fichiers modèles",
+                "it": "Aggiornamento della documentazione e dei file modello",
+                "es": "Actualización de la documentación y archivos de plantilla.",
+                "pl": "Aktualizacja dokumentacji i plików szablonów",
+                "zh-cn": "更新文档和模板文件"
+            },
             "1.0.5": {
                 "en": "adapter can create now asterisk configuration files",
                 "de": "Adapter kann jetzt Asterisk Konfigurationsdateien erstellen",
