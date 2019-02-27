@@ -10,7 +10,7 @@ You can install asterisk and ffmpeg on Linux (Raspberry), Windows and Apple Macs
 
 You shall install asterisk and ffmpeg on the same hardware as ioBroker! The reason is that the audio files are stored locally and accessible from ioBroker and asterisk. 
 
-If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](docs/SSH.md).
+If you want still using separated server for ioBroker and Asterisk you can use the ssh support. You still install ffmpeg or sox on the ioBroker server. Asterisk and a ssh server on the asterisk server. You find the detailed installation [here ](SSH.md).
 
 if you use Linux (Raspberry for example) and ioBroker and asterisk runs on the same server, you have to install ffmpeg and asterisk like this: 
 
@@ -54,7 +54,7 @@ If you are done with the configuration of "Asterisk Settings" you switch to the 
 
 ![Iobroker_fritzbox_sip](iobroker_fritzbox_sip.png)
 
-Leave the "SSH" tab empty if asterisk and iobroker runs on the same machine (server). If you want to use ssh look here: Configuration [ssh/scp ](docs/SSH.md) (ioBroker and asterisk runs on different server).
+Leave the "SSH" tab empty if asterisk and iobroker runs on the same machine (server). If you want to use ssh look here: Configuration [ssh/scp ](SSH.md) (ioBroker and asterisk runs on different server).
 
 ### Automatic creating asterisk configuration files
 
