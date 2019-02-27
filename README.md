@@ -34,7 +34,7 @@ The easiest way to use asterisk is through the ioBroker objects page. There, fil
 * telnr: the number to be dialed
 * text: the text that will be played to the callee 
 
-![iobroker_dialout](iobroker_dialout.png)
+![iobroker_dialout](docs/iobroker_dialout.png)
 
 ### Using Asterisk with objects / states for dialing in
 
@@ -44,7 +44,7 @@ If you configured your SIP Provider (for example Fritzbox, Sipgate, ...) and the
 * dtmf: callers pressed numbers on the keypad
 * text: the text that will be played to the caller  
 
-![iobroker_dialin](iobroker_dialin.png)
+![iobroker_dialin](docs/iobroker_dialin.png)
 
 ### Using Asterisk with javascript or blocky for dialing out
 

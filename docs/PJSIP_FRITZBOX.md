@@ -32,8 +32,6 @@ sudo apt-get install asterisk
 
 ## Install & Configuration of Asterisk with the Fritzbox by using PJSIP 
 
-First you have to install all the packages described [here](../README.md).
-
 First you have to open the Fritzbox configuration and add a new LAN/WLAN telephone device. In my example, the FritzBox has the IP address 192.168.1.1 and the user name is *12345689* und the password is *mypassword* . The telphone number for outgoing and incoming calls is *03047114711*.
 
 ![Fritzbox1](fritzbox1.png)
@@ -92,7 +90,7 @@ bindaddr = 0.0.0.0					; Do not change
 
 [manager]						; Do not change
 secret = managerpassword				; Change Manager password for ioBroker asterisk adapter
-permit = 192.168.1.0/255.255.255.0  			; Change to your subnet and netmask
+permit = 0.0.0.0/0.0.0.0                                ; Change to your subnet and netmask if you like
 read = all						; Do not change
 write = all						; Do not change
 ```
@@ -153,9 +151,9 @@ endpoint = 123456789 ; Change to username of Fritzbox WLAN/LAN telephone
 match = 192.168.1.1  ; Change to hostname / IP address of Fritzbox
 ```
 You have to change in */etc/asterisk/psip.conf* the IP/hostname of SIP Server, Username of SIP server  and Password of SIP Server.
-The IP/Hostname of SIP Server shall be the IP Adress of your Fritzbox.
-The Username of SIP Server must be **Benutzername of your Fritzbox** (Telefonie -> Anmeldedaten)
-The Password of SIP Server must be the **Kennwort of your Fritzbox** (Telefonie -> Anmeldedaten)
+- The IP/Hostname of SIP Server shall be the IP Adress of your Fritzbox.
+- The Username of SIP Server must be **Benutzername of your Fritzbox** (Telefonie -> Anmeldedaten)
+- The Password of SIP Server must be the **Kennwort of your Fritzbox** (Telefonie -> Anmeldedaten)
 
 ![iobroker_fritzbox_pjsip](iobroker_fritzbox_pjsip.png)
 

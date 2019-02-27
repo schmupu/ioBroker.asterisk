@@ -32,8 +32,6 @@ sudo apt-get install asterisk
 
 ## Install & Configuration of Asterisk with the provider Telekom by using PJSIP 
 
-First you have to install all the packages described [here](../README.md).
-
 Configure the connection from ioBroker to the Asterisk server on "Asterisk Settings" tab. 
 This configuration is independent if you use as SIP Provider your Fritzbox, Telekom, Sipgate or an other vendor. Normaly the username is **manager** . You can choose any password you want. But manager username and manager password in ioBroker must be the same as in the manager.conf later.
 
@@ -83,7 +81,7 @@ bindaddr =  0.0.0.0					; Do not change
 
 [manager]						; Do not change
 secret =  managerpassword				; Change Manager password for ioBroker asterisk adapter
-permit =  192.168.1.0/255.255.255.0  			; Change to your subnet and netmask
+permit = 0.0.0.0/0.0.0.0                                ; Change to your subnet and netmask if you like
 read =  all						; Do not change
 write =  all						; Do not change
 ```
@@ -166,9 +164,9 @@ You have to change in */etc/asterisk/psip.conf* a view things. Please replace th
 - **$pin**					: your Telekom password (persönliches Kennwort) like 34242322
 
 In the ioBroker Asterisk Admin you have to do following adjustments
-The IP/Hostname of SIP Server must be **tel.t-online.de**
-The Username of SIP Server must be **Telekom telphonenumber ($mynumber)** (with area code, no spaces, no contry code)
-The Password of SIP Server must be **pin:zugangsnummer-mitbenutzernr** of your telekom account
+- The IP/Hostname of SIP Server must be **tel.t-online.de**
+- The Username of SIP Server must be **Telekom telphonenumber ($mynumber)** (with area code, no spaces, no contry code)
+- The Password of SIP Server must be **pin:zugangsnummer-mitbenutzernr** of your telekom account
 
 ![iobroker_telekom_pjsip](iobroker_telekom_pjsip.png)
 
