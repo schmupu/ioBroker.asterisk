@@ -342,6 +342,7 @@ function dial(command, parameter, msgid, callback) {
         if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
           parameter.audiofile = converter.getBasename(parameter.audiofile);
         }
+        if(!parameter.delete) { parameter.delete = 'delete'; } // delete file after dialing
         let language = parameter.language || adapter.config.language || systemLanguage;
         adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
         adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
@@ -393,6 +394,7 @@ function dial(command, parameter, msgid, callback) {
           let fileNameMP3 = parameter.audiofile;
           let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
           parameter.audiofile = converter.getBasename(parameter.audiofile);
+          if(!parameter.delete) { parameter.delete = ''; } // no delting of the file after dialing
           adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
           adapter.log.debug('Start converting MP3 audio file ' + fileNameMP3 + ' to GSM audio file ' + fileNameGSM);
           if (adapter.config.transcoder == 'sox') {

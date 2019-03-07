@@ -13,7 +13,14 @@ context ael-ansage {
 			SayDigits(${dtmf});
 		}
 		Hangup();
-        }
+    }
+
+	h =>  {
+    	if ("${del}" = "delete") {
+				NoOp(/bin/rm ${file}.*);
+                System(/bin/rm ${file}.*);
+		}
+	}	
 }
 
 context ael-antwort {
@@ -27,4 +34,8 @@ context ael-antwort {
 		}
     		Hangup();
 	}
+
+	_.  => {
+        Goto(ael-antwort,s,1);
+  	}	
 }

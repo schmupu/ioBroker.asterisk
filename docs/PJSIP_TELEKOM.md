@@ -173,39 +173,45 @@ In the ioBroker Asterisk Admin you have to do following adjustments
 **/etc/asterisk/extensions.ael**
 ```sh
 context default {
-  	1000  => {
+  	1000 => {
         Goto(ael-antwort,s,1);
   	}
 }
 
 context ael-ansage {
-	_. 	=> {
+	_. => {
         Answer();
         Wait(1);
 		Read(dtmf,${file}&beep,0,s,${repeat},1);
-		if ("${dtmf}"  ! =  "") {
+		if ("${dtmf}" != "") {
 			SayDigits(${dtmf});
 		}
 		Hangup();
-        }
+    }
+
+	h =>  {
+    	if ("${del}" = "delete") {
+				NoOp(/bin/rm ${file}.*);
+                System(/bin/rm ${file}.*);
+		}
+	}	
 }
 
 context ael-antwort {
-	s   => {
+	s  => {
 		Answer();
 		Wait(1);
-		Set(repeat = 5);
+		Set(repeat=5);
 		Read(dtmf,/tmp/asterisk_dtmf&beep,0,s,${repeat},1);
-		if ("${dtmf}"  ! =  "") {
+		if ("${dtmf}" != "") {
 			SayDigits(${dtmf});
 		}
-    		Hangup();
+    	Hangup();
 	}
 
 	_.  => {
         Goto(ael-antwort,s,1);
-  	}
-	  
+  	}	  
 }
 ```
 Copy the content above into the */etc/asterisk/extensions.ael* and do not change anything! If you change something here, your ioBroker dial command will not work.
