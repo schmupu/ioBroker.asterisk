@@ -107,7 +107,7 @@ function startAdapter(options) {
   // *****************************************************************************************************
   adapter.on('ready', () => {
     adapter.getForeignObject('system.config', (err, obj) => {
-      systemLanguage = (obj.common.language).toUpperCase();
+      if(obj.common && obj.common.language) systemLanguage = (obj.common.language).toUpperCase();
       if (adapter.config.password) {
         if (obj && obj.native && obj.native.secret) {
           //noinspection JSUnresolvedVariable
