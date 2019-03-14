@@ -108,7 +108,7 @@ Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. 
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2018 Thorsten <thorsten@stueben.de> / <https://github.com/schmupu>
+Copyright (c) 2018-2019 Thorsten Stueben <thorsten@stueben.de> / <https://github.com/schmupu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

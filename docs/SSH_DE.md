@@ -2,27 +2,14 @@
 
 # ioBroker Asterisk VoIP Adapter
 
-## Install Asterisk with using SSH 
+## Installation
 
-With ssh / scp option you have the posibility to install ioBroker and asterisk on different server. On the asterisk server you have to install additional a ssh server like oppenssh and you do not have to install astersik on the ioBroker server. 
+Mit der SSH kannst Du ioBroker und Asterisk auf unterschiedlichen Servern betreiben. Auf dem Asterisk Server musst Du einen SSH Server wie openssh installieren. 
 
-
-### Linux Packages / ioBroker on asterisk running on different server with ffmpeg 
+### Linux Pakete auf dem ioBroker und Asterisk Server
 ```sh
 # ioBroker server
 sudo apt-get install ffmpeg
-sudo apt install openssh-client
-```
-
-```sh
-# asterisk server
-sudo apt-get install asterisk
-sudo apt-get install openssh-server
-```
-
-### Linux Packages / ioBroker on asterisk running on different server with sox
-```sh
-# ioBroker server
 sudo apt-get install lame
 sudo apt-get install sox
 sudo apt-get install libsox-fmt-mp3
@@ -35,11 +22,9 @@ sudo apt-get install asterisk
 sudo apt-get install openssh-server
 ```
 
-## Configuration of Asterisk with using SSH 
-
-Now you need on the asterisk server an user with access to login by ssh. The user must have the unix user rights to write files which can read by asterisk. 
-You create on the asterisk server the directory with the name you configured in the iobroker asterisk adapter configuration under the name *'Path for temporary audio files'*. The path must be accessible and authorized for asterisk and ssh, because iobroker sends the generated audiofile (your text message), by scp to the asterisk server and save it in the 'Path for temporary audio files'. 
-After that ioBroker will send by the AMI api a message to asterisk to dial an play the generated audiofile saved in the given path.
+## Konfiguration von Asterisk mit SSH
+Nun musst Du auf dem Asterisk Server einen Benutzer einrichten, der über SSH erreichbar ist und Asterisk Benutzerberechtigungen besitzt. Damit ist sichergestellt, dass die kopierten Audiodateien per SSH von ioBroker für Asterik lesbar sind.
+Lege nun eine ein Verzeichnis auf dem Asterisk Server mit dem eben angelegten Benutzer an. Das Verzeichnis trägst Du in der ioBroker Konfiguration in dem Feld *'Path for temporary audio files'* ein. 
+Ist das geschehen muss die Instanz des Adapters neu gestartet werden. Jetzt werden Audiofiles in ioBroker erstellt und per scp an den Asterisk Server kopiert.
 
 ![ssh](iobroker_ssh.png)
-
