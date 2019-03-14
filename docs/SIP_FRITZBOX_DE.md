@@ -4,13 +4,13 @@
 
 ## Installation und Grundeinstellungen
 
-Dus musst für Asterisk das Paket ffmpeg oder sox installieren um MP3-Audiodateien in GSM-Audiodateien umzuwandeln. 
+Du musst für Asterisk das Paket ffmpeg oder sox installieren um MP3-Audiodateien in GSM-Audiodateien umzuwandeln. 
 
 Du kannst Asterisk unter Linux (Raspberry), Windows und Apple Macs Computer installieren. Wenn Du Asterisk in einem Docker-Container im Bridge-Modus installieren möchtest, musst Du Sie die UDP-Ports 5038,5060 und die UDP-Ports 7078 bis 7097 im Container exposen.
 
-Asterisk muss auf dem gleichen Server wie ioBroker installiert werden, da auf die Sprachnachrichten (Audiodateien) von ioBroker und Asterisk zugegriffen wird.
+Asterisk muss auf dem gleichen Server wie ioBroker installiert werden, da auf die Sprachnachrichten (Audiodateien) von ioBroker sowie Asterisk zugegriffen wird.
 
-Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du SSH nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein SSH Server muss auf dem Asterisk Server installiert sein. Eine detaillierte Installationsanleitung findest Du hier (SSH_DE.md).
+Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Eine detaillierte Installationsanleitung findest Du hier (SSH_DE.md). Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
 
 Unter Linux (z.B. Raspberry) installiere folgende Pakete:
 
@@ -54,8 +54,10 @@ Mehr Infos dazu findest Du unter [ssh/scp](SSH_DE.md).
 
 ### Automatische Erstellung der Asterisk Konfiguration
 
-Now you go on the "Asterisk Settings" tab and activate the checkbox "create asterisk config files (once)". Save and start the Asterisk instance. 
-copy following files from your /tmp/ to the /etc/asterisk/ directory. Please take a look first which user rights the files have before copying in  /etc/asterisk . Maybe you have to adjust the user rights afterwards.
+Gehe auf den Reiter "Asterisk Settings" und aktiviere das Kontrollkästchen "Anlegen der Asterisk Konfigurationsdateien (einmalig)". Drücke anschließend auf „Speichern und Schließen". Nun befinden sich die Konfigurationsdateien im /tmp/ Verzeichnis. Kopiere diese wie unten beschrieben das Verzeichnis /etc/asterisk. Die Benutzerberechtigungen der Dateien im /etc/asterisk Verzeichnis müssen unverändert bleiben. Vielleicht müssen die Berechtigungen nach dem Kopieren angepasst werden. 
+
+
+Bitte Dateien wie folgt kopieren:
 
 ```sh
 sudo mv /tmp/extensions.ael /etc/asterisk/extensions.ael
@@ -68,17 +70,17 @@ sudo chown asterisk:asterisk  /etc/asterisk/extensions.ael
 sudo chown asterisk:asterisk /etc/asterisk/manager.conf
 sudo chown asterisk:asterisk /etc/asterisk/sip.conf
 sudo chown asterisk:asterisk /etc/asterisk/rtp.conf
+
+# Asterisk neu starten
+sudo /etc/init.d/asterisk restart
 ```
 
-Now start asterisk again. For example with /etc/init.d/asterisk restart and restart the Asterisk iobroker instance. 
-Everything shall work now and you are done with the configuration.
-Please delete all config files in the /tmp/ directory, because your password is provide in the files.
+Ist der Kopiervorgang abgeschlossen muss erst die Asterisk und danach die Asterisk ioBroker Instanz neu gestartet werden. 
+Jetzt sollte der Asterisk Adapter funktionieren. Entferne noch die überflüssigen Konfigurationsdateien aus dem /tmp/ Verzeichnis da diese Passwörter enthalten.
 
-### Manual creating asterisk configuration files
+### Manuelle Erstellung der Asterisk Konfiguration
 
-Instead of creating the config files automatically, you can do it by your own. 
-Now you have to edit the follwoing asterisk configuration files. Delete the old staff in this 4 files! 
-Do not change the user authority and user rights of the files. 
+Die Konfigurationsdateien können auch manuell erstellt werden. Dafür sind die alten 4 Konfigurationsdateien durch die unten beschriebenen Dateien zu ersetzen. Dabei ändere nicht die Benutzerberechtigungen. 
 
 **/etc/asterisk/manager.conf**
 ```sh
@@ -94,7 +96,7 @@ read = all						; Do not change
 write = all						; Do not change
 ```
 
-You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit* (your subnet + subnet mask). 
+In der Datei */etc/asterisk/manager.conf* ersetzte die Werte für *secret* und *permit* mit (your subnet / subnet mask). 
 
 **/etc/asterisk/rtp.conf**
 ```sh
@@ -102,7 +104,7 @@ You have to change in */etc/asterisk/manager.conf* the values *secret*, *permit*
 rtpstart=30000
 rtpend=30100
 ```
-You have to change in */etc/asterisk/rtp.conf* nothing. Copy only this file.
+In der Datei */etc/asterisk/rtp.conf* änderst Du nichts. Kopiere diese nur.
 
 **/etc/asterisk/sip.conf** 
 ```sh
@@ -124,8 +126,9 @@ fromdomain = 192.168.1.1  		; Change hostname / IP address of Fritzbox
 fromuser = 123456789   	  		; Change username of Fritzbox WLAN/LAN telephone
 ```
 
-You have to change in */etc/asterisk/sip.conf* the *host* (IP Adress of Fritzbox or VoIP Provider), the *secret*, *username*, *fromuser* with the username configured in the Fritzbox or VoIP Provider. 
-Change the *callerid* with your phone number configured in the Fritzbox. Important, the Fritzbox username (Benutzername) musst only consist of number. Example: 12345689, 00004711 or 47110815 !!
+In der Datei */etc/asterisk/sip.conf* ändere *host* durch (IP Adresse der Fritzbox oder des VoIP Providers), *secret*, *username*, *fromuser* mit dem hinterlegtem Benutzernamen und Password in der Fritzbox oder Deines VoIP Anbieters. 
+
+Ändere die *callerid* mit der Telefnonnummer Deiner Fritzbox. Wichtig, der Fritzbox Benutzername darf nur aus Zahlen bestehen. Beispiel: 12345689, 00004711 oder 47110815 !!
 
 **/etc/asterisk/extensions.ael**
 ```sh
@@ -171,8 +174,6 @@ context ael-antwort {
   	}	  
 }
 ```
-Copy the content above into the */etc/asterisk/extensions.ael* and do not change anything! If you change something here, your ioBroker dial command will not work.
+Ersetze den Inhalt der Datei */etc/asterisk/extensions.ael* ohne Änderungen.
 
-For starting the asterisk server type */etc/init.d/asterisk start*
-Now you have to connect ioBroker with the asterisk server. If the ioBroker and the asterisk server use as IP adress 192.168.1.2 you have to configure this IP and the port, username and password from the */etc/asterisk/manager.conf* and the unsername of your sip.conf (for example 123456789). You have enter a path for temporary audio files. This path must be accessible and authorized for Asterisk and ioBroker. 
-
+Nun muss der Asterisk Server neu gestartet werden. Dieses geschieht z.b. über */etc/init.d/asterisk restart*. Nun sollte sich ioBroker mit dem Asterisk Server verbinden. 
