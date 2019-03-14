@@ -1,4 +1,4 @@
-![Logo](../admin/asterisk.png)
+![Logo](admin/asterisk.png)
 
 # ioBroker Asterisk VoIP Adapter
 
