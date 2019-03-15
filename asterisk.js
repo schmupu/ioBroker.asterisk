@@ -107,7 +107,7 @@ function startAdapter(options) {
   // *****************************************************************************************************
   adapter.on('ready', () => {
     adapter.getForeignObject('system.config', (err, obj) => {
-      if(obj && obj.common && obj.common.language) systemLanguage = (obj.common.language).toUpperCase();
+      if (obj && obj.common && obj.common.language) systemLanguage = (obj.common.language).toUpperCase();
       if (adapter.config.password) {
         if (obj && obj.native && obj.native.secret) {
           //noinspection JSUnresolvedVariable
@@ -263,13 +263,41 @@ function createConfigFile(configfiles, callback) {
   }
 }
 
+async function unlink(file) {
+  return new Promise((resolve, reject) => {
+    fs.unlink(srcfile, (err) => {
+      if (!err) {
+        adapter.log.debug('Deleting file : ' + srcfile);
+        resolve();
+      } else {
+        adapter.log.error('Error deleting srcfile ' + srcfile + ' : ' + err);
+        reject(err);
+      }
+    });
+  })
+}
+
+async function writeFile(file, content) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(file, content, (err) => {
+      if (!err) {
+        resolve();
+      } else {
+        // adapter.log.error('Error creating config file ' + dstfile + ' / ' + err);
+        reject(err);
+      }
+    });
+  })
+}
+
 // *****************************************************************************************************
 // SSH
 // *****************************************************************************************************
-function sendSSH(srcfile, dstfile) {
-  return new Promise((resolve, reject) => {
-    let ssh = new node_ssh();
-    ssh.connect({
+async function sendSSH(srcfile, dstfile) {
+  let ssh = new node_ssh();
+  let errormsg;
+  try {
+    await ssh.connect({
       host: adapter.config.ip,
       username: adapter.config.sshuser,
       port: adapter.config.sshport,
@@ -281,32 +309,16 @@ function sendSSH(srcfile, dstfile) {
         }
       }
     })
-      .then(() => {
-        adapter.log.info('scp ' + srcfile + ' ' + adapter.config.sshuser + '@' + adapter.config.ip + ':' + dstfile);
-        ssh.putFile(srcfile, dstfile)
-          .then(() => {
-            adapter.log.debug('Transfer of file with scp ' + srcfile + ' is done');
-            // deleting src file. Will not be needed anymore after tranfering
-            fs.unlink(srcfile, (err) => {
-              if (!err) {
-                adapter.log.debug('Deleting file : ' + srcfile);
-              } else {
-                adapter.log.error('Error deleting srcfile ' + srcfile + ' : ' + err);
-              }
-            });
-            resolve('Transfer of file with scp ' + srcfile + ' is done');
-          })
-          .catch((err) => {
-            adapter.log.error('scp transfer error: ' + err);
-            reject(err);
-          });
-      })
-      .catch((err) => {
-        // An error occured
-        adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
-        reject(err);
-      });
-  });
+  } catch (err) {
+    adapter.log.error('Error with scp connection: ' + JSON.stringify(err));
+  }
+  try {
+    adapter.log.info('scp ' + srcfile + ' ' + adapter.config.sshuser + '@' + adapter.config.ip + ':' + dstfile);
+    await ssh.putFile(srcfile, dstfile);
+    await unlink(srcfile);
+  } catch (error) {
+    adapter.log.error('scp transfer error: ' + err);
+  }
 }
 
 // *****************************************************************************************************
@@ -342,7 +354,7 @@ function dial(command, parameter, msgid, callback) {
         if (converter.getFilenameExtension(parameter.audiofile).toLowerCase() == 'gsm') {
           parameter.audiofile = converter.getBasename(parameter.audiofile);
         }
-        if(!parameter.delete) { parameter.delete = 'delete'; } // delete file after dialing
+        if (!parameter.delete) { parameter.delete = 'delete'; } // delete file after dialing
         let language = parameter.language || adapter.config.language || systemLanguage;
         adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
         adapter.log.debug('Start converting text message (' + parameter.text + ') to GSM audio ‚file ' + parameter.audiofile);
@@ -394,7 +406,7 @@ function dial(command, parameter, msgid, callback) {
           let fileNameMP3 = parameter.audiofile;
           let fileNameGSM = converter.getBasename(parameter.audiofile) + '.gsm';
           parameter.audiofile = converter.getBasename(parameter.audiofile);
-          if(!parameter.delete) { parameter.delete = ''; } // no delting of the file after dialing
+          if (!parameter.delete) { parameter.delete = ''; } // no delting of the file after dialing
           adapter.log.debug('Parameter: ' + JSON.stringify(parameter));
           adapter.log.debug('Start converting MP3 audio file ' + fileNameMP3 + ' to GSM audio file ' + fileNameGSM);
           if (adapter.config.transcoder == 'sox') {

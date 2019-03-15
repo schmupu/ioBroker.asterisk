@@ -2,6 +2,9 @@
 
 # ioBroker Asterisk VoIP Adapter
 
+### 1.0.8 (27.02.2019)
+* (Stübi) Redisign node v8 and async
+
 ### 1.0.6 (27.02.2019)
 * (Stübi) Update documentation and templates
 

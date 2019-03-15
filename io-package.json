@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "asterisk",
-        "version": "1.0.6",
+        "version": "1.0.7",
         "news": {
+            "1.0.7": {
+                "en": "Async"
+            },
             "1.0.6": {
                 "en": "Update of the documentation and template files",
                 "de": "Update der Dokumentations- und Vorlagendateien",
