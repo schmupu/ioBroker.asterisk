@@ -592,12 +592,12 @@ function dial(command, parameter, msgid, callback) {
           parameter.audiofile = converter.getBasename(dstfile);
           sendSSH(srcfile, dstfile)
             .then(() => {
-              adapter.log.info('Start dialing');
-              asterisk.dial(parameter, (err, res) => {
+              adapter.log.info('Start execute action');
+              asterisk.action(parameter, (err, res) => {
                 if (err) {
-                  adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+                  adapter.log.error('Error while executing action (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
                 } else {
-                  adapter.log.info('Dialing completed. Result: ' + JSON.stringify(res));
+                  adapter.log.info('Action completed. Result: ' + JSON.stringify(res));
                 }
                 adapter.log.debug('Calling callback function: ' + callback);
                 callback && callback(res, err);
@@ -607,12 +607,12 @@ function dial(command, parameter, msgid, callback) {
               callback && callback(null, err);
             });
         } else {
-          adapter.log.info('Start dialing');
-          asterisk.dial(parameter, (err, res) => {
+          adapter.log.info('Start execute action');
+          asterisk.action(parameter, (err, res) => {
             if (err) {
-              adapter.log.error('Error while dialing (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
+              adapter.log.error('Error while executing action (1). Error: ' + JSON.stringify(err) + ', Result: ' + JSON.stringify(res));
             } else {
-              adapter.log.info('Dialing completed. Result: ' + JSON.stringify(res));
+              adapter.log.info('Action completed. Result: ' + JSON.stringify(res));
             }
             adapter.log.debug('Calling callback function: ' + callback);
             callback && callback(res, err);
