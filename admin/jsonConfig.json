@@ -1,5 +1,5 @@
 {
-    "i18n": false,
+    "i18n": true,
     "type": "tabs",
     "items": {
         "_options": {
@@ -92,7 +92,7 @@
                 "path": {
                     "newLine": true,
                     "type": "text",
-                    "sm": 22,
+                    "sm": 12,
                     "md": 12,
                     "lg": 8,
                     "xl": 8,
