@@ -2,6 +2,7 @@
     "common": {
         "name": "asterisk",
         "version": "1.0.6",
+        "tier": 3,
         "news": {
             "1.0.6": {
                 "en": "Update of the documentation and template files",
@@ -13,187 +14,8 @@
                 "it": "Aggiornamento della documentazione e dei file modello",
                 "es": "Actualización de la documentación y archivos de plantilla.",
                 "pl": "Aktualizacja dokumentacji i plików szablonów",
-                "zh-cn": "更新文档和模板文件"
-            },
-            "1.0.5": {
-                "en": "adapter can create now asterisk configuration files",
-                "de": "Adapter kann jetzt Asterisk Konfigurationsdateien erstellen",
-                "ru": "Адаптер Asterisk теперь может создавать файлы конфигурации Asterisk",
-                "pt": "O adaptador Asterisk pode criar agora arquivos de configuração do asterisco",
-                "nl": "Asterisk-adapter kan nu asterisk-configuratiebestanden maken",
-                "fr": "Adaptateur astérisque peut créer maintenant des fichiers de configuration astérisque",
-                "it": "L'adattatore Asterisk può creare ora i file di configurazione dell'asterisco",
-                "es": "El adaptador de asterisco puede crear ahora archivos de configuración de asterisco",
-                "pl": "Adapter Asterisk może tworzyć teraz pliki konfiguracyjne z gwiazdką",
-                "zh-cn": "星号适配器可以创建现在的星号配置文件"
-            },
-            "1.0.4": {
-                "en": "New instruction how to use adapter with Sipgate",
-                "de": "Neue Anleitung zur Verwendung des Adapters mit Sipgate",
-                "ru": "Новая инструкция как использовать адаптер с Sipgate",
-                "pt": "Nova instrução de como usar o adaptador com o Sipgate",
-                "nl": "Nieuwe instructie voor het gebruik van de adapter met Sipgate",
-                "fr": "Nouvelle instruction sur l'utilisation de l'adaptateur avec Sipgate",
-                "it": "Nuove istruzioni su come utilizzare l'adattatore con Sipgate",
-                "es": "Nuevas instrucciones de uso del adaptador con Sipgate.",
-                "pl": "Nowa instrukcja użycia adaptera z Sipgate",
-                "zh-cn": "新指令如何使用Sipgate的适配器"
-            },
-            "1.0.3": {
-                "en": "SSH Support. You can have ioBroker and asterisk on different server",
-                "de": "SSH Unterstütztung. ioBroker und Asterisk können auf verschidenen Servern installiert werden",
-                "ru": "Поддержка SSH. ",
-                "pt": "Suporte SSH. ",
-                "nl": "SSH-ondersteuning. ",
-                "fr": "Prise en charge SSH. ",
-                "it": "Supporto SSH. ",
-                "es": "Soporte SSH. ",
-                "pl": "Wsparcie SSH. ",
-                "zh-cn": "SSH支持。"
-            },
-            "1.0.2": {
-                "en": "Support of compact mode",
-                "de": "Compact Modus Unterstützung",
-                "ru": "Поддержка компактного режима",
-                "pt": "Suporte do modo compacto",
-                "nl": "Ondersteuning van de compacte modus",
-                "fr": "Prise en charge du mode compact",
-                "it": "Supporto della modalità compatta",
-                "es": "Soporte de modo compacto.",
-                "pl": "Obsługa trybu kompaktowego",
-                "zh-cn": "支持紧凑模式"
-            },
-            "1.0.1": {
-                "en": "Calling without extension",
-                "de": "Wählen ohne extension",
-                "ru": "Звонок без расширения",
-                "pt": "Chamando sem extensão",
-                "nl": "Bellen zonder extensie",
-                "fr": "Appeler sans extension",
-                "it": "Chiamare senza estensione",
-                "es": "Llamando sin extensión",
-                "pl": "Dzwonienie bez rozszerzenia",
-                "zh-cn": "无延期通话"
-            },
-            "1.0.0": {
-                "en": "Instead using ffmpeg you can use now sox too",
-                "de": "Nutzung von sox statt ffmpeg bei Problemen",
-                "ru": "Вместо использования ffmpeg вы можете использовать и сейчас sox",
-                "pt": "Em vez disso, usando ffmpeg você pode usar agora sox também",
-                "nl": "In plaats van ffmpeg te gebruiken, kun je nu ook sox gebruiken",
-                "fr": "Au lieu d’utiliser ffmpeg, vous pouvez aussi utiliser maintenant sox",
-                "it": "Invece usando ffmpeg puoi usare anche ora sox",
-                "es": "En lugar de usar ffmpeg, puedes usar ahora también sox",
-                "pl": "Zamiast używania ffmpeg możesz teraz używać sox",
-                "zh-cn": "相反，使用ffmpeg你现在也可以使用sox"
-            },
-            "0.1.9": {
-                "en": "Language Update",
-                "de": "Sprache angepaßt",
-                "ru": "Обновление языка",
-                "pt": "Atualização de idioma",
-                "nl": "Taal update",
-                "fr": "Mise à jour de la langue",
-                "it": "Aggiornamento della lingua",
-                "es": "Actualización de idioma",
-                "pl": "Aktualizacja językowa",
-                "zh-cn": "语言更新"
-            },
-            "0.1.8": {
-                "en": "DTMF Code will be recognized",
-                "de": "Auswertung von DTMF Code",
-                "ru": "Код DTMF будет распознан",
-                "pt": "Código DTMF será reconhecido",
-                "nl": "DTMF-code wordt herkend",
-                "fr": "Le code DTMF sera reconnu",
-                "it": "Il codice DTMF sarà riconosciuto",
-                "es": "El código DTMF será reconocido",
-                "pl": "Kod DTMF zostanie rozpoznany",
-                "zh-cn": "DTMF代码将被识别"
-            },
-            "0.1.7": {
-                "en": "Bugfixing and DTMF Code will be recognized",
-                "de": "Fehlerbehebung und Auswertung von DTMF Code",
-                "ru": "Исправление ошибок и код DTMF будут распознаны",
-                "pt": "Bugfixing e Código DTMF serão reconhecidos",
-                "nl": "Bugfixing en DTMF-code worden herkend",
-                "fr": "La correction de bugs et le code DTMF seront reconnus",
-                "it": "Bugfixing e codice DTMF saranno riconosciuti",
-                "es": "Se reconocerán las correcciones de errores y el código DTMF.",
-                "pl": "Poprawione błędy i kod DTMF zostaną rozpoznane",
-                "zh-cn": "将识别错误修正和DTMF代码"
-            },
-            "0.1.6": {
-                "en": "Bugfixing and password will be saved encrypted",
-                "de": "Fehlerbehebung und Passwort wird verschlüsselt gespeichert",
-                "ru": "Исправление ошибок и пароль будут сохранены в зашифрованном виде",
-                "pt": "Correção de bugs e senha serão salvos criptografados",
-                "nl": "Bugfixing en wachtwoord worden versleuteld opgeslagen",
-                "fr": "La correction de bugs et le mot de passe seront enregistrés cryptés",
-                "it": "Bugfixing e password verranno salvati crittografati",
-                "es": "La corrección de errores y la contraseña se guardarán encriptadas",
-                "pl": "Naprawianie błędów i hasło zostaną zapisane w postaci zaszyfrowanej",
-                "zh-cn": "错误修正和密码将被加密保存"
-            },
-            "0.1.5": {
-                "en": "Bugfixing",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Corrigindo erro",
-                "nl": "bugfixing",
-                "fr": "Correction de bugs",
-                "it": "bugfixing",
-                "es": "Corrección de errores",
-                "pl": "Naprawa błędów",
-                "zh-cn": "Bugfixing"
-            },
-            "0.1.4": {
-                "en": "Bugfixing",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Corrigindo erro",
-                "nl": "bugfixing",
-                "fr": "Correction de bugs",
-                "it": "bugfixing",
-                "es": "Corrección de errores",
-                "pl": "Naprawa błędów",
-                "zh-cn": "Bugfixing"
-            },
-            "0.1.3": {
-                "en": "Bugfixing",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Corrigindo erro",
-                "nl": "bugfixing",
-                "fr": "Correction de bugs",
-                "it": "bugfixing",
-                "es": "Corrección de errores",
-                "pl": "Naprawa błędów",
-                "zh-cn": "Bugfixing"
-            },
-            "0.1.2": {
-                "en": "First version of ioBroker Asterisk VoIP Adapter",
-                "de": "Erste Version vom ioBroker Asterisk VoIP Adapter",
-                "ru": "Первая версия ioBroker Asterisk VoIP Adapter",
-                "pt": "Primeira versão do ioBroker Asterisk VoIP Adapter",
-                "nl": "Eerste versie van ioBroker Asterisk VoIP-adapter",
-                "fr": "Première version de l'adaptateur VoIP Asterisk ioBroker",
-                "it": "Prima versione di ioBroker Asterisk VoIP Adapter",
-                "es": "Primera versión de ioBroker Asterisk VoIP Adapter",
-                "pl": "Pierwsza wersja adaptera VoIP firmy ioBroker Asterisk",
-                "zh-cn": "第一版ioBroker Asterisk VoIP适配器"
-            },
-            "0.1.1": {
-                "en": "First version of ioBroker Asterisk VoIP Adapter",
-                "de": "Erste Version vom ioBroker Asterisk VoIP Adapter",
-                "ru": "Первая версия ioBroker Asterisk VoIP Adapter",
-                "pt": "Primeira versão do ioBroker Asterisk VoIP Adapter",
-                "nl": "Eerste versie van ioBroker Asterisk VoIP-adapter",
-                "fr": "Première version de l'adaptateur VoIP Asterisk ioBroker",
-                "it": "Prima versione di ioBroker Asterisk VoIP Adapter",
-                "es": "Primera versión de ioBroker Asterisk VoIP Adapter",
-                "pl": "Pierwsza wersja adaptera VoIP firmy ioBroker Asterisk",
-                "zh-cn": "第一版ioBroker Asterisk VoIP适配器"
+                "zh-cn": "更新文档和模板文件",
+                "uk": "Оновлення документації та файлів шаблонів"
             }
         },
         "title": "Asterisk VoIP",
@@ -207,7 +29,8 @@
             "it": "Asterisk VoIP",
             "es": "Asterisco VoIP",
             "pl": "Asterisk VoIP",
-            "zh-cn": "星号VoIP"
+            "zh-cn": "星号VoIP",
+            "uk": "Asterisk VoIP"
         },
         "desc": {
             "en": "Asterisk VoIP Adapter",
@@ -219,22 +42,12 @@
             "it": "Asterisk VoIP Adapter",
             "es": "Adaptador VoIP Asterisco",
             "pl": "Adapter Asterisk VoIP",
-            "zh-cn": "Asterisk VoIP适配器"
+            "zh-cn": "Asterisk VoIP适配器",
+            "uk": "VoIP-адаптер Asterisk"
         },
-        "license": "MIT",
         "authors": [
             "Thorsten Stueben <thorsten@stueben.de>"
         ],
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "messagebox": true,
-        "stopBeforeUpdate": true,
-        "subscribe": "messagebox",
-        "icon": "asterisk.png",
-        "materialize": true,
-        "compact": true,
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
         "keywords": [
             "voip",
             "asterisk",
@@ -243,14 +56,45 @@
             "speach",
             "call"
         ],
+        "licenseInformation": {
+            "license": "MIT",
+            "type": "free"
+        },
+        "platform": "Javascript/Node.js",
+        "icon": "asterisk.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
         "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
         "loglevel": "info",
+        "messagebox": true,
+        "mode": "daemon",
         "type": "communication",
-        "restartAdapters": []
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
+        "adminUI": {
+            "config": "json"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=5.0.19"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=6.4.4"
+            }
+        ]
     },
+    "protectedNative": [],
+    "encryptedNative": [
+        "password",
+        "sippassword",
+        "sshpassword"
+    ],
     "native": {
-        "port": 5038,
         "ip": "192.168.1.1",
+        "port": 5038,
         "user": "manager",
         "password": "manager",
         "siphost": "192.168.1.2",
@@ -269,6 +113,27 @@
     "objects": [],
     "instanceObjects": [
         {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
             "_id": "dialin",
             "type": "channel",
             "common": {
@@ -286,6 +151,29 @@
                 "read": true,
                 "write": true,
                 "def": "Please enter after the beep tone your passwort and press hashtag."
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.language",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "states": {
+                    "EN": "englisch",
+                    "DE": "deutsch",
+                    "RU": "русский",
+                    "PT": "português",
+                    "NL": "Nederlands",
+                    "FR": "français",
+                    "IT": "italiano",
+                    "ES": "español",
+                    "PL": "polski"
+                }
             },
             "native": {}
         },
@@ -333,6 +221,29 @@
                 "read": true,
                 "write": true,
                 "def": "ioBroker is calling you. Please call me back"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.language",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "states": {
+                    "EN": "englisch",
+                    "DE": "deutsch",
+                    "RU": "русский",
+                    "PT": "português",
+                    "NL": "Nederlands",
+                    "FR": "français",
+                    "IT": "italiano",
+                    "ES": "español",
+                    "PL": "polski"
+                }
             },
             "native": {}
         },

@@ -1,0 +1,242 @@
+{
+    "i18n": "i18n",
+    "type": "tabs",
+    "items": {
+        "_options": {
+            "type": "panel",
+            "label": "Main Settings",
+            "items": {
+                "language": {
+                    "type": "select",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Language of speech",
+                    "tooltip": "Language of speech",
+                    "options": [
+                        { "label": "englisch", "value": "EN" },
+                        { "label": "deutsch", "value": "DE" },
+                        { "label": "русский", "value": "RU" },
+                        { "label": "português", "value": "PT" },
+                        { "label": "Nederlands", "value": "NL" },
+                        { "label": "français", "value": "FR" },
+                        { "label": "italiano", "value": "IT" },
+                        { "label": "español", "value": "ES" },
+                        { "label": "polski", "value": "PL" }
+                    ]
+                },
+                "transcoder": {
+                    "type": "select",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Choose transcoder",
+                    "tooltip": "Choose transcoder",
+                    "options": [
+                        { "label": "ffmpeg", "value": "ffmpeg" },
+                        { "label": "sox", "value": "sox" }
+                    ]
+                },
+                "ip": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "IP / Hostname of Asterisk-Servers",
+                    "validator": "data.ip",
+                    "validatorNoSaveOnError": true
+                },
+                "port": {
+                    "type": "port",
+                    "min": 1,
+                    "max": 65535,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Port of Asterisk-Servers"
+                },
+                "user": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Username of asterisk Manager",
+                    "validator": "data.user",
+                    "validatorNoSaveOnError": true
+                },
+                "password": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Password of Asterisk Manager",
+                    "validator": "data.password",
+                    "validatorNoSaveOnError": true
+                },
+                "path": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 22,
+                    "md": 12,
+                    "lg": 8,
+                    "xl": 8,
+                    "xs": 24,
+                    "help": "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker",
+                    "validator": "data.path",
+                    "validatorNoSaveOnError": true
+                },
+                "forceReInit": {
+                    "newLine": true,
+                    "type": "checkbox",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "label": "Create Asterisk config files (once)",
+                    "tooltip": "Create Asterisk config files (once)"
+                }
+            }
+        },
+        "_sip": {
+            "type": "panel",
+            "label": "SIP Settings",
+            "items": {
+                "service": {
+                    "type": "select",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Serivce",
+                    "tooltip": "Service",
+                    "options": [
+                        { "label": "sip", "value": "sip" },
+                        { "label": "pjsip", "value": "pjsip" }
+                    ]
+                },
+                "siphost": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "IP / Hostname of SIP-Servers",
+                    "validator": "data.siphost",
+                    "validatorNoSaveOnError": true
+                },
+                "sipuser": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Username of SIP Server",
+                    "validator": "data.sipuser",
+                    "validatorNoSaveOnError": true
+                },
+                "sippassword": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Password of SIP Server",
+                    "validator": "data.sippassword",
+                    "validatorNoSaveOnError": true
+                }
+            }
+        },
+        "_ssh": {
+            "type": "panel",
+            "label": "SSH Settings",
+            "items": {
+                "ssh": {
+                    "newLine": true,
+                    "type": "checkbox",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "label": "Using SSH",
+                    "tooltip": "Using SSH"
+                },
+                "ip": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "readOnly": true,
+                    "help": "IP / Hostname of Asterisk-Servers",
+                    "tooltip": "SSH Server must run on Asterisk Server",
+                    "validator": "!data.ssh || data.ip",
+                    "validatorNoSaveOnError": true
+                },
+                "sshport": {
+                    "type": "port",
+                    "min": 1,
+                    "max": 65535,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Port of Asterisk-Servers"
+                },
+                "sshuser": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Username of SSH Server",
+                    "validator": "!data.ssh || data.sshuser",
+                    "validatorNoSaveOnError": true
+                },
+                "sshpassword": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4,
+                    "xs": 12,
+                    "help": "Password of SSH Server",
+                    "validator": "!data.ssh || data.sshpassword",
+                    "validatorNoSaveOnError": true
+                }
+            }
+        }
+    }
+}

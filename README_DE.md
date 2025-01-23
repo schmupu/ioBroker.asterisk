@@ -9,7 +9,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.asterisk.png?downloads=true)](https://nodei.co/npm/iobroker.asterisk/)
 
-[English manual / Englische Anleitung](README.md) 
+[English manual / Englische Anleitung](README.md)
 
 Der Asterisk Adapter wandelt Textnachrichten in Sprachnachrichten um und ruft dann über Asterisk per VoIP eine beliebige Telefonnummer an und spielt die Sprachnachricht vor.
 
@@ -19,20 +19,22 @@ Asterisk muss sich für ausgehende Gespräche mit Ihrem VoIP Provider wie mit de
 
 - Konfiguration [Asterisk mit SIP über die FritzBox](docs/SIP_FRITZBOX_DE.md) (der einfachste Weg)
 - Konfiguration [Asterisk mit PJSIP über die FriztBox](docs/PJSIP_FRITZBOX_DE.md) (pjsip ist moderner als pjsip, aber komplizierter)
-- Konfiguration [Asterisk mit PJSIP über die Telekom als SIP Provider](docs/PJSIP_TELEKOM_DE.md) 
-- Konfiguration [Asterisk mit PJSIP über Sipgate als SIP Provider](docs/PJSIP_SIPGATE_DE.md) 
-- Konfiguration [ssh/scp ](docs/SSH_DE.md) (ioBroker und Asterisk sind auf verschiedenen Servern installiert)  
+- Konfiguration [Asterisk mit PJSIP über die Telekom als SIP Provider](docs/PJSIP_TELEKOM_DE.md)
+- Konfiguration [Asterisk mit PJSIP über Sipgate als SIP Provider](docs/PJSIP_SIPGATE_DE.md)
+- Konfiguration [ssh/scp ](docs/SSH_DE.md) (ioBroker und Asterisk sind auf verschiedenen Servern installiert)
 
 ## Nutzung von Asterisk
 
 ### Nutzung von Asterisk mit Objketen / Status für ausgehende Annrufe
 
 Die einfachste Möglichkeit Asterisk zu verwenden ist es die Seite mit den ioBroker Objekten aufzurufen. Fülle dort die folgenden Felder unter dialout aus:
-* call: Anruf tätigen
-* callerid: Absender Telefonnummer. Wird dem angerufenem angezeigt
-* dtmf: Nummern die der Anrufer auf seinem Telefon gedrückt hat
-* telnr: Nummer des anzufrufendem 
-* text: Text dem der Anrufer vorgespielt wird
+
+- call: Anruf tätigen
+- callerid: Absender Telefonnummer. Wird dem angerufenem angezeigt
+- dtmf: Nummern die der Anrufer auf seinem Telefon gedrückt hat
+- telnr: Nummer des anzufrufendem
+- text: Text dem der Anrufer vorgespielt wird
+- language: der Text wird in dieser Sprache als Audio umgewandelt
 
 ![iobroker_dialout](docs/iobroker_dialout.png)
 
@@ -40,9 +42,10 @@ Die einfachste Möglichkeit Asterisk zu verwenden ist es die Seite mit den ioBro
 
 Wenn Du den SIP-Provider (zum Beispiel Fritzbox, Sipgate, ...) und die Asterisk Konfiguration so konfiguriert hast das eingehende Anrufe zulässt, kannst Du folgende Einstellungen in dialin vornehmen
 
-* callerid: Telefnommer von dem Anrufer
-* dtmf: Nummern die der Anrufer auf seinem Telefon gedrückt hat
-* text: Text dem der Anrufer vorgespielt wird
+- callerid: Telefnommer von dem Anrufer
+- dtmf: Nummern die der Anrufer auf seinem Telefon gedrückt hat
+- text: Text dem der Anrufer vorgespielt wird
+- language: der Text wird in dieser Sprache als Audio umgewandelt
 
 ![iobroker_dialin](docs/iobroker_dialin.png)
 
@@ -53,24 +56,24 @@ Beispielprogramm um jemanden anzurufen und eine Nachricht vorzuspielen
 ```sh
 var number   = "040 666-7766";
 var callerid = '040 123 999'; // Optional
-var msg      = "Hello, this textmessage will be converted to audio"; 
+var msg      = "Hello, this textmessage will be converted to audio";
 
 // rufe Telefonnumer 040 666-7766 and und spiele Textnachricht als Sprachnachricht ab
 sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, text:  msg},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
-});  
+});
 
 // rufe Telefonnummer 040 666-7766 an und spiele Audiodatei im MP3 Format ab
 // MP3 Datei muss auf dem Asterisk Server existieren
 sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.mp3'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
-});  
+});
 
 // rufe Telefonnummer 040 666-7766 an und spiele Audiodatei im GSM Format ab
 // GSM Datei muss auf dem Asterisk Server existieren
 sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.gsm'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
-});  
+});
 
 // Zeige bei eingehendem Anruf DTMF Nachricht an
 on({ id: "asterisk.0.dialin.dtmf"/*DTMF Code*/ },  (obj) => {
@@ -87,6 +90,7 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 ```
 
 > In der Anweisung sendTo dial können Sie folgende Parameter verwendet werden:
+>
 > - **language:** Sprache für die Umwandung der Textnachricht in eine Sprachnachricht (zulässige Werte: 'DE', 'EN', ... Der Standardwert ist die ioBroker Systemsprache)
 > - **repeat:** wie oft soll die Audio-Nachricht wiederholt werden (zulässige Werte 1 bis n, Standard 5)
 > - **priority:** Wenn du parallel viele sendTo-Dial-Anweisungen sendest, werden die Nachrichten mit der höchsten Priorität (1) zuerst gesendet (zulässige Werte 1 bis n, Standard 1).
@@ -95,20 +99,22 @@ on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
 > - **async:** Ermöglicht das auführen von mehreren Aufrufe ohne auf eine Antwort zu warten (zulässige Werte: false / true Standardwert false). Bei Async false, werden die Anrufe hintereinander getätigt.
 > - **audiofile:** Es wird das Audiofile abgespielt. Das muss im GSM oder MP3 Format vorliegen. Parameter **text** muss leer bleiben. Audiodatei muss auf dem Asterisk Server liegen.
 > - **callerid:** Absender Telefonnummer.
+> - **telnr:** Anzurufende Telefonunumer.
 
 ## Problembehebung
 
 Wenn Du Probleme hast, schaue in die Protokolldateien unter /var/log /asterisk auf dem Asterisk Server. Wenn asterisk läuft, kannst Du auch **asterisk -rvvvvvv** eingeben. Du siehst dann was Asterisk tut.
-Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. Damit erhält man allerhand mehr Informationen. 
+Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. Damit erhält man allerhand mehr Informationen.
 
 ## Changelog
 
 [Changelog](CHANGELOG.md)
 
 ## License
+
 The MIT License (MIT)
 
-Copyright (c) 2018-2019 Thorsten Stueben <thorsten@stueben.de> / <https://github.com/schmupu>
+Copyright (c) 2025 Thorsten Stueben <thorsten@stueben.de> / <https://github.com/schmupu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
