@@ -18,7 +18,6 @@
                 "uk": "Оновлення документації та файлів шаблонів"
             }
         },
-        "title": "Asterisk VoIP",
         "titleLang": {
             "en": "Asterisk VoIP",
             "de": "Asterisk VoIP",
@@ -86,7 +85,11 @@
             }
         ]
     },
-    "protectedNative": [],
+    "protectedNative": [
+        "password",
+        "sippassword",
+        "sshpassword"
+    ],
     "encryptedNative": [
         "password",
         "sippassword",

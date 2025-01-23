@@ -34,6 +34,7 @@ class asterisk extends utils.Adapter {
   configfiles;
   asterisk;
   tmppath;
+  timeouthandler;
   constructor(options = {}) {
     super({
       ...options,
@@ -359,7 +360,7 @@ class asterisk extends utils.Adapter {
     } catch (err) {
       this.log.error(`Error: ${tools.getErrorMessage(err)}`);
     }
-    this.setTimeout(async () => {
+    this.timeouthandler = this.setTimeout(async () => {
       await this.startAsterisk();
     }, 10 * 1e3);
   }
@@ -414,6 +415,9 @@ class asterisk extends utils.Adapter {
   async asteriskDisconnect() {
     if (this.asterisk) {
       this.log.debug(`Disconnecting from Asterisk`);
+      if (this.timeouthandler) {
+        this.clearTimeout(this.timeouthandler);
+      }
       await this.asterisk.disconnectAsync();
       let count = 0;
       while (this.asterisk.isConnected()) {

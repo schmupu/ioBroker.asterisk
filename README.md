@@ -55,37 +55,37 @@ If you configured your SIP Provider (for example Fritzbox, Sipgate, ...) and the
 Now you can use the adapter in your javascript or blocky programms.
 
 ```sh
-var number   = "040 666-7766";
-var callerid = '040 123 999'; // optional, if not set anonymous call
-var msg      = "Hello, this textmessage will be converted to audio";
+const number   = '040 666-7766';
+const callerid = '040 123 999'; // optional, if not set anonymous call
+const msg      = 'Hello, this textmessage will be converted to audio';
 
 // call telephone nummber 040 666-7766 and play text message as audio
-sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, text:  msg},  (res) => {
-      console.log('Result: ' + JSON.stringify(res));
+sendTo('asterisk.0', 'dial', { telnr: number, callerid: callerid, text:  msg},  (res) => {
+      console.log(`Result: ${JSON.stringify(res)}`);
 });
 
 // call telephone nummber 040 666-7766 and play mp3 audio file
 // mp3 file has to exist on asterix server
-sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.mp3'},  (res) => {
-      console.log('Result: ' + JSON.stringify(res));
+sendTo('asterisk.0', 'dial', { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.mp3'},  (res) => {
+      console.log(`Result: ${JSON.stringify(res)}`);
 });
 
 // call telephone nummber 040 666-7766 and play gsm audio file
 // gsm file has to exist on asterix server
-sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.gsm'},  (res) => {
-      console.log('Result: ' + JSON.stringify(res));
+sendTo('asterisk.0', 'dial', { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.gsm'},  (res) => {
+      console.log(`Result: ${JSON.stringify(res)}`);
 });
 
 // Show entered DTMF code
-on({ id: "asterisk.0.dialin.dtmf"/*DTMF Code*/ },  (obj) => {
-    let dtmf = obj.state.val;
-    console.log("DTMF: " + dtmf);
+on({ id: 'asterisk.0.dialin.dtmf'/*DTMF Code*/ },  (obj) => {
+    const dtmf = obj.state.val;
+    console.log(`DTMF: ${dtmf}`);
 });
 
 // Show entered DTMF code
-on({ id: "asterisk.0.dialout.dtmf"/*DTMF Code*/ },  (obj) => {
-    let dtmf = obj.state.val;
-    console.log("DTMF: " + dtmf);
+on({ id: 'asterisk.0.dialout.dtmf'/*DTMF Code*/ },  (obj) => {
+    const dtmf = obj.state.val;
+    console.log(`DTMF: ${dtmf}`);
 });
 
 ```
@@ -108,7 +108,34 @@ If you have problems with asterisk, you can try to find something in the logfile
 
 ## Changelog
 
-[Changelog](CHANGELOG.md)
+### **WORK IN PROGRESS**
+
+- (Stübi) Redesign of Asterisk
+- (Stübi) Switching from Javascript to Typescript
+- (Stübi) Nodes 20 and 22 are now supported
+- (Stübi) js controllers in versions 6 and 7 are supported
+- (Stübi) Attention: Passwords must be re-entered from this version!
+- (Stübi) Language object added
+- (Stübi) Revision of the reconnect if Asterisk is restarted once
+- (Stübi) Fixing errors from repository checker (Issue #51)
+
+### 1.0.6 (27.02.2019)
+
+- (Stübi) Update documentation and templates
+- (Stübi) Asterisk adapter can create now asterisk configuration files. You have to rename and move them afterwards to the /etc/asterisk directory
+- (Stübi) a new documentation for using Sipgate as provide.
+- (Stübi) Now you can call internal fritzbox numbers. You must change your extensions.ael if you install the version 1.0.4! (replace **10 => { ... }** with **\_. => { ... }**)
+- (Stübi) You can install asterisk on a different server and use scp to transfer audio files from ioBroker to asterisk.
+- (Stübi) You can use the service PJSIP instead of SIP now.
+- (Stübi) Support js-controller compact mode
+- (Stübi) Calling without extension, if you do not use the fritzbox for example (leave sip.conf username in adapter config empty)
+- (Stübi) Instead of ffmpeg you can use now sox too
+- (Stübi) Update with languages
+- (Stübi) Add Callerid to dialin states
+- (Stübi) A lot of new features. Now you can call ioBroker / Asterisk by telephone number and enter a DTMF Code.
+- (Stübi) You can enter a DTMF Code if you get called by ioBroker / Asterisk
+- (Stübi) Bugfixing and password will be saved encrypted and text message size can be unlimited
+- (Stübi) First Version
 
 ## License
 

@@ -1,5 +1,5 @@
 {
-    "i18n": "i18n",
+    "i18n": false,
     "type": "tabs",
     "items": {
         "_options": {
@@ -96,7 +96,7 @@
                     "md": 12,
                     "lg": 8,
                     "xl": 8,
-                    "xs": 24,
+                    "xs": 12,
                     "help": "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker",
                     "validator": "data.path",
                     "validatorNoSaveOnError": true
