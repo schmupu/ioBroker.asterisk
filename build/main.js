@@ -418,14 +418,17 @@ class asterisk extends utils.Adapter {
       if (this.timeouthandler) {
         this.clearTimeout(this.timeouthandler);
       }
-      await this.asterisk.disconnectAsync();
-      let count = 0;
-      while (this.asterisk.isConnected()) {
-        count++;
-        if (count > 1e3) {
-          throw new Error(`Could not disconnect to Asterisk`);
+      try {
+        await this.asterisk.disconnectAsync();
+        let count = 0;
+        while (this.asterisk.isConnected()) {
+          count++;
+          if (count > 1e3) {
+            throw new Error(`Could not disconnect to Asterisk`);
+          }
+          await tools.wait(20 / 1e3);
         }
-        await tools.wait(20 / 1e3);
+      } catch (err) {
       }
     }
   }
