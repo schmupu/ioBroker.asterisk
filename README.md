@@ -229,8 +229,7 @@ on({ id: 'asterisk.0.dialout.dtmf'/*DTMF Code*/ },  (obj) => {
 If you have problems with asterisk, you can try to find something in the logfiles under /var/log/asterisk. After you started asterisk you can call asterisk with asterisk -rvvvvvv on the comand shell for debugging. After you started asterisk -rvvvvvv you can initialize a call by iobroker and see what happens.
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 2.0.0 (2025-01-24)
 
 - (Stübi) Redesign of Asterisk
 - (Stübi) Switching from Javascript to Typescript
