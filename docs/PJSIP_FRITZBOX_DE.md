@@ -10,19 +10,9 @@ Du kannst Asterisk unter Linux (Raspberry), Windows und Apple Macs Computer inst
 
 Asterisk muss auf dem gleichen Server wie ioBroker installiert werden, da auf die Sprachnachrichten (Audiodateien) von ioBroker sowie Asterisk zugegriffen wird.
 
-Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Eine detaillierte Installationsanleitung findest Du hier (SSH_DE.md). Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
+Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
 
 Unter Linux (z.B. Raspberry) installiere folgende Pakete:
-
-### Linux Pakete / ioBroker & Asterisk laufen auf dem gleichen Server
-
-```sh
-sudo apt-get install ffmpeg
-sudo apt-get install lame
-sudo apt-get install sox
-sudo apt-get install libsox-fmt-mp3
-sudo apt-get install asterisk
-```
 
 ## Installation und Konfiguration
 
@@ -50,7 +40,6 @@ Wenn Du mit den "Asterisk Einstellungen" fertig bist, wechsle auf die Registerka
 ![iobroker_fritzbox_pjsip](iobroker_fritzbox_pjsip.png)
 
 Die Registerkarte "SSH" lässt Du leer. Diese ist nur auszufüllen wenn Asterisk nicht auf dem gleichen Server wie ioBroker läuft.
-Mehr Infos dazu findest Du unter [ssh/scp](SSH_DE.md).
 
 ### Automatische Erstellung der Asterisk Konfiguration
 

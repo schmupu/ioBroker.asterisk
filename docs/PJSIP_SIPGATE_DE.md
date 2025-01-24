@@ -4,35 +4,26 @@
 
 ## Grundeinstellungen
 
-Du musst für Asterisk das Paket ffmpeg oder sox installieren um MP3-Audiodateien in GSM-Audiodateien umzuwandeln. 
+Du musst für Asterisk das Paket ffmpeg oder sox installieren um MP3-Audiodateien in GSM-Audiodateien umzuwandeln.
 
 Du kannst Asterisk unter Linux (Raspberry), Windows und Apple Macs Computer installieren. Wenn Du Asterisk in einem Docker-Container im Bridge-Modus installieren möchtest, musst Du Sie die UDP-Ports 5038,5060 und die UDP-Ports 7078 bis 7097 im Container exposen.
 
 Asterisk muss auf dem gleichen Server wie ioBroker installiert werden, da auf die Sprachnachrichten (Audiodateien) von ioBroker sowie Asterisk zugegriffen wird.
 
-Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Eine detaillierte Installationsanleitung findest Du hier (SSH_DE.md). Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
+Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
 
 Unter Linux (z.B. Raspberry) installiere folgende Pakete:
 
-### Linux Pakete / ioBroker & Asterisk laufen auf dem gleichen Server 
-```sh
-sudo apt-get install ffmpeg
-sudo apt-get install lame
-sudo apt-get install sox
-sudo apt-get install libsox-fmt-mp3
-sudo apt-get install asterisk
-```
+## Installation und Konfiguration
 
-## Installation und Konfiguration 
-
-Zuerst musst Du die Verbindung zwischen ioBroker und  Asterisk auf der Registerkarte "Asterisk Einstellungen" konfigurieren.
+Zuerst musst Du die Verbindung zwischen ioBroker und Asterisk auf der Registerkarte "Asterisk Einstellungen" konfigurieren.
 Normalerweise lautet der Benutzername **manager**. Du kannst ein beliebiges Passwort auswählen. Der Benutzername und das Passwort müssen jedoch später mit den Einträgen in der manager.conf identisch sein.
-Diese Konfiguration ist unabhängig vom  SIP-Provider wie z.B. Fritzbox, Telekom oder Sipgate.
+Diese Konfiguration ist unabhängig vom SIP-Provider wie z.B. Fritzbox, Telekom oder Sipgate.
 .
 
 ![iobroker_main](iobroker_main.png)
 
-Wenn Du mit den "Asterisk Einstellungen" fertig bist, wechsle auf die Registerkarte "SIP Einstellungen". Wähle als Service **pjsip** aus.  Gebe nun folgendes ein:
+Wenn Du mit den "Asterisk Einstellungen" fertig bist, wechsle auf die Registerkarte "SIP Einstellungen". Wähle als Service **pjsip** aus. Gebe nun folgendes ein:
 
 1. IP/Hostname of SIP Server : Gebe hier **sipgate.de** als Hostnamen an
 2. Username of SIP Server: Hinterlege hier Deinen Sipgate Id. For Beispiel 2456379f
@@ -60,14 +51,15 @@ sudo chown asterisk:asterisk /etc/asterisk/rtp.conf
 sudo /etc/init.d/asterisk restart
 ```
 
-Ist der Kopiervorgang abgeschlossen muss erst die Asterisk und danach die Asterisk ioBroker Instanz neu gestartet werden. 
+Ist der Kopiervorgang abgeschlossen muss erst die Asterisk und danach die Asterisk ioBroker Instanz neu gestartet werden.
 Jetzt sollte der Asterisk Adapter funktionieren. Entferne noch die überflüssigen Konfigurationsdateien aus dem /tmp/ Verzeichnis da diese Passwörter enthalten.
 
 ### Manuelle Erstellung der Asterisk Konfiguration
 
 Die Konfigurationsdateien können auch manuell erstellt werden. Dafür sind die alten 4 Konfigurationsdateien durch die unten beschriebenen Dateien zu ersetzen. Dabei ändere nicht die Benutzerberechtigungen.
- 
+
 **/etc/asterisk/manager.conf**
+
 ```sh
 [general]						; Do not change
 enabled = yes						; Do not change
@@ -80,18 +72,21 @@ permit = 0.0.0.0/0.0.0.0                                ; Change to your subnet 
 read = all						; Do not change
 write = all						; Do not change
 ```
-In der Datei */etc/asterisk/manager.conf* ersetzte die Werte für *secret* und *permit* mit (your subnet / subnet mask).
 
+In der Datei _/etc/asterisk/manager.conf_ ersetzte die Werte für _secret_ und _permit_ mit (your subnet / subnet mask).
 
 **/etc/asterisk/rtp.conf**
+
 ```sh
 [general]
 rtpstart=30000
 rtpend=30100
 ```
-In der Datei */etc/asterisk/rtp.conf* änderst Du nichts. Kopiere diese nur.
 
-**/etc/asterisk/pjsip.conf** 
+In der Datei _/etc/asterisk/rtp.conf_ änderst Du nichts. Kopiere diese nur.
+
+**/etc/asterisk/pjsip.conf**
+
 ```sh
 [global]
 type=global
@@ -146,12 +141,14 @@ match = sipgate.de
 
 
 ```
-Ersetze in der */etc/asterisk/psip.conf* die Platzhalter **sipid** und **sippw** wie beschrieben:
 
-- **$sipid** 				: Deine SIP Gate Id ohne führendes $ 
-- **$sippw** 				: Dein SIP Passwort ohne führendes $ 
+Ersetze in der _/etc/asterisk/psip.conf_ die Platzhalter **sipid** und **sippw** wie beschrieben:
+
+- **$sipid** : Deine SIP Gate Id ohne führendes $
+- **$sippw** : Dein SIP Passwort ohne führendes $
 
 In der ioBroker Asterisk Konfiguration nehme folgende Einstellungen vor:
+
 - Die IP-Adresse/Hostname des SIP Servers latutet **sipgate.de**
 - Der Benutzername des SIP Servers ist Dein **Sipgate Id ($sipid)**
 - Das Passwort des SIP Servers ist Dein **Sipgate password ($sippw)**
@@ -159,6 +156,7 @@ In der ioBroker Asterisk Konfiguration nehme folgende Einstellungen vor:
 ![iobroker_sipgate_pjsip](iobroker_sipgate_pjsip.png)
 
 **/etc/asterisk/extensions.ael**
+
 ```sh
 context default {
   	1000 => {
@@ -182,7 +180,7 @@ context ael-ansage {
 				NoOp(/bin/rm ${file}.*);
                 System(/bin/rm ${file}.*);
 		}
-	}	
+	}
 }
 
 context ael-antwort {
@@ -199,9 +197,10 @@ context ael-antwort {
 
 	_.  => {
         Goto(ael-antwort,s,1);
-  	}	  
+  	}
 }
 ```
-Ersetze den Inhalt der Datei */etc/asterisk/extensions.ael* ohne Änderungen.
 
-Nun muss der Asterisk Server neu gestartet werden. Dieses geschieht z.b. über */etc/init.d/asterisk restart*. Nun sollte sich ioBroker mit dem Asterisk Server verbinden. 
+Ersetze den Inhalt der Datei _/etc/asterisk/extensions.ael_ ohne Änderungen.
+
+Nun muss der Asterisk Server neu gestartet werden. Dieses geschieht z.b. über _/etc/init.d/asterisk restart_. Nun sollte sich ioBroker mit dem Asterisk Server verbinden.

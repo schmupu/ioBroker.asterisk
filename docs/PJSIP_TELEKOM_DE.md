@@ -10,18 +10,9 @@ Du kannst Asterisk unter Linux (Raspberry), Windows und Apple Macs Computer inst
 
 Asterisk muss auf dem gleichen Server wie ioBroker installiert werden, da auf die Sprachnachrichten (Audiodateien) von ioBroker sowie Asterisk zugegriffen wird.
 
-Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Eine detaillierte Installationsanleitung findest Du hier (SSH_DE.md). Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
+Sollten ioBroker und Asterisk auf getrennten Servern laufen kannst Du ssh dafür nutzen. Hier wird weiterhin ffmpeg oder sox auf dem ioBroker Server benötigt. Ein ssh Client muss auf dem ioBroker Server und ein ssh Server auf dem Asterisk Server installiert sein. Die Trennung von ioBroker und Asterisk sollte nur vorgenommen werden, wenn man gute Linux Kenntnisse hat.
 
 Unter Linux (z.B. Raspberry) installiere folgende Pakete:
-
-### Linux Pakete / ioBroker & Asterisk laufen auf dem gleichen Server
-```sh
-sudo apt-get install ffmpeg
-sudo apt-get install lame
-sudo apt-get install sox
-sudo apt-get install libsox-fmt-mp3
-sudo apt-get install asterisk
-```
 
 ## Installation und Konfiguration
 
@@ -36,7 +27,7 @@ Wenn Du mit den "Asterisk Einstellungen" fertig bist, wechsle auf die Registerka
 
 1. IP/Hostname of SIP Server : Gebe hier **tel.t-online.de** als Hostname ein
 2. Username of SIP Server: Hinterlege Deine Telefonnummer mit Vorwahl (ohne Ländervorwahl!). Beispiel: 03047114711 (keine Leezeichen)
-3. Password of SIP Server: Dein T-Online Passwort in folgndem Format   **PIN:ZUGANGSNUMMER-MITBENUTZERNUMMER** . Beispiel: 23457830:323127211711-0001
+3. Password of SIP Server: Dein T-Online Passwort in folgndem Format **PIN:ZUGANGSNUMMER-MITBENUTZERNUMMER** . Beispiel: 23457830:323127211711-0001
 
 ![iobroker_telekom_pjsip](iobroker_telekom_pjsip.png)
 
@@ -68,6 +59,7 @@ Jetzt sollte der Asterisk Adapter funktionieren. Entferne noch die überflüssig
 Die Konfigurationsdateien können auch manuell erstellt werden. Dafür sind die alten 4 Konfigurationsdateien durch die unten beschriebenen Dateien zu ersetzen. Dabei ändere nicht die Benutzerberechtigungen.
 
 **/etc/asterisk/manager.conf**
+
 ```sh
 [general]                       ; Do not change
 enabled =  yes                      ; Do not change
@@ -80,18 +72,21 @@ permit = 0.0.0.0/0.0.0.0                                ; Change to your subnet 
 read =  all                     ; Do not change
 write =  all                        ; Do not change
 ```
-In der Datei */etc/asterisk/manager.conf* ersetzte die Werte für *secret* und *permit* mit (your subnet / subnet mask).
+
+In der Datei _/etc/asterisk/manager.conf_ ersetzte die Werte für _secret_ und _permit_ mit (your subnet / subnet mask).
 
 **/etc/asterisk/rtp.conf**
+
 ```sh
 [general]
 rtpstart = 30000
 rtpend = 30100
 ```
 
-In der Datei */etc/asterisk/rtp.conf* änderst Du nichts. Kopiere diese nur.
+In der Datei _/etc/asterisk/rtp.conf_ änderst Du nichts. Kopiere diese nur.
 
 **/etc/asterisk/pjsip.conf**
+
 ```sh
 [global]
 type = global
@@ -151,15 +146,17 @@ endpoint = $mynumber
 match = 217.0.0.0/13
 
 ```
-Du musst folgende Felder in der */etc/asterisk/psip.conf* ändern. 
 
-- **$mynumber**      	   : Meine Telefonnummer mit Vorwahl. Beispiel: 03047114711 (keine Leerzeichen)
-- **$countrymynumber**      : Meine Telefonnummer mit Ländercode und Vorwahl. Beispiel: +493047114711 (keine Leerzeichen)
-- **$zugangsnummer**        : T-Online Zungangsnummer wie z.B. 532496966969
-- **$mitbenutzernr**        : Mitbenutzernummer wie z.B. 0001
-- **$pin**                  : Deine Telekom / T-Online Passwort (persönliches Kennwort). Beispiel: 34242322
+Du musst folgende Felder in der _/etc/asterisk/psip.conf_ ändern.
+
+- **$mynumber** : Meine Telefonnummer mit Vorwahl. Beispiel: 03047114711 (keine Leerzeichen)
+- **$countrymynumber** : Meine Telefonnummer mit Ländercode und Vorwahl. Beispiel: +493047114711 (keine Leerzeichen)
+- **$zugangsnummer** : T-Online Zungangsnummer wie z.B. 532496966969
+- **$mitbenutzernr** : Mitbenutzernummer wie z.B. 0001
+- **$pin** : Deine Telekom / T-Online Passwort (persönliches Kennwort). Beispiel: 34242322
 
 In der ioBroker Asterisk Konfiguration nehme folgende Einstellungen vor:
+
 - Die IP-Adresse/Hostname des SIP Servers lautet **tel.t-online.de**
 - Der Benutzername des SIP Servers ist Deine **Telekom telphonenumber ($mynumber)** (Mit Vorwahl, ohne Ländercode und ohne Leerzeichen)
 - Das Passwort des SIP Servers ist Dein **pin:zugangsnummer-mitbenutzernr** of your telekom account
@@ -167,6 +164,7 @@ In der ioBroker Asterisk Konfiguration nehme folgende Einstellungen vor:
 ![iobroker_telekom_pjsip](iobroker_telekom_pjsip.png)
 
 **/etc/asterisk/extensions.ael**
+
 ```sh
 context default {
    1000 => {
@@ -190,7 +188,7 @@ context ael-ansage {
                 NoOp(/bin/rm ${file}.*);
                System(/bin/rm ${file}.*);
         }
-    }   
+    }
 }
 
 context ael-antwort {
@@ -207,9 +205,10 @@ context ael-antwort {
 
     _.  => {
        Goto(ael-antwort,s,1);
-   }	
+   }
 }
 ```
-Ersetze den Inhalt der Datei */etc/asterisk/extensions.ael* ohne Änderungen.
 
-Nun muss der Asterisk Server neu gestartet werden. Dieses geschieht z.b. über */etc/init.d/asterisk restart*. Nun sollte sich ioBroker mit dem Asterisk Server verbinden.
+Ersetze den Inhalt der Datei _/etc/asterisk/extensions.ael_ ohne Änderungen.
+
+Nun muss der Asterisk Server neu gestartet werden. Dieses geschieht z.b. über _/etc/init.d/asterisk restart_. Nun sollte sich ioBroker mit dem Asterisk Server verbinden.

@@ -22,7 +22,7 @@ of these installation guides.
 
 ```sh
 sudo apt-get install ffmpeg
-# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+# if asterisk package is missing, follow the instructions "Install asterisk manual"
 sudo apt-get install asterisk
 ```
 
@@ -34,7 +34,7 @@ If you have problems with transcoding with ffmpeg you can choose sox as transcod
 sudo apt-get install lame
 sudo apt-get install sox
 sudo apt-get install libsox-fmt-mp3
-# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+# if asterisk package is missing, follow the instructions "Install asterisk manual"
 sudo apt-get install asterisk
 ```
 
@@ -48,7 +48,7 @@ sudo apt install openssh-client
 
 ```sh
 # asterisk server
-# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+# if asterisk package is missing, follow the instructions "Install asterisk manual"
 sudo apt-get install asterisk
 sudo apt-get install openssh-server
 ```
@@ -65,12 +65,12 @@ sudo apt-get install libsox-fmt-mp3
 
 ```sh
 # asterisk server
-# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+# if asterisk package is missing, follow the instructions "Install asterisk manual"
 sudo apt-get install asterisk
 sudo apt-get install openssh-server
 ```
 
-### Install asterix manuel
+### Install asterix manual
 
 if the apt package asterisk is missing, you can install asterisk manual:
 
@@ -240,6 +240,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 - (Stübi) Language object added
 - (Stübi) Revision of the reconnect if Asterisk is restarted once
 - (Stübi) Fixing errors from repository checker (Issue #51)
+- (Stübi) Add documentation how to install asterisk manual (Issue #33)
 
 ### 1.0.6 (27.02.2019)
 

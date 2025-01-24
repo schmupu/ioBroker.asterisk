@@ -17,15 +17,15 @@ Der Asterisk Adapter wandelt Textnachrichten in Sprachnachrichten um und ruft da
 
 Asterisk muss sich für ausgehende Gespräche mit Ihrem VoIP Provider wie mit der Telekom oder Vodafone oder mit Ihrer FritzBox verbinden! Bitte folge einer dieser Installationsanleitungen.
 
-### Linux Packages / ioBroker & asterisk running on same server with ffmpeg
+### Linux Pakete / ioBroker & Asterisk laufen auf dem gleichem Server mit ffmpeg
 
 ```sh
 sudo apt-get install ffmpeg
-# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+# Falls das asterisk Paket fehlt, gehe wie unter "Maneulle Installation von asterisk" vor
 sudo apt-get install asterisk
 ```
 
-### Linux Packages / ioBroker & asterisk running on same server with sox
+### Linux Pakete / ioBroker & Asterisk laufen auf dem gleichem Server mit sox
 
 If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
 
@@ -33,13 +33,47 @@ If you have problems with transcoding with ffmpeg you can choose sox as transcod
 sudo apt-get install lame
 sudo apt-get install sox
 sudo apt-get install libsox-fmt-mp3
-# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+# Falls das asterisk Paket fehlt, gehe wie unter "Maneulle Installation von asterisk" vor
 sudo apt-get install asterisk
 ```
 
-### Install asterix manuel
+### Linux Pakete / ioBroker & Asterisk laufen auf verschiedenen Servern mit ffmpeg
 
-if the apt package asterisk is missing, you can install asterisk manual:
+```sh
+# iobroker server
+sudo apt-get install ffmpeg
+sudo apt install openssh-client
+```
+
+```sh
+# asterisk server
+# Falls das asterisk Paket fehlt, gehe wie unter "Maneulle Installation von asterisk" vor
+sudo apt-get install asterisk
+sudo apt-get install openssh-server
+```
+
+### Linux Pakete / ioBroker & Asterisk laufen auf verschiedenen Servern mit sox
+
+If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
+
+```sh
+# iobroker server
+sudo apt-get install lame
+sudo apt-get install sox
+sudo apt-get install libsox-fmt-mp3
+sudo apt-get install openssh-server
+```
+
+```sh
+# asterisk server
+# Falls das asterisk Paket fehlt, gehe wie unter "Maneulle Installation von asterisk" vor
+sudo apt-get install asterisk
+sudo apt-get install openssh-server
+```
+
+### Maneulle Installation von asterisk
+
+Falls das asterisk Paket fehlt, gehe wie folgt vor:
 
 ```sh
 sudo apt install git vim curl wget libnewt-dev libssl-dev libncurses5-dev subversion libsqlite3-dev build-essential libjansson-dev libxml2-dev uuid-dev
@@ -103,7 +137,14 @@ Hier findest Du eine Anleitung, wie Du den Asterisk Adapter mit der Fritzbox, mi
 - Konfiguration [Asterisk mit PJSIP über die FriztBox](docs/PJSIP_FRITZBOX_DE.md) (pjsip ist moderner als pjsip, aber komplizierter)
 - Konfiguration [Asterisk mit PJSIP über die Telekom als SIP Provider](docs/PJSIP_TELEKOM_DE.md)
 - Konfiguration [Asterisk mit PJSIP über Sipgate als SIP Provider](docs/PJSIP_SIPGATE_DE.md)
-- Konfiguration [ssh/scp ](docs/SSH_DE.md) (ioBroker und Asterisk sind auf verschiedenen Servern installiert)
+
+### Konfiguration von Asterisk mit SSH
+
+Nun musst Du auf dem Asterisk Server einen Benutzer einrichten, der über SSH erreichbar ist und Asterisk Benutzerberechtigungen besitzt. Damit ist sichergestellt, dass die kopierten Audiodateien per SSH von ioBroker für Asterik lesbar sind.
+Lege nun eine ein Verzeichnis auf dem Asterisk Server mit dem eben angelegten Benutzer an. Das Verzeichnis trägst Du in der ioBroker Konfiguration in dem Feld _'Path for temporary audio files'_ ein.
+Ist das geschehen muss die Instanz des Adapters neu gestartet werden. Jetzt werden Audiofiles in ioBroker erstellt und per scp an den Asterisk Server kopiert.
+
+![ssh](docs/iobroker_ssh.png)
 
 ## Nutzung von Asterisk
 
@@ -190,7 +231,7 @@ Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. 
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 2.0.0
 
 - (Stübi) Redesign of Asterisk
 - (Stübi) Switching from Javascript to Typescript
@@ -200,6 +241,7 @@ Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. 
 - (Stübi) Language object added
 - (Stübi) Revision of the reconnect if Asterisk is restarted once
 - (Stübi) Fixing errors from repository checker (Issue #51)
+- (Stübi) Add documentation how to install asterisk manual (Issue #33)
 
 ### 1.0.6 (27.02.2019)
 

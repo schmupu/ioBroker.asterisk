@@ -241,8 +241,6 @@ class asterisk extends utils.Adapter {
         await this.setStateChangedAsync('dialin.language', { val: dialin_language, ack: true });
         await this.setStateChangedAsync('dialout.text', { val: dialout_txt, ack: true });
         await this.setStateChangedAsync('dialin.text', { val: dialin_txt, ack: true });
-        await this.setState('dialin.dtmf', { val: '', ack: true });
-        await this.setState('dialin.callerid', { val: '', ack: true });
     }
 
     /**
@@ -561,11 +559,11 @@ class asterisk extends utils.Adapter {
                             value: evt.value,
                         };
                         this.log.debug(`Variable: ${i} = ${evt.value}`);
-                        if (evt.context == 'ael-antwort' && i == 'dtmf') {
+                        if (evt.context == 'ael-antwort' && i == 'dtmf' && evt.value != '') {
                             await this.setState('dialin.callerid', { val: evt.calleridnum, ack: true });
                             await this.setState('dialin.dtmf', { val: evt.value, ack: true });
                         }
-                        if (evt.context == 'ael-ansage' && i == 'dtmf') {
+                        if (evt.context == 'ael-ansage' && i == 'dtmf' && evt.value != '') {
                             await this.setState('dialout.dtmf', { val: evt.value, ack: true });
                         }
                     }
