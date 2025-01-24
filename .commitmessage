@@ -1,0 +1,11 @@
+chore: release v2.0.0
+
+- (Stübi) Redesign of Asterisk
+- (Stübi) Switching from Javascript to Typescript
+- (Stübi) Nodes 20 and 22 are now supported
+- (Stübi) js controllers in versions 6 and 7 are supported
+- (Stübi) Attention: Passwords must be re-entered from this version!
+- (Stübi) Language object added
+- (Stübi) Revision of the reconnect if Asterisk is restarted once
+- (Stübi) Fixing errors from repository checker (Issue #51)
+- (Stübi) Add documentation how to install asterisk manual (Issue #33)
