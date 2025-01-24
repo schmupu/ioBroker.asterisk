@@ -135,7 +135,7 @@ class asterisk extends utils.Adapter {
             if (stateId == 'dialin.text') {
                 const tmppath = tools.addSlashToPath(this.config.path) || this.tmppath;
                 const text = state.val?.toString() || '';
-                const language = (await this.getStateAsync('dialin.callerid'))?.val?.toString() || this.config.language;
+                const language = (await this.getStateAsync('dialin.language'))?.val?.toString() || this.config.language;
                 try {
                     await this.createDialInFile(text, `${tmppath}asterisk_dtmf`, language);
                     await this.setStateChangedAsync('dialin.text', { ack: true });
@@ -180,6 +180,29 @@ class asterisk extends utils.Adapter {
                     try {
                         await this.asteriskConnect();
                         const result = await this.asteriskDial(parameter);
+                        await this.setState('dialout.telnr', { val: parameter?.telnr || '', ack: true });
+                        await this.setState('dialout.text', { val: parameter?.text || '', ack: true });
+                        await this.setState('dialout.callerid', { val: parameter?.callerid || '', ack: true });
+                        if (obj.callback) {
+                            this.sendTo(obj.from, obj.command, { result: result, error: undefined }, obj.callback);
+                        }
+                    } catch (err) {
+                        this.sendTo(
+                            obj.from,
+                            obj.command,
+                            { result: undefined, error: tools.getErrorMessage(err) },
+                            obj.callback,
+                        );
+                        this.log.error(`Error in onMessage for cammnd ${obj.command}: ${tools.getErrorMessage(err)}`);
+                    }
+                    break;
+                }
+                case 'action': {
+                    const parameter: any = obj.message?.parameter;
+                    const at: { text?: string; audiofile?: string } = obj.message?.at;
+                    try {
+                        await this.asteriskConnect();
+                        const result = await this.asteriskAction(parameter, at);
                         if (obj.callback) {
                             this.sendTo(obj.from, obj.command, { result: result, error: undefined }, obj.callback);
                         }
@@ -276,12 +299,88 @@ class asterisk extends utils.Adapter {
     }
 
     /**
-     * Asterisk Action
+     * Asterisk action
      *
-     * @param parameter paramter
+     * @param parameter AMI Paramter
+     * @param at text or audiofile (optional)
+     * @param at.text text (optional)
+     * @param at.audiofile audiofile (optional)
+     * @returns result
      */
-    private async asteriskAction(parameter: dialparameter): Promise<any> {
+    private async asteriskAction(parameter: any, at?: { text?: string; audiofile?: string }): Promise<any> {
         this.log.debug(`Starting asteriskAction`);
+        if (!this.asterisk?.isConnected()) {
+            throw new Error(`No connection to Asterisk!`);
+        }
+        const msgid = tools.getGuid();
+        const tmppath = this.tmppath;
+        const audiofile_gsm = `${tmppath}audio_${msgid}.gsm`;
+
+        if (at && (at.text || at.audiofile)) {
+            const converter = new TextToGSMConverter({
+                transcoder: this.config.transcoder,
+                language: this.config.language,
+            });
+            if (!at.audiofile && at.text) {
+                await converter.textToGsm(at.text, audiofile_gsm);
+            }
+            if (at.audiofile && !at.text) {
+                if (at.audiofile && !fs.existsSync(at.audiofile)) {
+                    throw new Error(`Auddiofile ${at.audiofile} is missing`);
+                }
+                switch (path.extname(at.audiofile).toLowerCase()) {
+                    case '.mp3':
+                        await converter.mp3ToGsm(at.audiofile, audiofile_gsm);
+                        break;
+                    case '.gsm':
+                        fs.copyFileSync(at.audiofile, audiofile_gsm);
+                        break;
+                    default:
+                        throw new Error(`Audiofile ${at.audiofile} must have ending .mp3 or .gsm`);
+                }
+            }
+            if (this.config.ssh) {
+                const audiofile_ssh_gsm = tools.addSlashToPath(this.config.path) + path.basename(audiofile_gsm);
+                this.log.debug(`scp ${audiofile_gsm} ${this.config.sshuser}@${this.config.ip}:${audiofile_ssh_gsm}`);
+                await tools.sendSSH(audiofile_gsm, audiofile_ssh_gsm, this.sshconfig);
+                this.log.debug(`Delete file ${audiofile_gsm}`);
+                fs.unlinkSync(audiofile_gsm);
+                if (parameter.variable) {
+                    parameter.variable.file = tools.getFilenameWithoutExtension(audiofile_ssh_gsm);
+                    parameter.variable.del = 'delete';
+                } else {
+                    parameter.variable = {
+                        file: tools.getFilenameWithoutExtension(audiofile_ssh_gsm),
+                        del: 'delete',
+                    };
+                }
+            }
+            if (!this.config.ssh) {
+                if (parameter.variable) {
+                    parameter.variable.file = tools.getFilenameWithoutExtension(audiofile_gsm);
+                    parameter.variable.del = 'delete';
+                } else {
+                    parameter.variable = {
+                        file: tools.getFilenameWithoutExtension(audiofile_gsm),
+                        del: 'delete',
+                    };
+                }
+            }
+            this.log.debug(`Message: ${JSON.stringify(parameter)}`);
+            this.log.debug('AMI Command');
+            const result = await this.asterisk.actionAsync(parameter);
+            this.log.debug(`AMI Result : ${JSON.stringify(result)}`);
+            return result;
+        }
+    }
+
+    /**
+     * Asterisk Dial
+     *
+     * @param parameter parameter
+     */
+    private async asteriskDial(parameter: dialparameter): Promise<any> {
+        this.log.debug(`Starting asteriskDial`);
         if (!parameter.audiofile && !parameter.text) {
             throw new Error(`Text or audiofile are missing!`);
         }
@@ -344,26 +443,6 @@ class asterisk extends utils.Adapter {
         this.log.debug('AMI Command');
         const result = await this.asterisk.dialAsync(parameter);
         this.log.debug(`AMI Result : ${JSON.stringify(result)}`);
-        return result;
-    }
-
-    /**
-     * Asterisk Dial
-     *
-     * @param parameter parameter
-     */
-    private async asteriskDial(parameter: dialparameter): Promise<any> {
-        this.log.debug(`Starting asteriskDial`);
-        const result = await this.asteriskAction(parameter);
-        if (parameter.telnr) {
-            await this.setState('dialout.telnr', parameter.telnr, true);
-        }
-        if (parameter.text) {
-            await this.setState('dialout.text', parameter.text, true);
-        }
-        if (parameter.callerid) {
-            await this.setState('dialout.callerid', parameter.callerid, true);
-        }
         return result;
     }
 
@@ -468,7 +547,7 @@ class asterisk extends utils.Adapter {
         const text =
             (await this.getStateAsync('dialin.text'))?.val?.toString() ||
             'Please enter after the beep tone your passwort and press hashtag!';
-        const language = (await this.getStateAsync('dialin.callerid'))?.val?.toString() || this.config.language;
+        const language = (await this.getStateAsync('dialin.language'))?.val?.toString() || this.config.language;
         const tmppath = tools.addSlashToPath(this.config.path) || this.tmppath;
         const audiofile = `${tmppath}asterisk_dtmf`;
         await this.createDialInFile(text, audiofile, language);

@@ -17,6 +17,88 @@ Der Asterisk Adapter wandelt Textnachrichten in Sprachnachrichten um und ruft da
 
 Asterisk muss sich für ausgehende Gespräche mit Ihrem VoIP Provider wie mit der Telekom oder Vodafone oder mit Ihrer FritzBox verbinden! Bitte folge einer dieser Installationsanleitungen.
 
+### Linux Packages / ioBroker & asterisk running on same server with ffmpeg
+
+```sh
+sudo apt-get install ffmpeg
+# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+sudo apt-get install asterisk
+```
+
+### Linux Packages / ioBroker & asterisk running on same server with sox
+
+If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
+
+```sh
+sudo apt-get install lame
+sudo apt-get install sox
+sudo apt-get install libsox-fmt-mp3
+# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+sudo apt-get install asterisk
+```
+
+### Install asterix manuel
+
+if the apt package asterisk is missing, you can install asterisk manual:
+
+```sh
+sudo apt install git vim curl wget libnewt-dev libssl-dev libncurses5-dev subversion libsqlite3-dev build-essential libjansson-dev libxml2-dev uuid-dev
+
+cd /usr/src/
+sudo wget https://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-16.30.1.tar.gz
+sudo tar xvf asterisk-16*.tar.gz
+cd asterisk-16*/
+sudo contrib/scripts/get_mp3_source.sh
+sudo contrib/scripts/install_prereq install
+sudo ./configure
+sudo make menuselect
+
+# Choose following packages in the menu:
+## Add-ons: chan_ooh323 & format_mp3
+## Core Sound Packages: Audio packets CORE-SOUNDS-EN-*
+## Music On Hold: MOH-OPSOUND-WAV bis MOH-G729
+## Extra Sound: EXTRA-SOUNDS-EN-WAV bis EXTRA-SOUNDS-EN-G729
+## Applications: app_macro
+## Exit with "Save&Exit".
+
+sudo make
+sudo make install
+sudo make progdocs # (optional documentation)
+sudo make samples
+sudo make config
+sudo ldconfig
+
+sudo groupadd asterisk
+sudo useradd -r -d /var/lib/asterisk -g asterisk asterisk
+sudo usermod -aG audio,dialout asterisk
+sudo chown -R asterisk:asterisk /etc/asterisk
+sudo chown -R asterisk:asterisk /var/{lib,log,spool}/asterisk
+sudo chown -R asterisk:asterisk /usr/lib/asterisk
+
+# asterisk as default user for asterisk
+sudo nano /etc/default/asterisk
+AST_USER="asterisk"
+AST_GROUP="asterisk"
+
+# Insert/ replae follwoing in the config file /etc/asterisk/asterisk.conf
+sudo nano /etc/asterisk/asterisk.conf
+runuser = asterisk ; The user to run as.
+rungroup = asterisk ; The group to run as
+
+sudo ufw allow proto tcp from any to any port 5060,5061 # (optional open Firewall, if activ)
+
+sudo systemctl restart asterisk
+sudo systemctl enable asterisk
+
+# Check state of asterisk
+sudo systemctl status asterisk
+sudo asterisk -rvv
+```
+
+### Configuration of asterisk
+
+Hier findest Du eine Anleitung, wie Du den Asterisk Adapter mit der Fritzbox, mit der Telekom oder mit Sipgate nutzen kannst.
+
 - Konfiguration [Asterisk mit SIP über die FritzBox](docs/SIP_FRITZBOX_DE.md) (der einfachste Weg)
 - Konfiguration [Asterisk mit PJSIP über die FriztBox](docs/PJSIP_FRITZBOX_DE.md) (pjsip ist moderner als pjsip, aber komplizierter)
 - Konfiguration [Asterisk mit PJSIP über die Telekom als SIP Provider](docs/PJSIP_TELEKOM_DE.md)

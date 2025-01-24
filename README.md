@@ -18,11 +18,133 @@ The Asterisk adapter converts text messages to audio files and calls then over A
 Asterisk has to connect for outgoing calls with your voip provider like Telekom or Vodfone or with your FritzBox! Please follow one
 of these installation guides.
 
+### Linux Packages / ioBroker & asterisk running on same server with ffmpeg
+
+```sh
+sudo apt-get install ffmpeg
+# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+sudo apt-get install asterisk
+```
+
+### Linux Packages / ioBroker & asterisk running on same server with sox
+
+If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
+
+```sh
+sudo apt-get install lame
+sudo apt-get install sox
+sudo apt-get install libsox-fmt-mp3
+# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+sudo apt-get install asterisk
+```
+
+### Linux Packages / ioBroker & asterisk running on different server with ffmpeg
+
+```sh
+# ioBroker server
+sudo apt-get install ffmpeg
+sudo apt install openssh-client
+```
+
+```sh
+# asterisk server
+# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+sudo apt-get install asterisk
+sudo apt-get install openssh-server
+```
+
+### Linux Packages / ioBroker & asterisk running on different server with sox
+
+If you have problems with transcoding with ffmpeg you can choose sox as transcoder. For that, you have to install following packages and choose sox in the adapter configuration.
+
+```sh
+sudo apt-get install lame
+sudo apt-get install sox
+sudo apt-get install libsox-fmt-mp3
+```
+
+```sh
+# asterisk server
+# if asterisk package is missing, follow the instructions "Install asterisk manuel"
+sudo apt-get install asterisk
+sudo apt-get install openssh-server
+```
+
+### Install asterix manuel
+
+if the apt package asterisk is missing, you can install asterisk manual:
+
+```sh
+sudo apt install git vim curl wget libnewt-dev libssl-dev libncurses5-dev subversion libsqlite3-dev build-essential libjansson-dev libxml2-dev uuid-dev
+
+cd /usr/src/
+sudo wget https://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-16.30.1.tar.gz
+sudo tar xvf asterisk-16*.tar.gz
+cd asterisk-16*/
+sudo contrib/scripts/get_mp3_source.sh
+sudo contrib/scripts/install_prereq install
+sudo ./configure
+sudo make menuselect
+
+# Choose following packages in the menu:
+## Add-ons: chan_ooh323 & format_mp3
+## Core Sound Packages: Audio packets CORE-SOUNDS-EN-*
+## Music On Hold: MOH-OPSOUND-WAV bis MOH-G729
+## Extra Sound: EXTRA-SOUNDS-EN-WAV bis EXTRA-SOUNDS-EN-G729
+## Applications: app_macro
+## Exit with "Save&Exit".
+
+sudo make
+sudo make install
+sudo make progdocs # (optional documentation)
+sudo make samples
+sudo make config
+sudo ldconfig
+
+sudo groupadd asterisk
+sudo useradd -r -d /var/lib/asterisk -g asterisk asterisk
+sudo usermod -aG audio,dialout asterisk
+sudo chown -R asterisk:asterisk /etc/asterisk
+sudo chown -R asterisk:asterisk /var/{lib,log,spool}/asterisk
+sudo chown -R asterisk:asterisk /usr/lib/asterisk
+
+# asterisk as default user for asterisk
+sudo nano /etc/default/asterisk
+AST_USER="asterisk"
+AST_GROUP="asterisk"
+
+# Insert/ replae follwoing in the config file /etc/asterisk/asterisk.conf
+sudo nano /etc/asterisk/asterisk.conf
+runuser = asterisk ; The user to run as.
+rungroup = asterisk ; The group to run as
+
+sudo ufw allow proto tcp from any to any port 5060,5061 # (optional open Firewall, if activ)
+
+sudo systemctl restart asterisk
+sudo systemctl enable asterisk
+
+# Check state of asterisk
+sudo systemctl status asterisk
+sudo asterisk -rvv
+```
+
+### Configuration of asterisk
+
+The following documents describe detailed how to configure asterisk.
+
 - Configuration [Asterisk via SIP with the FritzBox](docs/SIP_FRITZBOX.md) (the easiest way)
 - Configuration [Asterisk via PJSIP with the FriztBox](docs/PJSIP_FRITZBOX.md) (pjsip is more modern as sip)
 - Configuration [Asterisk via PJSIP with Telekom as provider](docs/PJSIP_TELEKOM.md)
 - Configuration [Asterisk via PJSIP with Sipgate as provider](docs/PJSIP_SIPGATE.md)
-- Configuration [ssh/scp ](docs/SSH.md) (ioBroker and asterisk runs on different server)
+
+### Configuration using SSH
+
+If iobroker and asterisk is installed on differnet user, you need on the asterisk server an user with access from the iobroker server to login by ssh.
+The user must have the unix user rights to write files which can read by asterisk.
+You create on the asterisk server the directory with the name you configured in the iobroker asterisk adapter configuration under the name _'Path for temporary audio files'_. The path must be accessible and authorized for asterisk and ssh, because iobroker sends the generated audiofile (your text message), by scp to the asterisk server and save it in the 'Path for temporary audio files'.
+After that ioBroker will send by the AMI api a message to asterisk to dial an play the generated audiofile saved in the given path.
+
+![ssh](docs/iobroker_ssh.png)
 
 ## Using Asterisk
 
