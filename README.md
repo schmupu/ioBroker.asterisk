@@ -198,6 +198,11 @@ sendTo('asterisk.0', 'dial', { telnr: number, callerid: callerid, aufiofile: '/t
       console.log(`Result: ${JSON.stringify(res)}`);
 });
 
+// create dial in message
+sendTo('asterisk.0', 'dial', { text:  'Please enter PIN after hashtag.' },  (res) => {
+      console.log(`Result: ${JSON.stringify(res)}`);
+});
+
 // Show entered DTMF code
 on({ id: 'asterisk.0.dialin.dtmf'/*DTMF Code*/ },  (obj) => {
     const dtmf = obj.state.val;
@@ -229,6 +234,14 @@ on({ id: 'asterisk.0.dialout.dtmf'/*DTMF Code*/ },  (obj) => {
 If you have problems with asterisk, you can try to find something in the logfiles under /var/log/asterisk. After you started asterisk you can call asterisk with asterisk -rvvvvvv on the comand shell for debugging. After you started asterisk -rvvvvvv you can initialize a call by iobroker and see what happens.
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- (Stübi) Fix error by using asterisk and iobroker on the same server
+- (Stübi) Add action command for send messages
+- (Stübi) Add dial in command for send messages
+- (Stübi) Add create butteon for create dial in file
+
 ### 2.0.0 (2025-01-24)
 
 - (Stübi) Redesign of Asterisk
@@ -241,7 +254,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 - (Stübi) Fixing errors from repository checker (Issue #51)
 - (Stübi) Add documentation how to install asterisk manual (Issue #33)
 
-### 1.0.6 (27.02.2019)
+### 1.0.6 ((2019-02-27)
 
 - (Stübi) Update documentation and templates
 - (Stübi) Asterisk adapter can create now asterisk configuration files. You have to rename and move them afterwards to the /etc/asterisk directory

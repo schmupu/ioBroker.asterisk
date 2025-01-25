@@ -231,7 +231,14 @@ Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. 
 
 ## Changelog
 
-### 2.0.0
+### **WORK IN PROGRESS**
+
+- (Stübi) Fix error by using asterisk and iobroker on the same server
+- (Stübi) Add action command for send messages
+- (Stübi) Add dial in command for send messages
+- (Stübi) Add create butteon for create dial in file
+
+### 2.0.0 (2025-01-24)
 
 - (Stübi) Redesign of Asterisk
 - (Stübi) Switching from Javascript to Typescript
@@ -243,7 +250,7 @@ Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. 
 - (Stübi) Fixing errors from repository checker (Issue #51)
 - (Stübi) Add documentation how to install asterisk manual (Issue #33)
 
-### 1.0.6 (27.02.2019)
+### 1.0.6 (2019-02-27)
 
 - (Stübi) Update documentation and templates
 - (Stübi) Asterisk adapter can create now asterisk configuration files. You have to rename and move them afterwards to the /etc/asterisk directory
