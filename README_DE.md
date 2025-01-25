@@ -231,7 +231,7 @@ Auch kann man den Loglevel in ioBroker für Asterisk von Info auf Debug setzen. 
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 2.0.1 (2025-01-25)
 
 - (Stübi) Fix error by using asterisk and iobroker on the same server
 - (Stübi) Add action command for send messages
