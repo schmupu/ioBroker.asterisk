@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "asterisk",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "tier": 3,
         "news": {
             "2.0.2": {
@@ -83,17 +83,8 @@
             "zh-cn": "Asterisk VoIP适配器",
             "uk": "VoIP-адаптер Asterisk"
         },
-        "authors": [
-            "Thorsten Stueben <thorsten@stueben.de>"
-        ],
-        "keywords": [
-            "voip",
-            "asterisk",
-            "sip",
-            "voice",
-            "speach",
-            "call"
-        ],
+        "authors": ["Thorsten Stueben <thorsten@stueben.de>"],
+        "keywords": ["voip", "asterisk", "sip", "voice", "speach", "call"],
         "licenseInformation": {
             "license": "MIT",
             "type": "free"
@@ -124,16 +115,8 @@
             }
         ]
     },
-    "protectedNative": [
-        "password",
-        "sippassword",
-        "sshpassword"
-    ],
-    "encryptedNative": [
-        "password",
-        "sippassword",
-        "sshpassword"
-    ],
+    "protectedNative": ["password", "sippassword", "sshpassword"],
+    "encryptedNative": ["password", "sippassword", "sshpassword"],
     "native": {
         "ip": "192.168.1.1",
         "port": 5038,
