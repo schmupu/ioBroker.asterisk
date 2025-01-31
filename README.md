@@ -240,7 +240,11 @@ If you have problems with asterisk, you can try to find something in the logfile
 - (Stübi) Add Create Directory
 - (Stübi) Add translation for configuration
 
-### 2.0.1 (2025-01-25)
+### 2.0.2 (2025-01-26)
+
+- (Stübi) Bugfixing
+
+### 2.0.1 (2025-01-24)
 
 - (Stübi) Fix error by using asterisk and iobroker on the same server
 - (Stübi) Add action command for send messages

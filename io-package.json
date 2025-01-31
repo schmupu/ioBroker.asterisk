@@ -4,6 +4,19 @@
         "version": "2.0.1",
         "tier": 3,
         "news": {
+            "2.0.2": {
+                "en": "Bugfixing",
+                "de": "Bugfixing",
+                "ru": "Исполнение ошибок",
+                "pt": "Bugfixing",
+                "nl": "Bugfixing",
+                "fr": "Bugfixing",
+                "it": "Bugfixing",
+                "es": "Corrección de errores",
+                "pl": "Fixing",
+                "uk": "Пошкодження",
+                "zh-cn": "bug -fixing"
+            },
             "2.0.1": {
                 "en": "Fix error by using asterisk and iobroker on the same server\nAdd action command for send messages\nAdd dial in command for send messages\nAdd create butteon for create dial in file",
                 "de": "Fehler behoben, indem Asterisk und iobroker auf demselben Server verwendet werden\nAktionsbefehl zum Senden von Nachrichten hinzufügen\nWählen Sie im Befehl zum Senden von Nachrichten\nErstellen Sie Butteon für das Erstellen von Zifferblatt in Datei",
@@ -70,8 +83,17 @@
             "zh-cn": "Asterisk VoIP适配器",
             "uk": "VoIP-адаптер Asterisk"
         },
-        "authors": ["Thorsten Stueben <thorsten@stueben.de>"],
-        "keywords": ["voip", "asterisk", "sip", "voice", "speach", "call"],
+        "authors": [
+            "Thorsten Stueben <thorsten@stueben.de>"
+        ],
+        "keywords": [
+            "voip",
+            "asterisk",
+            "sip",
+            "voice",
+            "speach",
+            "call"
+        ],
         "licenseInformation": {
             "license": "MIT",
             "type": "free"
@@ -102,8 +124,16 @@
             }
         ]
     },
-    "protectedNative": ["password", "sippassword", "sshpassword"],
-    "encryptedNative": ["password", "sippassword", "sshpassword"],
+    "protectedNative": [
+        "password",
+        "sippassword",
+        "sshpassword"
+    ],
+    "encryptedNative": [
+        "password",
+        "sippassword",
+        "sshpassword"
+    ],
     "native": {
         "ip": "192.168.1.1",
         "port": 5038,
