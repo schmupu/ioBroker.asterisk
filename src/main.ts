@@ -91,6 +91,7 @@ class asterisk extends utils.Adapter {
             },
         };
         try {
+            await this.createPath(this.config.path);
             await this.createConfigFiles();
             await this.initStates();
             await this.startAsterisk();
@@ -318,6 +319,23 @@ class asterisk extends utils.Adapter {
             throw new Error(`Could not find the file ${audiofile_guid_gsm}`);
         }
         return audiofile_guid_gsm;
+    }
+
+    /**
+     * Create path
+     *
+     * @param path path to create
+     */
+    private async createPath(path: string): Promise<void> {
+        if (this.config.ssh) {
+            this.log.info(`Creating path ${path} on ${this.config.sshuser}@${this.config.ip} if not exist!`);
+            await tools.mkdirdSSH(path, this.sshconfig);
+        } else {
+            if (!fs.existsSync(path)) {
+                this.log.info(`Creating path ${path}!`);
+                fs.mkdirSync(path, { recursive: true });
+            }
+        }
     }
 
     /**

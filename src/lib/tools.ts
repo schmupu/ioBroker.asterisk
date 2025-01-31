@@ -142,7 +142,7 @@ export function getFilenameWithoutExtension(filename: string): string {
 }
 
 /**
- * SSH
+ * SSH copy file
  *
  * @param srcfile source file
  * @param dstfile destination file
@@ -152,6 +152,38 @@ export async function sendSSH(srcfile: string, dstfile: string, config: sshconfi
     const ssh = new NodeSSH();
     await ssh.connect(config);
     await ssh.putFile(srcfile, dstfile);
+}
+
+/**
+ * SSH excecute command
+ *
+ * @param command comand
+ * @param config configuration file for SSH
+ * @param options option
+ */
+export async function executedSSH(command: string, config: sshconfig, options?: any): Promise<void> {
+    const ssh = new NodeSSH();
+    await ssh.connect(config);
+    const result = await ssh.execCommand(command, options);
+    if (result.stderr) {
+        throw new Error(result.stderr);
+    }
+}
+
+/**
+ * SSH excecute command
+ *
+ * @param path path to create
+ * @param config configuration file for SSH
+ */
+export async function mkdirdSSH(path: string, config: sshconfig): Promise<void> {
+    const ssh = new NodeSSH();
+    await ssh.connect(config);
+    const command: string = isWindow() ? `mkdir ${path}` : `mkdir -p ${path}`;
+    const result = await ssh.execCommand(command);
+    if (result.stderr) {
+        throw new Error(result.stderr);
+    }
 }
 
 /**

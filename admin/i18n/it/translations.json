@@ -25,5 +25,15 @@
     "Username of SIP Server": "Nome utente del server SIP",
     "Using SSH": "Utilizzando SSH",
     "hello I am asterisk": "ciao sono un asterisco",
-    "on save adapter restarts with new config immediately": "su save adapter si riavvia immediatamente con la nuova configurazione"
+    "on save adapter restarts with new config immediately": "su save adapter si riavvia immediatamente con la nuova configurazione",
+    "Language of speech": "Linguaggio del discorso",
+    "Choose transcoder": "Scegli il transcoder",
+    "IP / Hostname of Asterisk-Servers": "Nome IP / host di asterisk-server",
+    "Port of Asterisk-Servers": "Porta di asterisco",
+    "Username of asterisk Manager": "Nome utente di Asterisk Manager",
+    "Password of Asterisk Manager": "Password di Asterisk Manager",
+    "SIP Service": "Servizio SIP",
+    "IP / Hostname of SIP-Servers": "Nome IP / host dei server SIP",
+    "Username of SSH Server": "Nome utente del server SSH",
+    "Password of SSH Server": "Password del server SSH"
 }

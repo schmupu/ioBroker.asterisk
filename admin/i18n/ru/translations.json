@@ -25,5 +25,15 @@
     "Username of SIP Server": "Имя пользователя SIP-сервера",
     "Using SSH": "Использование SSH",
     "hello I am asterisk": "привет я звездочка",
-    "on save adapter restarts with new config immediately": "на перезаписываемом адаптере перезагружается с новой конфигурацией немедленно"
+    "on save adapter restarts with new config immediately": "на перезаписываемом адаптере перезагружается с новой конфигурацией немедленно",
+    "Language of speech": "Язык речи",
+    "Choose transcoder": "Выберите Transcoder",
+    "IP / Hostname of Asterisk-Servers": "IP / HOSTNAME of Asterisk-сервер",
+    "Port of Asterisk-Servers": "Порт звездочек-серверов",
+    "Username of asterisk Manager": "Имя пользователя менеджера Asterisk",
+    "Password of Asterisk Manager": "Пароль Asterisk Manager",
+    "SIP Service": "SIP -сервис",
+    "IP / Hostname of SIP-Servers": "IP / HostName of SIP-сервер",
+    "Username of SSH Server": "Имя пользователя сервера SSH",
+    "Password of SSH Server": "Пароль сервера SSH"
 }

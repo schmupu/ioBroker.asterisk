@@ -25,5 +25,15 @@
     "Username of SIP Server": "Gebruikersnaam van SIP-server",
     "Using SSH": "SSH gebruiken",
     "hello I am asterisk": "hallo ik ben asterisk",
-    "on save adapter restarts with new config immediately": "on save-adapter wordt onmiddellijk opnieuw opgestart met nieuwe config"
+    "on save adapter restarts with new config immediately": "on save-adapter wordt onmiddellijk opnieuw opgestart met nieuwe config",
+    "Language of speech": "Spraaktaal",
+    "Choose transcoder": "Kies Transcoder",
+    "IP / Hostname of Asterisk-Servers": "IP / hostnaam van asterisk-servers",
+    "Port of Asterisk-Servers": "Port van asterisk-servers",
+    "Username of asterisk Manager": "Gebruikersnaam van Asterisk Manager",
+    "Password of Asterisk Manager": "Wachtwoord van Asterisk Manager",
+    "SIP Service": "Slokje service",
+    "IP / Hostname of SIP-Servers": "IP / hostnaam van SIP-servers",
+    "Username of SSH Server": "Gebruikersnaam van SSH -server",
+    "Password of SSH Server": "Wachtwoord van SSH -server"
 }

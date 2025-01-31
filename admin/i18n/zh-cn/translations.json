@@ -25,5 +25,15 @@
     "Username of SIP Server": "SIP服务器的用户名",
     "Using SSH": "使用SSH",
     "hello I am asterisk": "你好，我是星号",
-    "on save adapter restarts with new config immediately": "保存适配器立即重新启动新配置"
+    "on save adapter restarts with new config immediately": "保存适配器立即重新启动新配置",
+    "Language of speech": "言语语言",
+    "Choose transcoder": "选择转码器",
+    "IP / Hostname of Asterisk-Servers": "IP / hostname的星号词组",
+    "Port of Asterisk-Servers": "星号港口",
+    "Username of asterisk Manager": "星号经理的用户名",
+    "Password of Asterisk Manager": "星号经理的密码",
+    "SIP Service": "SIP服务",
+    "IP / Hostname of SIP-Servers": "sip-servers的IP /主机名",
+    "Username of SSH Server": "SSH服务器的用户名",
+    "Password of SSH Server": "SSH服务器的密码"
 }

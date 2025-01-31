@@ -125,8 +125,8 @@
                     "lg": 4,
                     "xl": 4,
                     "xs": 12,
-                    "help": "Serivce",
-                    "tooltip": "Service",
+                    "help": "SIP Serivce",
+                    "tooltip": "SIP Service",
                     "options": [
                         { "label": "sip", "value": "sip" },
                         { "label": "pjsip", "value": "pjsip" }

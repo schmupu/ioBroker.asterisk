@@ -30,12 +30,14 @@ var tools_exports = {};
 __export(tools_exports, {
   _translateText: () => _translateText,
   addSlashToPath: () => addSlashToPath,
+  executedSSH: () => executedSSH,
   getErrorMessage: () => getErrorMessage,
   getFilenameWithoutExtension: () => getFilenameWithoutExtension,
   getGuid: () => getGuid,
   isArray: () => isArray,
   isObject: () => isObject,
   isWindow: () => isWindow,
+  mkdirdSSH: () => mkdirdSSH,
   sendSSH: () => sendSSH,
   substr: () => substr,
   textToNumber: () => textToNumber,
@@ -111,6 +113,23 @@ async function sendSSH(srcfile, dstfile, config) {
   await ssh.connect(config);
   await ssh.putFile(srcfile, dstfile);
 }
+async function executedSSH(command, config, options) {
+  const ssh = new import_node_ssh.NodeSSH();
+  await ssh.connect(config);
+  const result = await ssh.execCommand(command, options);
+  if (result.stderr) {
+    throw new Error(result.stderr);
+  }
+}
+async function mkdirdSSH(path, config) {
+  const ssh = new import_node_ssh.NodeSSH();
+  await ssh.connect(config);
+  const command = isWindow() ? `mkdir ${path}` : `mkdir -p ${path}`;
+  const result = await ssh.execCommand(command);
+  if (result.stderr) {
+    throw new Error(result.stderr);
+  }
+}
 function getErrorMessage(error) {
   if (error instanceof Error) {
     return error.message;
@@ -121,12 +140,14 @@ function getErrorMessage(error) {
 0 && (module.exports = {
   _translateText,
   addSlashToPath,
+  executedSSH,
   getErrorMessage,
   getFilenameWithoutExtension,
   getGuid,
   isArray,
   isObject,
   isWindow,
+  mkdirdSSH,
   sendSSH,
   substr,
   textToNumber,

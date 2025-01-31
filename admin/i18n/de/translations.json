@@ -1,5 +1,5 @@
 {
-    "Asterisk settings": "Sternchen",
+    "Asterisk settings": "Asterisk",
     "Audio language": "Audiosprache",
     "Create Asterisk config files (once)": "Asterisk-Konfigurationsdateien erstellen (einmalig)",
     "Create config files (once)": "Konfigurationsdateien erstellen (einmalig)",
@@ -13,7 +13,7 @@
     "Password in sip.conf or pjsip.conf": "Passwort in der sip.conf oder pjsip.conf",
     "Password of SIP Server": "Passwort des SIP-Servers",
     "Path for temporary audio files. Must be accessible and authorized for Asterisk and ioBroker": "Pfad für temporäre Audiodateien. Muss für Asterisk und ioBroker zugänglich und autorisiert sein",
-    "Please choose transcoder": "Bitte wählen Sie den Transcoder",
+    "Please choose transcoder": "Bitte wählen Sie einen Transcoder",
     "Port": "Port",
     "SIP settings": "SIP-Einstellungen",
     "SSH IP is same as Asterisk IP (see main tab)": "SSH-IP ist identisch mit Asterisk-IP (siehe Hauptregisterkarte)",
@@ -24,6 +24,16 @@
     "Username in sip.conf or pjsip.conf": "Benutzername in der sip.conf / pjsip.conf",
     "Username of SIP Server": "Benutzername des SIP-Servers",
     "Using SSH": "SSH verwenden",
-    "hello I am asterisk": "hallo ich bin ein Sternchen",
-    "on save adapter restarts with new config immediately": "Beim Speichern wird der Adapter sofort mit der neuen Konfiguration gestartet"
+    "hello I am asterisk": "hallo ich bin Asterisk",
+    "on save adapter restarts with new config immediately": "Beim Speichern wird der Adapter sofort mit der neuen Konfiguration gestartet",
+    "Language of speech": "Übersetzungssprache",
+    "Choose transcoder": "Wählen Sie einen Transcoder",
+    "IP / Hostname of Asterisk-Servers": "IP / Hostname des Asterisk-Servers",
+    "Port of Asterisk-Servers": "Port des Asterisk-Servers",
+    "Username of asterisk Manager": "Benutzername des Asterisk Managers",
+    "Password of Asterisk Manager": "Passwort des Asterisk Managers",
+    "SIP Service": "SIP Service",
+    "IP / Hostname of SIP-Servers": "IP / Hostname des SIP-Servers",
+    "Username of SSH Server": "Benutzername des SSH Servers",
+    "Password of SSH Server": "Passwort des SSH Servers"
 }
