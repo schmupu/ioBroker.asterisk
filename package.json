@@ -1,6 +1,6 @@
 {
     "name": "iobroker.asterisk",
-    "version": "2.0.2",
+    "version": "2.0.1",
     "description": "asterisk alarm system",
     "author": {
         "name": "Thorsten Stueben",

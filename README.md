@@ -239,9 +239,6 @@ If you have problems with asterisk, you can try to find something in the logfile
 
 - (Stübi) Add Create Directory
 - (Stübi) Add translation for configuration
-
-### 2.0.2 (2025-01-26)
-
 - (Stübi) Bugfixing
 
 ### 2.0.1 (2025-01-24)
