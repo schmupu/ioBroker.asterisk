@@ -1,6 +1,5 @@
-chore: release v2.0.1
+chore: release v2.0.2
 
-- (Stübi) Fix error by using asterisk and iobroker on the same server
-- (Stübi) Add action command for send messages
-- (Stübi) Add dial in command for send messages
-- (Stübi) Add create butteon for create dial in file
+- (Stübi) Add Create Directory
+- (Stübi) Add translation for configuration
+- (Stübi) Bugfixing
