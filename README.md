@@ -235,7 +235,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 
 ## Changelog
 
-## **WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 
 - (Stübi) Add Create Directory
 - (Stübi) Add translation for configuration
