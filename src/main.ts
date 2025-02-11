@@ -25,6 +25,10 @@ interface dialparameter {
     language?: string;
     delete?: string;
     extension?: string;
+    async?: boolean;
+    timeout?: number;
+    priority?: number;
+    repeat?: number;
 }
 
 class asterisk extends utils.Adapter {
@@ -155,6 +159,7 @@ class asterisk extends utils.Adapter {
                 const parameter: dialparameter = {
                     callerid: (await this.getStateAsync('dialout.callerid'))?.val?.toString() || '',
                     text: (await this.getStateAsync('dialout.text'))?.val?.toString() || '',
+                    repeat: ((await this.getStateAsync('dialout.repeat'))?.val as number) || 5,
                     telnr: (await this.getStateAsync('dialout.telnr'))?.val?.toString() || '',
                     language: (await this.getStateAsync('dialout.language'))?.val?.toString() || this.config.language,
                 };
@@ -165,6 +170,7 @@ class asterisk extends utils.Adapter {
                     await this.setStateChangedAsync('dialout.callerid', { ack: true });
                     await this.setStateChangedAsync('dialout.telnr', { ack: true });
                     await this.setStateChangedAsync('dialout.text', { ack: true });
+                    await this.setStateChangedAsync('dialout.repeat', { ack: true });
                     await this.setStateChangedAsync('dialout.language', { ack: true });
                 } catch (err) {
                     this.log.error(`Error in onStateChange: ${stateId}:  ${tools.getErrorMessage(err)}`);
@@ -187,11 +193,14 @@ class asterisk extends utils.Adapter {
                     try {
                         await this.asteriskConnect();
                         const result = await this.asteriskDial(parameter);
-                        /*
                         await this.setState('dialout.telnr', { val: parameter?.telnr || '', ack: true });
                         await this.setState('dialout.text', { val: parameter?.text || '', ack: true });
+                        await this.setState('dialout.repeat', { val: parameter?.repeat || 5, ack: true });
+                        await this.setState('dialout.language', {
+                            val: parameter?.language || this.config.language,
+                            ack: true,
+                        });
                         await this.setState('dialout.callerid', { val: parameter?.callerid || '', ack: true });
-                        */
                         if (obj.callback) {
                             this.sendTo(obj.from, obj.command, { result: result, error: undefined }, obj.callback);
                         }
@@ -265,12 +274,14 @@ class asterisk extends utils.Adapter {
         const dialout_text =
             (await this.getStateAsync('dialout.text'))?.val?.toString() ||
             'Please enter after the beep tone your passwort and press hashtag.';
+        const dialout_repeat = (await this.getStateAsync('dialout.repeat'))?.val || 5;
         const dialin_language = (await this.getStateAsync('dialin.language'))?.val?.toString() || this.config.language;
         const dialout_language =
             (await this.getStateAsync('dialout.language'))?.val?.toString() || this.config.language;
         await this.setStateChangedAsync('dialout.language', { val: dialout_language, ack: true });
         await this.setStateChangedAsync('dialin.language', { val: dialin_language, ack: true });
         await this.setStateChangedAsync('dialout.text', { val: dialout_text, ack: true });
+        await this.setStateChangedAsync('dialout.repeat', { val: dialout_repeat, ack: true });
         await this.setStateChangedAsync('dialin.text', { val: dialin_text, ack: true });
         await this.createDialInFile({ text: dialin_text, language: dialin_language });
     }
