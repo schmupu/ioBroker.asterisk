@@ -28,7 +28,7 @@
         "@iobroker/adapter-core": "^3.2.3",
         "asterisk-manager": "^0.2.0",
         "node-ssh": "^13.2.0",
-        "axios": "^1.7.9",
+        "axios": "^1.8.2",
         "google-tts-api": "^2.0.2"
     },
     "devDependencies": {
