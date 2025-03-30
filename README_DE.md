@@ -188,13 +188,13 @@ sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, text:  msg},  
 
 // rufe Telefonnummer 040 666-7766 an und spiele Audiodatei im MP3 Format ab
 // MP3 Datei muss auf dem Asterisk Server existieren
-sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.mp3'},  (res) => {
+sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, audiofile: '/tmp/audio.mp3'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
 });
 
 // rufe Telefonnummer 040 666-7766 an und spiele Audiodatei im GSM Format ab
 // GSM Datei muss auf dem Asterisk Server existieren
-sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, aufiofile: '/tmp/audio.gsm'},  (res) => {
+sendTo('asterisk.0', "dial", { telnr: number, callerid: callerid, audiofile: '/tmp/audio.gsm'},  (res) => {
       console.log('Result: ' + JSON.stringify(res));
 });
 
