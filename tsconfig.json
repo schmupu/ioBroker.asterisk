@@ -32,7 +32,8 @@
         // "useUnknownInCatchVariables": false,
 
         "sourceMap": true,
-        "inlineSourceMap": false
+        "inlineSourceMap": false,
+        "esModuleInterop": true
     },
     "include": ["src/**/*.ts"],
     "exclude": ["build/**", "node_modules/**", "widgets/**"]
