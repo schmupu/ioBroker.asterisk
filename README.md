@@ -241,6 +241,7 @@ If you have problems with asterisk, you can try to find something in the logfile
 - (Stübi) Add Object repeat
 - (Stübi) Fixing @iobroker/adapter-dev 1.0.1 specified. 1.3.0 is required as minimum, 1.3.0 is recommended (Issue #57)
 - (Stübi) Fixing dependency (Issue #58)
+- (Stübi) Fixing issue with missing template directory (Issue #56 and #65)
 
 ### 2.0.2 (2025-02-01)
 
