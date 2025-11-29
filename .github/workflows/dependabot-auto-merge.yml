@@ -21,7 +21,7 @@ jobs:
               with:
                   # In order to use this, you need to go to https://github.com/settings/tokens and
                   # create a Personal Access Token with the permission "public_repo".
-                  # Enter this token in your repository settings under "Secrets" and name it AUTO_MERGE_TOKEN
-                  github-token: ${{ secrets.AUTO_MERGE_TOKEN }}
+                  # The built-in GITHUB_TOKEN is available in workflows and is safer to use here
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
                   # By default, squash and merge, so Github chooses nice commit messages
                   command: squash and merge

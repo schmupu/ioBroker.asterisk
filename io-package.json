@@ -1,384 +1,367 @@
 {
-  "common": {
-    "name": "asterisk",
-    "version": "2.0.3",
-    "tier": 3,
-    "news": {
-      "2.0.3": {
-        "en": "Bugfixing in sendto function\nAdd Object repeat\nFixing @iobroker/adapter-dev 1.0.1 specified. 1.3.0 is required as minimum, 1.3.0 is recommended (Issue #57)\nFixing dependency (Issue #58)\nFixing issue with missing template directory (Issue #56 and #65)",
-        "de": "Bugfixing in sendto Funktion\nObjekt wiederholen\nFestlegen von @iobroker/adapter-dev 1.0.1 angegeben. 1.3.0 ist als Minimum erforderlich, 1.3.0 wird empfohlen (Issue #57)\nBehebung der Abhängigkeit (Issue #58)\nProblem mit fehlendem Template-Verzeichnis beheben (Issue #56 und #65)",
-        "ru": "Bugfixing в функции sendto\nДобавить Object Repeat\nУказание @iobroker/adapter-dev 1.0.1. 1.3.0 требуется как минимум, 1.3.0 рекомендуется (выпуск #57)\nЗависимость (проблема #58)\nИсправление проблемы с отсутствующим каталогом шаблонов (выпуск #56 и #65)",
-        "pt": "Bugfixing na função sendto\nAdicionar repetição do objeto\nCorrigindo @iobroker/adapter-dev 1.0.1 especificado. 1.3.0 é exigido como mínimo, 1.3.0 é recomendado (Issue #57)\nFixação de dependência (Issue #58)\nCorrigindo problema com o diretório de modelo ausente (Issue #56 e #65)",
-        "nl": "Bugfixing in sendto functie\nHerhaling object toevoegen\nBevestiging van @iobroker/adapter-dev 1.0.1 gespecificeerd. 1.3.0 is minimaal vereist, 1,30 wordt aanbevolen (issue #57)\nAfhankelijkheid herstellen (issue #58)\nProblemen oplossen met ontbrekende sjabloonmap (Issue #56 en #65)",
-        "fr": "Correction du bogue dans la fonction sendto\nAjouter une répétition d'objet\nCorrection @iobroker/adaptateur-dev 1.0.1 spécifiée. 1.3.0 est nécessaire au minimum, 1.3.0 est recommandé (numéro 57)\nCorrection de la dépendance (numéro 58)\nCorrection d'un problème avec le répertoire de gabarit manquant (Numéro #56 et #65)",
-        "it": "Bugfixing nella funzione sendto\nAggiungere la ripetizione dell'oggetto\nFissaggio @iobroker/adapter-dev 1.0.1 specificato. 1.3.0 è richiesto come minimo, 1.3.0 è raccomandato (Essue #57)\nRisolvere la dipendenza (Issue #58)\nRisolvere il problema con la directory dei modelli mancanti (Issue #56 e #65)",
-        "es": "Bugfixing en función sendto\nAgregar la repetición de objetos\nCorrección @iobroker/adapter-dev 1.0.1 especificado. 1.3.0 se requiere como mínimo, 1.3.0 se recomienda (Isue #57)\nFijación de dependencia (Isue #58)\nEdición de fijación con directorio de plantillas desaparecidos (Isue #56 y #65)",
-        "pl": "Ustalanie błędów w funkcji sendto\nDodaj obiekt powtórzyć\nFixing @ iobroker / adapter- dev 1.0.1 określony. 1.3.0 jest wymagane jako minimum, 1.3.0 jest zalecane (wydanie # 57)\nUstalenie zależności (wydanie # 58)\nNaprawianie problemu z brakującym katalogiem szablonów (wydanie # 56 i # 65)",
-        "uk": "Виправлення помилок в функції відправника\nДодати повторення об'єкта\nВиправлення @iobroker/adapter-dev 1.0.1 вказаний. 1.3.0 потрібна як мінімум, 1.3.0 рекомендується (Issue #57)\nФіксована залежність (Issue #58)\nВиправлення проблеми з відсутнім каталогом шаблонів (Issue #56 і #65)",
-        "zh-cn": "发送到函数中的错误修正\n添加对象重复\n正在修复@iobroduc/adapter-dev 1. 0.1。 最低要求为1.3.0,建议为1.3.0(第57期)\n解决依赖(问题58)\n解决缺少模板目录的问题(问题56和65)"
-      },
-      "2.0.2": {
-        "en": "Add Create Directory\nAdd translation for configuration\nBugfixing",
-        "de": "In den Warenkorb\nÜbersetzung hinzufügen für Konfiguration\nFehlerbehebung",
-        "ru": "Добавить Создать каталог\nДобавить перевод для конфигурации\nИсправление",
-        "pt": "Adicionar ao cesto\nAdicionar tradução para configuração\nBugfixing",
-        "nl": "Map toevoegen\nVertaling toevoegen voor configuratie\nBugfixing",
-        "fr": "Ajouter un répertoire Créer\nAjouter la traduction pour la configuration\nCorrection des bugs",
-        "it": "Aggiungi Crea directory\nAggiungi traduzione per la configurazione\nBugfixing",
-        "es": "Añadir Crear Directorio\nAñadir traducción para configuración\nBugfixing",
-        "pl": "Dodaj katalog tworzenia\nDodaj tłumaczenie do konfiguracji\nUstalanie błędów",
-        "uk": "Додати каталог\nДодавання перекладу для конфігурації\nПомилки",
-        "zh-cn": "添加创建目录\n为配置添加翻译\n错误修正"
-      },
-      "2.0.1": {
-        "en": "Fix error by using asterisk and iobroker on the same server\nAdd action command for send messages\nAdd dial in command for send messages\nAdd create butteon for create dial in file",
-        "de": "Fehler behoben, indem Asterisk und iobroker auf demselben Server verwendet werden\nAktionsbefehl zum Senden von Nachrichten hinzufügen\nWählen Sie im Befehl zum Senden von Nachrichten\nErstellen Sie Butteon für das Erstellen von Zifferblatt in Datei",
-        "ru": "Исправление ошибки с помощью asterisk и iobroker на одном сервере\nДобавить команду действий для отправки сообщений\nДобавить в команду для отправки сообщений\nДобавить для создания циферблата в файле",
-        "pt": "Corrigir erro usando asterisco e iobroker no mesmo servidor\nAdicionar comando de ação para enviar mensagens\nAdicionar discagem no comando para enviar mensagens\nAdicionar criar butteon para criar dial no arquivo",
-        "nl": "Fout herstellen door gebruik te maken van asterisk en iobroker op dezelfde server\nActie-opdracht toevoegen voor verzenden van berichten\nDial toevoegen in opdracht voor verzenden van berichten\nToevoegen aanmaak butteon voor aanmaken dial in bestand",
-        "fr": "Correction de l'erreur en utilisant astérisque et iobroker sur le même serveur\nAjouter la commande action pour envoyer des messages\nAjouter le cadran dans la commande pour envoyer des messages\nAjouter créer le bouton pour créer le cadran dans le fichier",
-        "it": "Risolvere l'errore utilizzando asterisco e iobroker sullo stesso server\nAggiungi comando azione per inviare messaggi\nAggiungi comporre in comando per inviare messaggi\nAggiungi creare butteon per creare quadrante in file",
-        "es": "Corregir error utilizando asterisco y iobroker en el mismo servidor\nAgregar comando de acción para enviar mensajes\nAgregar dial en el comando para enviar mensajes\nAgregar crear butteon para crear dial en archivo",
-        "pl": "Popraw błąd używając gwiazdki i iobrokera na tym samym serwerze\nDodaj polecenie działania dla wysyłania wiadomości\nDodaj numer w poleceniu wysyłania wiadomości\nDodaj utworzyć butteon do tworzenia wybierania w pliku",
-        "uk": "Виправлення помилки за допомогою зірочки і iobroker на одному сервері\nДодати команду дій для відправки повідомлень\nДодати диал в команду для відправки повідомлень\nДодати створення алетеону для створення діал у файлі",
-        "zh-cn": "在同一服务器上使用星号和io经纪人来修正错误\n为发送消息添加动作命令\n在命令中添加发送消息的拨号\n为在文件中创建拨号添加创建 butteon"
-      },
-      "2.0.0": {
-        "en": "Redesign of Asterisk\nSwitching from Javascript to Typescript\nNodes 20 and 22 are now supported\njs controllers in versions 6 and 7 are supported\nAttention: Passwords must be re-entered from this version!\nLanguage object added\nRevision of the reconnect if Asterisk is restarted once\nFixing errors from repository checker (Issue #51)\nAdd documentation how to install asterisk manual (Issue #33)",
-        "de": "Neugestaltung von Asterisk\nUmschalten von Javascript zu Typescript\nNodes 20 und 22 werden nun unterstützt\njs-controller in den versionen 6 und 7 werden unterstützt\nAchtung: Passwörter müssen von dieser Version erneut eingelesen werden!\nSprache Objekt hinzugefügt\nRevision der Wiederverbindung, wenn Asterisk einmal neu gestartet wird\nFehler beim Repository-Checker behoben (Issue #51)\nDokumentation hinzufügen, wie man das Asterisk-Handbuch installiert (Issue #33)",
-        "ru": "Редизайн Asterisk\nПереключение с Javascript на Typescript\nНоды 20 и 22 теперь поддерживаются\njs контроллеры в версиях 6 и 7 поддерживаются\nВнимание: Пароли должны быть повторно включены из этой версии!\nДобавлен языковой объект\nПересмотр повторного подключения, если Asterisk перезапускается один раз\nИсправление ошибок из шашки репозиторий (Isue #51)\nДобавить документацию, как установить руководство по звездочке (Исход #33)",
-        "pt": "Redesenho de Asterisk\nMudando de Javascript para Typescript\nOs nós 20 e 22 são agora suportados\ncontroladores js nas versões 6 e 7 são suportados\nAtenção: As senhas devem ser reinseridas a partir desta versão!\nObjeto de linguagem adicionado\nRevisão da reconectação se Asterisk é reiniciado uma vez\nCorrigir erros do verificador de repositório (Issue #51)\nAdicionar documentação como instalar o manual do asterisco (Issue #33)",
-        "nl": "Herontwerp van Asterisk\nOverschakelen van Javascript naar Typescript\nKnooppunten 20 en 22 worden nu ondersteund\njs controllers in versies 6 en 7 worden ondersteund\nLet op: Wachtwoorden moeten opnieuw ingevoerd worden vanaf deze versie!\nTaalobject toegevoegd\nHerziening van de herverbinding als Asterisk eenmaal opnieuw wordt gestart\nFouten van repository-checker herstellen (Issue #51)\nVoeg documentatie toe hoe sterretje handleiding te installeren (Issue #33)",
-        "fr": "Reconception de l'astérisque\nChanger de Javascript en Typescript\nLes nœuds 20 et 22 sont maintenant pris en charge\nles contrôleurs js dans les versions 6 et 7 sont pris en charge\nAttention : les mots de passe doivent être réintroduits de cette version !\nObjet de langue ajouté\nRévision de la connexion si Astérisque est redémarré une fois\nCorrection d'erreurs à partir d'un vérificateur de dépôt (Issue #51)\nAjouter de la documentation comment installer le manuel d'astérisque (Émission #33)",
-        "it": "Riprogettazione di Asterisk\nPassare da Javascript a Typescript\nI nodi 20 e 22 sono ora supportati\njs controllers nelle versioni 6 e 7 sono supportati\nAttenzione: le password devono essere re-entrate da questa versione!\nOggetto linguistico aggiunto\nRevisione della riconnessione se Asterisk è riavviato una volta\nRisolvere gli errori da repository checker (Issue #51)\nAggiungi documentazione come installare il manuale di asterisk (Issue #33)",
-        "es": "Rediseño de Asterisk\nCambiar de Javascript a Tiposcript\nLos nodos 20 y 22 están ahora apoyados\njs controladores en versiones 6 y 7 son compatibles\nAtención: Las contraseñas deben volver a entrar de esta versión!\nObjeto de idioma añadido\nRevisión de la reconexión si el asteroide se reinicia una vez\nCorrección de errores del repositorio (Issue #51)\nAñada documentación cómo instalar manual de asterisco (Isue #33)",
-        "pl": "Przeredagowanie Asterisk\nPrzełączenie z Javascript na Typescript\nWęzły 20 i 22 są teraz obsługiwane\nsterowniki js w wersjach 6 i 7 są obsługiwane\nUwaga: Hasła muszą być ponownie wprowadzone z tej wersji!\nDodano obiekt językowy\nPrzegląd ponownego połączenia, jeśli Asterisk zostanie ponownie uruchomiony raz\nUstalanie błędów w sprawdzaczu repozytorium (wydanie # 51)\nDodaj dokumentację, jak zainstalować instrukcję asterisk (wydanie # 33)",
-        "uk": "Редизайн зірочки\nПереключення з Javascript до Typescript\nNodes 20 і 22 тепер підтримується\njs контролери в версіях 6 і 7 підтримуються\nУвага: Паролі повинні бути повторними з цієї версії!\nДодано об'єкт мови\nРевізія від'єднання, якщо зірочка перезавантажена один раз\nВиправлення помилок з репозиторійного чекера (Issue #51)\nДодайте документацію про те, як встановити ручну зірку (Issue #33)",
-        "zh-cn": "Asterisk的重新设计\n从 Javascript 切换到 Typescript\n20和22号节点现已获得支持\njs 支持第6和第7版的控制器\n注意: 密码必须从这个版本重新输入!\n语言对象已添加\n如果 Asterisk 重新启动一次, 则修改重联\n修正仓库检查器的错误( 问题 51)\n添加如何安装星号手册的文档( 问题 # 33)"
-      },
-      "1.0.6": {
-        "en": "Update of the documentation and template files",
-        "de": "Update der Dokumentations- und Vorlagendateien",
-        "ru": "Обновление документации и шаблонов файлов",
-        "pt": "Atualização da documentação e arquivos de modelo",
-        "nl": "Update van de documentatie en sjabloonbestanden",
-        "fr": "Mise à jour de la documentation et des fichiers modèles",
-        "it": "Aggiornamento della documentazione e dei file modello",
-        "es": "Actualización de la documentación y archivos de plantilla.",
-        "pl": "Aktualizacja dokumentacji i plików szablonów",
-        "zh-cn": "更新文档和模板文件",
-        "uk": "Оновлення документації та файлів шаблонів"
-      }
+    "common": {
+        "name": "asterisk",
+        "version": "2.0.3",
+        "tier": 3,
+        "news": {
+            "2.0.3": {
+                "en": "Bugfixing in sendto function\nAdd Object repeat\nFixing @iobroker/adapter-dev 1.0.1 specified. 1.3.0 is required as minimum, 1.3.0 is recommended (Issue #57)\nFixing dependency (Issue #58)\nFixing issue with missing template directory (Issue #56 and #65)",
+                "de": "Bugfixing in sendto Funktion\nObjekt wiederholen\nFestlegen von @iobroker/adapter-dev 1.0.1 angegeben. 1.3.0 ist als Minimum erforderlich, 1.3.0 wird empfohlen (Issue #57)\nBehebung der Abhängigkeit (Issue #58)\nProblem mit fehlendem Template-Verzeichnis beheben (Issue #56 und #65)",
+                "ru": "Bugfixing в функции sendto\nДобавить Object Repeat\nУказание @iobroker/adapter-dev 1.0.1. 1.3.0 требуется как минимум, 1.3.0 рекомендуется (выпуск #57)\nЗависимость (проблема #58)\nИсправление проблемы с отсутствующим каталогом шаблонов (выпуск #56 и #65)",
+                "pt": "Bugfixing na função sendto\nAdicionar repetição do objeto\nCorrigindo @iobroker/adapter-dev 1.0.1 especificado. 1.3.0 é exigido como mínimo, 1.3.0 é recomendado (Issue #57)\nFixação de dependência (Issue #58)\nCorrigindo problema com o diretório de modelo ausente (Issue #56 e #65)",
+                "nl": "Bugfixing in sendto functie\nHerhaling object toevoegen\nBevestiging van @iobroker/adapter-dev 1.0.1 gespecificeerd. 1.3.0 is minimaal vereist, 1,30 wordt aanbevolen (issue #57)\nAfhankelijkheid herstellen (issue #58)\nProblemen oplossen met ontbrekende sjabloonmap (Issue #56 en #65)",
+                "fr": "Correction du bogue dans la fonction sendto\nAjouter une répétition d'objet\nCorrection @iobroker/adaptateur-dev 1.0.1 spécifiée. 1.3.0 est nécessaire au minimum, 1.3.0 est recommandé (numéro 57)\nCorrection de la dépendance (numéro 58)\nCorrection d'un problème avec le répertoire de gabarit manquant (Numéro #56 et #65)",
+                "it": "Bugfixing nella funzione sendto\nAggiungere la ripetizione dell'oggetto\nFissaggio @iobroker/adapter-dev 1.0.1 specificato. 1.3.0 è richiesto come minimo, 1.3.0 è raccomandato (Essue #57)\nRisolvere la dipendenza (Issue #58)\nRisolvere il problema con la directory dei modelli mancanti (Issue #56 e #65)",
+                "es": "Bugfixing en función sendto\nAgregar la repetición de objetos\nCorrección @iobroker/adapter-dev 1.0.1 especificado. 1.3.0 se requiere como mínimo, 1.3.0 se recomienda (Isue #57)\nFijación de dependencia (Isue #58)\nEdición de fijación con directorio de plantillas desaparecidos (Isue #56 y #65)",
+                "pl": "Ustalanie błędów w funkcji sendto\nDodaj obiekt powtórzyć\nFixing @ iobroker / adapter- dev 1.0.1 określony. 1.3.0 jest wymagane jako minimum, 1.3.0 jest zalecane (wydanie # 57)\nUstalenie zależności (wydanie # 58)\nNaprawianie problemu z brakującym katalogiem szablonów (wydanie # 56 i # 65)",
+                "uk": "Виправлення помилок в функції відправника\nДодати повторення об'єкта\nВиправлення @iobroker/adapter-dev 1.0.1 вказаний. 1.3.0 потрібна як мінімум, 1.3.0 рекомендується (Issue #57)\nФіксована залежність (Issue #58)\nВиправлення проблеми з відсутнім каталогом шаблонів (Issue #56 і #65)",
+                "zh-cn": "发送到函数中的错误修正\n添加对象重复\n正在修复@iobroduc/adapter-dev 1. 0.1。 最低要求为1.3.0,建议为1.3.0(第57期)\n解决依赖(问题58)\n解决缺少模板目录的问题(问题56和65)"
+            },
+            "2.0.2": {
+                "en": "Add Create Directory\nAdd translation for configuration\nBugfixing",
+                "de": "In den Warenkorb\nÜbersetzung hinzufügen für Konfiguration\nFehlerbehebung",
+                "ru": "Добавить Создать каталог\nДобавить перевод для конфигурации\nИсправление",
+                "pt": "Adicionar ao cesto\nAdicionar tradução para configuração\nBugfixing",
+                "nl": "Map toevoegen\nVertaling toevoegen voor configuratie\nBugfixing",
+                "fr": "Ajouter un répertoire Créer\nAjouter la traduction pour la configuration\nCorrection des bugs",
+                "it": "Aggiungi Crea directory\nAggiungi traduzione per la configurazione\nBugfixing",
+                "es": "Añadir Crear Directorio\nAñadir traducción para configuración\nBugfixing",
+                "pl": "Dodaj katalog tworzenia\nDodaj tłumaczenie do konfiguracji\nUstalanie błędów",
+                "uk": "Додати каталог\nДодавання перекладу для конфігурації\nПомилки",
+                "zh-cn": "添加创建目录\n为配置添加翻译\n错误修正"
+            },
+            "2.0.1": {
+                "en": "Fix error by using asterisk and iobroker on the same server\nAdd action command for send messages\nAdd dial in command for send messages\nAdd create butteon for create dial in file",
+                "de": "Fehler behoben, indem Asterisk und iobroker auf demselben Server verwendet werden\nAktionsbefehl zum Senden von Nachrichten hinzufügen\nWählen Sie im Befehl zum Senden von Nachrichten\nErstellen Sie Butteon für das Erstellen von Zifferblatt in Datei",
+                "ru": "Исправление ошибки с помощью asterisk и iobroker на одном сервере\nДобавить команду действий для отправки сообщений\nДобавить в команду для отправки сообщений\nДобавить для создания циферблата в файле",
+                "pt": "Corrigir erro usando asterisco e iobroker no mesmo servidor\nAdicionar comando de ação para enviar mensagens\nAdicionar discagem no comando para enviar mensagens\nAdicionar criar butteon para criar dial no arquivo",
+                "nl": "Fout herstellen door gebruik te maken van asterisk en iobroker op dezelfde server\nActie-opdracht toevoegen voor verzenden van berichten\nDial toevoegen in opdracht voor verzenden van berichten\nToevoegen aanmaak butteon voor aanmaken dial in bestand",
+                "fr": "Correction de l'erreur en utilisant astérisque et iobroker sur le même serveur\nAjouter la commande action pour envoyer des messages\nAjouter le cadran dans la commande pour envoyer des messages\nAjouter créer le bouton pour créer le cadran dans le fichier",
+                "it": "Risolvere l'errore utilizzando asterisco e iobroker sullo stesso server\nAggiungi comando azione per inviare messaggi\nAggiungi comporre in comando per inviare messaggi\nAggiungi creare butteon per creare quadrante in file",
+                "es": "Corregir error utilizando asterisco y iobroker en el mismo servidor\nAgregar comando de acción para enviar mensajes\nAgregar dial en el comando para enviar mensajes\nAgregar crear butteon para crear dial en archivo",
+                "pl": "Popraw błąd używając gwiazdki i iobrokera na tym samym serwerze\nDodaj polecenie działania dla wysyłania wiadomości\nDodaj numer w poleceniu wysyłania wiadomości\nDodaj utworzyć butteon do tworzenia wybierania w pliku",
+                "uk": "Виправлення помилки за допомогою зірочки і iobroker на одному сервері\nДодати команду дій для відправки повідомлень\nДодати диал в команду для відправки повідомлень\nДодати створення алетеону для створення діал у файлі",
+                "zh-cn": "在同一服务器上使用星号和io经纪人来修正错误\n为发送消息添加动作命令\n在命令中添加发送消息的拨号\n为在文件中创建拨号添加创建 butteon"
+            },
+            "2.0.0": {
+                "en": "Redesign of Asterisk\nSwitching from Javascript to Typescript\nNodes 20 and 22 are now supported\njs controllers in versions 6 and 7 are supported\nAttention: Passwords must be re-entered from this version!\nLanguage object added\nRevision of the reconnect if Asterisk is restarted once\nFixing errors from repository checker (Issue #51)\nAdd documentation how to install asterisk manual (Issue #33)",
+                "de": "Neugestaltung von Asterisk\nUmschalten von Javascript zu Typescript\nNodes 20 und 22 werden nun unterstützt\njs-controller in den versionen 6 und 7 werden unterstützt\nAchtung: Passwörter müssen von dieser Version erneut eingelesen werden!\nSprache Objekt hinzugefügt\nRevision der Wiederverbindung, wenn Asterisk einmal neu gestartet wird\nFehler beim Repository-Checker behoben (Issue #51)\nDokumentation hinzufügen, wie man das Asterisk-Handbuch installiert (Issue #33)",
+                "ru": "Редизайн Asterisk\nПереключение с Javascript на Typescript\nНоды 20 и 22 теперь поддерживаются\njs контроллеры в версиях 6 и 7 поддерживаются\nВнимание: Пароли должны быть повторно включены из этой версии!\nДобавлен языковой объект\nПересмотр повторного подключения, если Asterisk перезапускается один раз\nИсправление ошибок из шашки репозиторий (Isue #51)\nДобавить документацию, как установить руководство по звездочке (Исход #33)",
+                "pt": "Redesenho de Asterisk\nMudando de Javascript para Typescript\nOs nós 20 e 22 são agora suportados\ncontroladores js nas versões 6 e 7 são suportados\nAtenção: As senhas devem ser reinseridas a partir desta versão!\nObjeto de linguagem adicionado\nRevisão da reconectação se Asterisk é reiniciado uma vez\nCorrigir erros do verificador de repositório (Issue #51)\nAdicionar documentação como instalar o manual do asterisco (Issue #33)",
+                "nl": "Herontwerp van Asterisk\nOverschakelen van Javascript naar Typescript\nKnooppunten 20 en 22 worden nu ondersteund\njs controllers in versies 6 en 7 worden ondersteund\nLet op: Wachtwoorden moeten opnieuw ingevoerd worden vanaf deze versie!\nTaalobject toegevoegd\nHerziening van de herverbinding als Asterisk eenmaal opnieuw wordt gestart\nFouten van repository-checker herstellen (Issue #51)\nVoeg documentatie toe hoe sterretje handleiding te installeren (Issue #33)",
+                "fr": "Reconception de l'astérisque\nChanger de Javascript en Typescript\nLes nœuds 20 et 22 sont maintenant pris en charge\nles contrôleurs js dans les versions 6 et 7 sont pris en charge\nAttention : les mots de passe doivent être réintroduits de cette version !\nObjet de langue ajouté\nRévision de la connexion si Astérisque est redémarré une fois\nCorrection d'erreurs à partir d'un vérificateur de dépôt (Issue #51)\nAjouter de la documentation comment installer le manuel d'astérisque (Émission #33)",
+                "it": "Riprogettazione di Asterisk\nPassare da Javascript a Typescript\nI nodi 20 e 22 sono ora supportati\njs controllers nelle versioni 6 e 7 sono supportati\nAttenzione: le password devono essere re-entrate da questa versione!\nOggetto linguistico aggiunto\nRevisione della riconnessione se Asterisk è riavviato una volta\nRisolvere gli errori da repository checker (Issue #51)\nAggiungi documentazione come installare il manuale di asterisk (Issue #33)",
+                "es": "Rediseño de Asterisk\nCambiar de Javascript a Tiposcript\nLos nodos 20 y 22 están ahora apoyados\njs controladores en versiones 6 y 7 son compatibles\nAtención: Las contraseñas deben volver a entrar de esta versión!\nObjeto de idioma añadido\nRevisión de la reconexión si el asteroide se reinicia una vez\nCorrección de errores del repositorio (Issue #51)\nAñada documentación cómo instalar manual de asterisco (Isue #33)",
+                "pl": "Przeredagowanie Asterisk\nPrzełączenie z Javascript na Typescript\nWęzły 20 i 22 są teraz obsługiwane\nsterowniki js w wersjach 6 i 7 są obsługiwane\nUwaga: Hasła muszą być ponownie wprowadzone z tej wersji!\nDodano obiekt językowy\nPrzegląd ponownego połączenia, jeśli Asterisk zostanie ponownie uruchomiony raz\nUstalanie błędów w sprawdzaczu repozytorium (wydanie # 51)\nDodaj dokumentację, jak zainstalować instrukcję asterisk (wydanie # 33)",
+                "uk": "Редизайн зірочки\nПереключення з Javascript до Typescript\nNodes 20 і 22 тепер підтримується\njs контролери в версіях 6 і 7 підтримуються\nУвага: Паролі повинні бути повторними з цієї версії!\nДодано об'єкт мови\nРевізія від'єднання, якщо зірочка перезавантажена один раз\nВиправлення помилок з репозиторійного чекера (Issue #51)\nДодайте документацію про те, як встановити ручну зірку (Issue #33)",
+                "zh-cn": "Asterisk的重新设计\n从 Javascript 切换到 Typescript\n20和22号节点现已获得支持\njs 支持第6和第7版的控制器\n注意: 密码必须从这个版本重新输入!\n语言对象已添加\n如果 Asterisk 重新启动一次, 则修改重联\n修正仓库检查器的错误( 问题 51)\n添加如何安装星号手册的文档( 问题 # 33)"
+            },
+            "1.0.6": {
+                "en": "Update of the documentation and template files",
+                "de": "Update der Dokumentations- und Vorlagendateien",
+                "ru": "Обновление документации и шаблонов файлов",
+                "pt": "Atualização da documentação e arquivos de modelo",
+                "nl": "Update van de documentatie en sjabloonbestanden",
+                "fr": "Mise à jour de la documentation et des fichiers modèles",
+                "it": "Aggiornamento della documentazione e dei file modello",
+                "es": "Actualización de la documentación y archivos de plantilla.",
+                "pl": "Aktualizacja dokumentacji i plików szablonów",
+                "zh-cn": "更新文档和模板文件",
+                "uk": "Оновлення документації та файлів шаблонів"
+            }
+        },
+        "titleLang": {
+            "en": "Asterisk VoIP",
+            "de": "Asterisk VoIP",
+            "ru": "Asterisk VoIP",
+            "pt": "VoIP Asterisco",
+            "nl": "Asterisk VoIP",
+            "fr": "Asterisk VoIP",
+            "it": "Asterisk VoIP",
+            "es": "Asterisco VoIP",
+            "pl": "Asterisk VoIP",
+            "zh-cn": "星号VoIP",
+            "uk": "Asterisk VoIP"
+        },
+        "desc": {
+            "en": "Asterisk VoIP Adapter",
+            "de": "Asterisk VoIP Adapter",
+            "ru": "Asterisk VoIP адаптер",
+            "pt": "Adaptador VoIP Asterisk",
+            "nl": "Asterisk VoIP-adapter",
+            "fr": "Adaptateur VoIP Asterisk",
+            "it": "Asterisk VoIP Adapter",
+            "es": "Adaptador VoIP Asterisco",
+            "pl": "Adapter Asterisk VoIP",
+            "zh-cn": "Asterisk VoIP适配器",
+            "uk": "VoIP-адаптер Asterisk"
+        },
+        "authors": ["Thorsten Stueben <thorsten@stueben.de>"],
+        "keywords": ["voip", "asterisk", "sip", "voice", "speach", "call"],
+        "licenseInformation": {
+            "license": "MIT",
+            "type": "free"
+        },
+        "platform": "Javascript/Node.js",
+        "icon": "asterisk.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
+        "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
+        "loglevel": "info",
+        "messagebox": true,
+        "mode": "daemon",
+        "type": "communication",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
+        "adminUI": {
+            "config": "json"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=6.0.11"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=7.6.17"
+            }
+        ]
     },
-    "titleLang": {
-      "en": "Asterisk VoIP",
-      "de": "Asterisk VoIP",
-      "ru": "Asterisk VoIP",
-      "pt": "VoIP Asterisco",
-      "nl": "Asterisk VoIP",
-      "fr": "Asterisk VoIP",
-      "it": "Asterisk VoIP",
-      "es": "Asterisco VoIP",
-      "pl": "Asterisk VoIP",
-      "zh-cn": "星号VoIP",
-      "uk": "Asterisk VoIP"
+    "protectedNative": ["password", "sippassword", "sshpassword"],
+    "encryptedNative": ["password", "sippassword", "sshpassword"],
+    "native": {
+        "ip": "192.168.1.1",
+        "port": 5038,
+        "user": "manager",
+        "password": "manager",
+        "siphost": "192.168.1.2",
+        "sipuser": "123456789",
+        "sippassword": "",
+        "path": "/tmp/",
+        "language": "EN",
+        "transcoder": "ffmpeg",
+        "service": "sip",
+        "ssh": false,
+        "sshport": 22,
+        "sshuser": "",
+        "sshpassword": "",
+        "forceReInit": false
     },
-    "desc": {
-      "en": "Asterisk VoIP Adapter",
-      "de": "Asterisk VoIP Adapter",
-      "ru": "Asterisk VoIP адаптер",
-      "pt": "Adaptador VoIP Asterisk",
-      "nl": "Asterisk VoIP-adapter",
-      "fr": "Adaptateur VoIP Asterisk",
-      "it": "Asterisk VoIP Adapter",
-      "es": "Adaptador VoIP Asterisco",
-      "pl": "Adapter Asterisk VoIP",
-      "zh-cn": "Asterisk VoIP适配器",
-      "uk": "VoIP-адаптер Asterisk"
-    },
-    "authors": [
-      "Thorsten Stueben <thorsten@stueben.de>"
-    ],
-    "keywords": [
-      "voip",
-      "asterisk",
-      "sip",
-      "voice",
-      "speach",
-      "call"
-    ],
-    "licenseInformation": {
-      "license": "MIT",
-      "type": "free"
-    },
-    "platform": "Javascript/Node.js",
-    "icon": "asterisk.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/schmupu/ioBroker.asterisk/master/admin/asterisk.png",
-    "readme": "https://github.com/schmupu/ioBroker.asterisk/blob/master/README.md",
-    "loglevel": "info",
-    "messagebox": true,
-    "mode": "daemon",
-    "type": "communication",
-    "compact": true,
-    "connectionType": "local",
-    "dataSource": "push",
-    "adminUI": {
-      "config": "json"
-    },
-    "dependencies": [
-      {
-        "js-controller": ">=5.0.19"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=7.4.10"
-      }
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin",
+            "type": "channel",
+            "common": {
+                "name": "Dial In"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.text",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "def": "Please enter after the beep tone your passwort and press hashtag."
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.language",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "states": {
+                    "EN": "englisch",
+                    "DE": "deutsch",
+                    "RU": "русский",
+                    "PT": "português",
+                    "NL": "Nederlands",
+                    "FR": "français",
+                    "IT": "italiano",
+                    "ES": "español",
+                    "PL": "polski"
+                }
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.dtmf",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "DTMF Code",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.callerid",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Callerid",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialin.create",
+            "type": "state",
+            "common": {
+                "role": "button",
+                "name": "Create dialin file",
+                "type": "boolean",
+                "read": false,
+                "write": true,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout",
+            "type": "channel",
+            "common": {
+                "name": "Dial Out"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.text",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "def": "ioBroker is calling you. Please call me back"
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.language",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Text",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "states": {
+                    "EN": "englisch",
+                    "DE": "deutsch",
+                    "RU": "русский",
+                    "PT": "português",
+                    "NL": "Nederlands",
+                    "FR": "français",
+                    "IT": "italiano",
+                    "ES": "español",
+                    "PL": "polski"
+                }
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.dtmf",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "DTMF Code",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.callerid",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Callerid",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.telnr",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Telephonenumber",
+                "type": "string",
+                "def": "",
+                "read": true,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.call",
+            "type": "state",
+            "common": {
+                "role": "button",
+                "name": "Start Call",
+                "type": "boolean",
+                "read": false,
+                "write": true,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "dialout.repeat",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Repeat Text",
+                "type": "number",
+                "read": false,
+                "write": true,
+                "def": 5
+            },
+            "native": {}
+        }
     ]
-  },
-  "protectedNative": [
-    "password",
-    "sippassword",
-    "sshpassword"
-  ],
-  "encryptedNative": [
-    "password",
-    "sippassword",
-    "sshpassword"
-  ],
-  "native": {
-    "ip": "192.168.1.1",
-    "port": 5038,
-    "user": "manager",
-    "password": "manager",
-    "siphost": "192.168.1.2",
-    "sipuser": "123456789",
-    "sippassword": "",
-    "path": "/tmp/",
-    "language": "EN",
-    "transcoder": "ffmpeg",
-    "service": "sip",
-    "ssh": false,
-    "sshport": 22,
-    "sshuser": "",
-    "sshpassword": "",
-    "forceReInit": false
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": "Information"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": "Device or service connected",
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin",
-      "type": "channel",
-      "common": {
-        "name": "Dial In"
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.text",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Text",
-        "type": "string",
-        "read": true,
-        "write": true,
-        "def": "Please enter after the beep tone your passwort and press hashtag."
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.language",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Text",
-        "type": "string",
-        "read": true,
-        "write": true,
-        "states": {
-          "EN": "englisch",
-          "DE": "deutsch",
-          "RU": "русский",
-          "PT": "português",
-          "NL": "Nederlands",
-          "FR": "français",
-          "IT": "italiano",
-          "ES": "español",
-          "PL": "polski"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.dtmf",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "DTMF Code",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.callerid",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Callerid",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialin.create",
-      "type": "state",
-      "common": {
-        "role": "button",
-        "name": "Create dialin file",
-        "type": "boolean",
-        "read": false,
-        "write": true,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout",
-      "type": "channel",
-      "common": {
-        "name": "Dial Out"
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.text",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Text",
-        "type": "string",
-        "read": true,
-        "write": true,
-        "def": "ioBroker is calling you. Please call me back"
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.language",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Text",
-        "type": "string",
-        "read": true,
-        "write": true,
-        "states": {
-          "EN": "englisch",
-          "DE": "deutsch",
-          "RU": "русский",
-          "PT": "português",
-          "NL": "Nederlands",
-          "FR": "français",
-          "IT": "italiano",
-          "ES": "español",
-          "PL": "polski"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.dtmf",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "DTMF Code",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.callerid",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Callerid",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": true
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.telnr",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Telephonenumber",
-        "type": "string",
-        "def": "",
-        "read": true,
-        "write": true
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.call",
-      "type": "state",
-      "common": {
-        "role": "button",
-        "name": "Start Call",
-        "type": "boolean",
-        "read": false,
-        "write": true,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "dialout.repeat",
-      "type": "state",
-      "common": {
-        "role": "state",
-        "name": "Repeat Text",
-        "type": "number",
-        "read": false,
-        "write": true,
-        "def": 5
-      },
-      "native": {}
-    }
-  ]
 }
