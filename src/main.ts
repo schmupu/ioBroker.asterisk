@@ -441,7 +441,8 @@ class asterisk extends utils.Adapter {
         if (!this.config.ssh) {
             const audiofile_local_gsm = tools.addSlashToPath(this.config.path) + path.basename(audiofile_guid_gsm);
             this.log.debug(`move ${audiofile_guid_gsm} ${audiofile_local_gsm}`);
-            fs.renameSync(audiofile_guid_gsm, audiofile_local_gsm);
+            fs.copyFileSync(audiofile_guid_gsm, audiofile_local_gsm);
+            fs.rmSync(audiofile_guid_gsm);
             if (parameter.variable) {
                 parameter.variable.file = tools.getFilenameWithoutExtension(audiofile_local_gsm);
                 parameter.variable.del = 'delete';
@@ -488,7 +489,8 @@ class asterisk extends utils.Adapter {
         if (!this.config.ssh) {
             const audiofile_local_gsm = tools.addSlashToPath(this.config.path) + path.basename(audiofile_guid_gsm);
             this.log.debug(`move ${audiofile_guid_gsm} ${audiofile_local_gsm}`);
-            fs.renameSync(audiofile_guid_gsm, audiofile_local_gsm);
+            fs.copyFileSync(audiofile_guid_gsm, audiofile_local_gsm);
+            fs.rmSync(audiofile_guid_gsm);
             parameter.audiofile = tools.getFilenameWithoutExtension(audiofile_local_gsm);
             parameter.delete = 'delete';
         }
@@ -642,7 +644,8 @@ class asterisk extends utils.Adapter {
         if (!this.config.ssh) {
             const audiofile_dtmf_gsm = `${tools.addSlashToPath(this.config.path)}asterisk_dtmf.gsm`;
             this.log.debug(`move ${audiofile_guid_gsm} ${audiofile_dtmf_gsm}`);
-            fs.renameSync(audiofile_guid_gsm, audiofile_dtmf_gsm);
+            fs.copyFileSync(audiofile_guid_gsm, audiofile_dtmf_gsm);
+            fs.rmSync(audiofile_guid_gsm);
         }
     }
 }
