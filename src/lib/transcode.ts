@@ -1,7 +1,7 @@
-import childProcess from 'child_process';
-import fs from 'fs';
+import childProcess from 'node:child_process';
+import fs from 'node:fs';
 import * as googleTTS from 'google-tts-api';
-import path from 'path';
+import path from 'node:path';
 import * as tools from './tools';
 
 /**

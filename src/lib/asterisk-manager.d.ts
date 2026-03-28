@@ -11,7 +11,7 @@ declare module 'asterisk-manager' {
     /**
      * Interface
      */
-    export default class Asterisk extends import('events').EventEmitter {
+    export default class Asterisk extends import('node:events').EventEmitter {
         constructor(port: string, host: string, username: string, password: string, events: boolean);
 
         public on(event: string, callback: (event: Response) => void): void;
