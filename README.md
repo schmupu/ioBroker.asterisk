@@ -285,6 +285,8 @@ If you have problems with asterisk, you can try to find something in the logfile
 - (Stübi) Bugfixing and password will be saved encrypted and text message size can be unlimited
 - (Stübi) First Version
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 The MIT License (MIT)
